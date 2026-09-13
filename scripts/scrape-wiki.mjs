@@ -1,16 +1,9 @@
 import fs from "node:fs/promises";
 import JSON5 from "json5";
 
-const API_URL =
-  "https://phigros.fandom.com/api.php" +
-  "?action=query" +
-  "&prop=revisions" +
-  "&titles=Phigros_Wiki:Song_Data" +
-  "&rvslots=main" +
-  "&rvprop=content" +
-  "&format=json" +
-  "&formatversion=2" +
-  "&origin=*";
+const WIKI_BASE_URL = "https://phigros.fandom.com/wiki";
+const API_URL = "https://phigros.fandom.com/api.php";
+const USER_AGENT = "Phigros-RKS-Calculator/1.0 (GitHub Pages)";
 
 const DIFFICULTIES = [
   ["ez", "EZ"],
@@ -42,17 +35,57 @@ function versionCompare(a, b) {
   return 0;
 }
 
-function makeCharts(songData) {
-  const charts = [];
+// Batch-fetches page image thumbnails (jackets) from Fandom API for given titles
+async function fetchJacketUrls(titles) {
+  const jacketMap = new Map();
+  const chunkSize = 50; // MediaWiki API limit for titles parameter
+
+  for (let i = 0; i < titles.length; i += chunkSize) {
+    const chunk = titles.slice(i, i + chunkSize);
+    const params = new URLSearchParams({
+      action: "query",
+      titles: chunk.join("|"),
+      prop: "pageimages",
+      piprop: "original|thumbnail",
+      pithumbsize: "500",
+      format: "json",
+      formatversion: "2",
+      origin: "*",
+    });
+
+    const res = await fetch(`${API_URL}?${params.toString()}`, {
+      headers: { "User-Agent": USER_AGENT },
+    });
+
+    if (!res.ok) continue;
+
+    const data = await res.json();
+    const pages = data?.query?.pages || [];
+
+    for (const page of pages) {
+      if (page.title) {
+        // Fallback to original image if thumbnail fails
+        const imageUrl = page.original?.source || page.thumbnail?.source || "";
+        jacketMap.set(page.title, imageUrl);
+      }
+    }
+  }
+
+  return jacketMap;
+}
+
+function parseSongs(songData) {
+  const songs = [];
+  const versions = [];
 
   for (const [key, song] of Object.entries(songData)) {
     if (!song || typeof song !== "object") continue;
 
-    // Song Data contains historical entries (e.g. Introduction#2.5.0)
-    // with display:false. Only current/displayed entries belong here.
+    // Skip historical/hidden entries
     if (song.display === false) continue;
 
-    const songName = song.title || key;
+    const name = song.title || key;
+    const charts = [];
 
     for (const [field, diff] of DIFFICULTIES) {
       const chart = song[field];
@@ -62,31 +95,43 @@ function makeCharts(songData) {
       if (!Number.isFinite(constant)) continue;
 
       charts.push({
-        song: songName,
         diff,
         constant: Math.round(constant * 10) / 10,
-        version: song.version || "",
-        pack: song.pack || "",
-        rksEligible: ["EZ", "HD", "IN", "AT"].includes(diff),
       });
     }
+
+    if (charts.length === 0) continue;
+
+    if (song.version) {
+      versions.push(song.version);
+    }
+
+    // Build wiki URL safe path
+    const wikiPath = encodeURIComponent(name.replace(/ /g, "_"));
+
+    songs.push({
+      name,
+      chapter: song.pack || "",
+      wikiUrl: `${WIKI_BASE_URL}/${wikiPath}`,
+      jacket: "", // Populated in next step
+      charts,
+    });
   }
 
-  charts.sort((a, b) =>
-    a.song.localeCompare(b.song) ||
-    a.diff.localeCompare(b.diff)
-  );
+  songs.sort((a, b) => a.name.localeCompare(b.name));
 
-  return charts;
+  return { songs, versions };
 }
 
 async function main() {
-  console.log("Fetching Phigros Wiki Song Data…");
+  console.log("1. Fetching Phigros Wiki Song Data…");
 
-  const response = await fetch(API_URL, {
-    headers: {
-      "User-Agent": "Phigros-RKS-Calculator/1.0 (GitHub Pages)"
-    }
+  const dataUrl =
+    `${API_URL}?action=query&prop=revisions&titles=Phigros_Wiki:Song_Data` +
+    `&rvslots=main&rvprop=content&format=json&formatversion=2&origin=*`;
+
+  const response = await fetch(dataUrl, {
+    headers: { "User-Agent": USER_AGENT },
   });
 
   if (!response.ok) {
@@ -103,18 +148,11 @@ async function main() {
   let songData;
 
   try {
-    // The Wiki Song Data is JSON5-like, but it also contains
-    // numeric object keys such as:
-    //
-    //   1: "Some Artist",
-    //   2: "Another Artist"
-    //
-    // Numeric keys are not valid JSON5 identifiers, so quote them first.
+    // Quote numeric object keys for JSON5 compatibility
     const normalizedContent = content.replace(
       /([,{]\s*)(\d+)(\s*:)/g,
       '$1"$2"$3'
     );
-
     songData = JSON5.parse(normalizedContent);
   } catch (error) {
     throw new Error(
@@ -122,27 +160,32 @@ async function main() {
     );
   }
 
-  const charts = makeCharts(songData);
+  const { songs, versions } = parseSongs(songData);
 
-  if (charts.length < 100) {
+  if (songs.length < 50) {
     throw new Error(
-      `Only ${charts.length} charts were parsed; refusing to overwrite songs.json.`
+      `Only ${songs.length} songs were parsed; refusing to overwrite songs.json.`
     );
   }
 
-  const versions = charts
-    .map(c => c.version)
-    .filter(Boolean)
-    .sort(versionCompare);
+  console.log(`2. Fetching jacket images for ${songs.length} songs…`);
+  const songTitles = songs.map((s) => s.name);
+  const jacketMap = await fetchJacketUrls(songTitles);
 
-  const sourceVersion = versions.at(-1) || "unknown";
+  // Assign jacket URLs
+  for (const song of songs) {
+    song.jacket = jacketMap.get(song.name) || "";
+  }
+
+  const sortedVersions = versions.filter(Boolean).sort(versionCompare);
+  const sourceVersion = sortedVersions.at(-1) || "unknown";
 
   const output = {
-    source: "Phigros Wiki:Song Data",
-    sourceUrl: "https://phigros.fandom.com/wiki/Phigros_Wiki:Song_Data",
+    source: "Phigros Wiki (Song Data + Songs + page images)",
+    sourceUrl: `${WIKI_BASE_URL}/Songs`,
     sourceVersion,
     generatedAt: new Date().toISOString(),
-    charts
+    songs,
   };
 
   await fs.writeFile(
@@ -151,11 +194,11 @@ async function main() {
     "utf8"
   );
 
-  console.log(`Wrote ${charts.length} charts.`);
-  console.log(`Newest chart version in dataset: ${sourceVersion}`);
+  console.log(`Successfully wrote ${songs.length} songs to songs.json.`);
+  console.log(`Newest version detected: ${sourceVersion}`);
 }
 
-main().catch(error => {
+main().catch((error) => {
   console.error(error);
   process.exit(1);
 });
