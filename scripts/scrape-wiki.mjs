@@ -1,4 +1,5 @@
 import fs from "node:fs/promises";
+import JSON5 from "json5";
 
 const API_URL =
   "https://phigros.fandom.com/api.php" +
@@ -102,10 +103,12 @@ async function main() {
   let songData;
 
   try {
-    songData = JSON.parse(content);
+    // The Wiki Song Data page uses JSON5-style syntax
+    // (e.g. unquoted/numeric keys and trailing commas).
+    songData = JSON5.parse(content);
   } catch (error) {
     throw new Error(
-      "The Wiki Song Data page was not valid JSON: " + error.message
+      "The Wiki Song Data page was not valid JSON5: " + error.message
     );
   }
 
