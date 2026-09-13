@@ -103,12 +103,22 @@ async function main() {
   let songData;
 
   try {
-    // The Wiki Song Data page uses JSON5-style syntax
-    // (e.g. unquoted/numeric keys and trailing commas).
-    songData = JSON5.parse(content);
+    // The Wiki Song Data is JSON5-like, but it also contains
+    // numeric object keys such as:
+    //
+    //   1: "Some Artist",
+    //   2: "Another Artist"
+    //
+    // Numeric keys are not valid JSON5 identifiers, so quote them first.
+    const normalizedContent = content.replace(
+      /([,{]\s*)(\d+)(\s*:)/g,
+      '$1"$2"$3'
+    );
+
+    songData = JSON5.parse(normalizedContent);
   } catch (error) {
     throw new Error(
-      "The Wiki Song Data page was not valid JSON5: " + error.message
+      "The Wiki Song Data page could not be parsed: " + error.message
     );
   }
 
