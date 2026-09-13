@@ -129,15 +129,23 @@
 
         <div class="field">
           <span>Jacket art</span>
-          <div class="jacketFetchRow">
+          <div class="jacketPreviewRow">
             <div id="jacketPreview" class="jacket jacketPreview" style="width:56px;height:56px" data-initials="?"></div>
-            <div class="jacketFetchCol">
-              <button type="button" id="fetchJacketBtn" class="secondary">Fetch from Phigros Wiki</button>
-              <div id="jacketStatus" class="muted small"></div>
+            <div class="jacketModeToggle" id="jacketModeToggle">
+              <button type="button" class="jacketModeBtn" data-mode="wiki">Use Phigros Wiki</button>
+              <button type="button" class="jacketModeBtn" data-mode="upload">Upload image</button>
             </div>
           </div>
-          <input id="fJacket" type="text" placeholder="Jacket image URL (auto-filled by fetch, or paste your own)">
-          <input id="fWikiUrl" type="text" placeholder="Wiki page URL (auto-filled by fetch, or paste your own)">
+
+          <div id="jacketWikiPanel" class="jacketPanel">
+            <div id="wikiUrlPreview" class="wikiUrlPreview muted small">Enter a song name to see the Wiki URL.</div>
+            <button type="button" id="fetchJacketBtn" class="secondary">Fetch jacket from this page</button>
+            <div id="jacketStatus" class="muted small"></div>
+          </div>
+
+          <div id="jacketUploadPanel" class="jacketPanel hidden">
+            <input id="fJacketFile" type="file" accept="image/*">
+          </div>
         </div>
 
         <div class="modalActions">

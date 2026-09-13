@@ -551,38 +551,43 @@ function renderAll() {
 }
 
 // ---------------------------------------------------------------------------
-// Manual song entry: add/edit modal + Phigros Wiki jacket lookup
+// Manual song entry: add/edit modal, deterministic Phigros Wiki URL, and
+// jacket art either fetched from that Wiki page or uploaded from disk
 // ---------------------------------------------------------------------------
 
-// Queries the Phigros Fandom Wiki's MediaWiki API (CORS-enabled via
-// origin=*) for the page matching `name`, then reads its page image and
-// canonical URL. Throws with a user-facing message on any failure.
+let jacketMode = "wiki";     // "wiki" | "upload" — which jacket panel is active
+let pendingJacket = null;    // the jacket value about to be saved (image URL or data: URL)
+let pendingWikiUrl = null;   // the wiki page URL about to be saved
+
+// Phigros Wiki page URLs follow a fixed pattern: spaces become underscores.
+// e.g. "ENERGY SYNERGY MATRIX" -> https://phigros.fandom.com/wiki/ENERGY_SYNERGY_MATRIX
+function computeWikiUrl(name) {
+  const trimmed = (name || "").trim();
+  if (!trimmed) return null;
+  return `${WIKI_BASE}/wiki/${encodeURIComponent(trimmed.replace(/\s+/g, "_"))}`;
+}
+
+// Reads the page image off that exact Wiki URL via the Fandom MediaWiki API
+// (CORS-enabled via origin=*). Throws with a user-facing message on failure.
 async function fetchJacketFromWiki(name) {
   const trimmed = name.trim();
   if (!trimmed) throw new Error("Enter a song name first.");
-
-  const searchUrl =
-    `${WIKI_BASE}/api.php?action=query&list=search&srsearch=${encodeURIComponent(trimmed)}` +
-    `&srlimit=1&format=json&origin=*`;
-  const searchRes = await fetch(searchUrl);
-  if (!searchRes.ok) throw new Error(`Wiki search failed (HTTP ${searchRes.status}).`);
-  const searchData = await searchRes.json();
-  const hit = searchData?.query?.search?.[0];
-  if (!hit) throw new Error("No matching page found on the Phigros Wiki.");
+  const title = trimmed.replace(/\s+/g, "_");
 
   const infoUrl =
-    `${WIKI_BASE}/api.php?action=query&titles=${encodeURIComponent(hit.title)}` +
-    `&prop=pageimages|info&piprop=original&inprop=url&format=json&origin=*`;
+    `${WIKI_BASE}/api.php?action=query&titles=${encodeURIComponent(title)}` +
+    `&prop=pageimages|info&piprop=original&inprop=url&redirects=1&format=json&origin=*`;
   const infoRes = await fetch(infoUrl);
   if (!infoRes.ok) throw new Error(`Wiki lookup failed (HTTP ${infoRes.status}).`);
   const infoData = await infoRes.json();
   const page = Object.values(infoData?.query?.pages || {})[0];
-  if (!page) throw new Error("Could not read that Wiki page.");
+  if (!page || page.missing !== undefined) {
+    throw new Error(`No Wiki page found at /wiki/${title} — check the spelling/capitalization.`);
+  }
 
   return {
-    title: hit.title,
     jacket: page.original?.source || null,
-    wikiUrl: page.fullurl || `${WIKI_BASE}/wiki/${encodeURIComponent(hit.title.replace(/ /g, "_"))}`,
+    wikiUrl: page.fullurl || computeWikiUrl(trimmed),
   };
 }
 
@@ -603,6 +608,22 @@ function updateJacketPreview(url, name) {
     : "";
 }
 
+function updateWikiUrlPreview() {
+  const url = computeWikiUrl($("fName").value);
+  $("wikiUrlPreview").textContent = url
+    ? url.replace(/^https?:\/\//, "")
+    : "Enter a song name to see the Wiki URL.";
+}
+
+function setJacketMode(mode) {
+  jacketMode = mode;
+  $("jacketModeToggle").querySelectorAll(".jacketModeBtn").forEach(btn => {
+    btn.classList.toggle("active", btn.dataset.mode === mode);
+  });
+  $("jacketWikiPanel").classList.toggle("hidden", mode !== "wiki");
+  $("jacketUploadPanel").classList.toggle("hidden", mode !== "upload");
+}
+
 function openSongModal(name = null) {
   editingSongName = name;
   const song = name ? songs.find(s => s.name === name) : null;
@@ -611,10 +632,14 @@ function openSongModal(name = null) {
   $("fName").value = song?.name || "";
   $("fName").disabled = !!song; // renaming would orphan saved ACCs, so lock it on edit
   $("fChapter").value = song?.chapter || "";
-  $("fJacket").value = song?.jacket || "";
-  $("fWikiUrl").value = song?.wikiUrl || "";
+
+  pendingJacket = song?.jacket || null;
+  pendingWikiUrl = song?.wikiUrl || computeWikiUrl(song?.name || "");
   $("jacketStatus").textContent = "";
-  updateJacketPreview(song?.jacket, song?.name || "");
+  $("fJacketFile").value = "";
+  updateWikiUrlPreview();
+  updateJacketPreview(pendingJacket, song?.name || "");
+  setJacketMode(pendingJacket && pendingJacket.startsWith("data:") ? "upload" : "wiki");
 
   $("constGrid").querySelectorAll("input").forEach(input => {
     const existing = song?.charts.find(c => c.diff === input.dataset.diff);
@@ -641,27 +666,49 @@ function setupAddSongModal() {
     if (e.target.id === "addSongModal") closeSongModal();
   });
 
-  $("fName").addEventListener("input", () => updateJacketPreview($("fJacket").value, $("fName").value));
-  $("fJacket").addEventListener("input", () => updateJacketPreview($("fJacket").value, $("fName").value));
+  $("jacketModeToggle").querySelectorAll(".jacketModeBtn").forEach(btn => {
+    btn.addEventListener("click", () => setJacketMode(btn.dataset.mode));
+  });
+
+  $("fName").addEventListener("input", () => {
+    updateWikiUrlPreview();
+    if (jacketMode === "wiki") updateJacketPreview(pendingJacket, $("fName").value);
+  });
 
   $("fetchJacketBtn").addEventListener("click", async () => {
     const btn = $("fetchJacketBtn");
     const status = $("jacketStatus");
+    const name = $("fName").value.trim();
+    if (!name) { status.textContent = "Enter a song name first."; return; }
+
     btn.disabled = true;
-    status.textContent = "Searching Phigros Wiki…";
+    status.textContent = "Fetching from Phigros Wiki…";
     try {
-      const result = await fetchJacketFromWiki($("fName").value);
-      if (result.jacket) $("fJacket").value = result.jacket;
-      if (result.wikiUrl) $("fWikiUrl").value = result.wikiUrl;
-      updateJacketPreview($("fJacket").value, $("fName").value);
-      status.textContent = result.jacket
-        ? `Found "${result.title}".`
-        : `Found "${result.title}", but it has no page image — paste a jacket URL manually.`;
+      const result = await fetchJacketFromWiki(name);
+      pendingWikiUrl = result.wikiUrl;
+      if (result.jacket) {
+        pendingJacket = result.jacket;
+        updateJacketPreview(pendingJacket, name);
+        status.textContent = "Jacket found.";
+      } else {
+        status.textContent = "Page found, but it has no image on it.";
+      }
     } catch (err) {
       status.textContent = err.message || "Could not fetch from the Wiki.";
     } finally {
       btn.disabled = false;
     }
+  });
+
+  $("fJacketFile").addEventListener("change", () => {
+    const file = $("fJacketFile").files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = () => {
+      pendingJacket = reader.result;
+      updateJacketPreview(pendingJacket, $("fName").value);
+    };
+    reader.readAsDataURL(file);
   });
 
   $("addSongForm").addEventListener("submit", e => {
@@ -693,8 +740,8 @@ function setupAddSongModal() {
     const songData = {
       name,
       chapter: $("fChapter").value.trim(),
-      jacket: $("fJacket").value.trim() || null,
-      wikiUrl: $("fWikiUrl").value.trim() || null,
+      jacket: pendingJacket || null,
+      wikiUrl: pendingWikiUrl || computeWikiUrl(name),
       charts: chartsList,
     };
 

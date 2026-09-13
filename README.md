@@ -12,13 +12,17 @@ add a chart:
 1. Enter the song name.
 2. Enter a difficulty constant for whichever of EZ / HD / IN / AT / SP / Legacy apply
    to that song — leave the rest blank.
-3. Optionally click **Fetch from Phigros Wiki** to look up the jacket art and Wiki
-   page link by searching the [Phigros Wiki](https://phigros.fandom.com) for a
-   matching page, or paste a jacket URL yourself.
+3. Pick a jacket source:
+   - **Use Phigros Wiki** — the page URL is derived automatically from the song name
+     (spaces become underscores, e.g. `ENERGY SYNERGY MATRIX` →
+     `phigros.fandom.com/wiki/ENERGY_SYNERGY_MATRIX`). Click **Fetch jacket from this
+     page** to pull that page's image.
+   - **Upload image** — pick an image file from your device instead; it's embedded
+     directly into the saved song (no external link needed).
 
 Songs are stored in your browser's `localStorage`, so they persist across visits on
 the same browser/device but aren't shared between devices. Reopen a song's editor
-(select it, then click **Edit song**) to change its constants or delete it.
+(select it, then click **Edit song**) to change its constants, jacket, or delete it.
 
 ## RKS
 

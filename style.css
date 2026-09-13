@@ -487,14 +487,34 @@ a { color: #9ca8ff; }
 .constField.diff-SP label { color: var(--diff-sp); }
 .constField.diff-Legacy label { color: var(--diff-legacy); }
 
-.jacketFetchRow {
+.jacketPreviewRow {
   display: flex;
   align-items: center;
   gap: 12px;
-  margin-bottom: 8px;
+  margin-bottom: 10px;
 }
-.jacketFetchCol { display: flex; flex-direction: column; gap: 4px; }
 .jacketPreview { flex: 0 0 auto; }
+
+.jacketModeToggle {
+  display: flex;
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  overflow: hidden;
+}
+.jacketModeBtn {
+  border: none;
+  border-radius: 0;
+  background: #0c101a;
+  padding: 8px 12px;
+  color: var(--muted);
+  font-size: 12px;
+}
+.jacketModeBtn + .jacketModeBtn { border-left: 1px solid var(--border); }
+.jacketModeBtn.active { background: var(--accent); color: #fff; }
+
+.jacketPanel { display: flex; flex-direction: column; gap: 6px; }
+.jacketPanel.hidden { display: none; }
+.wikiUrlPreview { word-break: break-all; }
 .small { font-size: 11px; }
 
 .modalActions {
