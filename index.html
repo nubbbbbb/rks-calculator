@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Phigros RKS Calculator</title>
+  <meta name="description" content="Phigros RKS calculator with B27 + P3 breakdown.">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="topbar">
+    <div>
+      <h1>Phigros RKS Calculator</h1>
+      <p class="subtitle">Enter your ACCs and see exactly what contributes to your RKS.</p>
+    </div>
+    <div class="actions">
+      <button id="exportBtn" class="secondary">Export scores</button>
+      <label class="fileBtn secondary">
+        Import scores
+        <input id="importInput" type="file" accept=".json,application/json" hidden>
+      </label>
+      <button id="clearBtn" class="danger">Clear scores</button>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="rksCard">
+        <div class="eyebrow">CURRENT RKS</div>
+        <div id="rksValue" class="rksValue">0.00</div>
+        <div id="rksDetail" class="muted">Enter some scores to begin.</div>
+      </div>
+      <div class="statCard">
+        <span>Charts</span><strong id="chartCount">—</strong>
+      </div>
+      <div class="statCard">
+        <span>Scores entered</span><strong id="scoreCount">0</strong>
+      </div>
+      <div class="statCard">
+        <span>Phi scores</span><strong id="phiCount">0</strong>
+      </div>
+    </section>
+
+    <section class="formula panel">
+      <div>
+        <h2>How RKS is calculated</h2>
+        <p>For ACC ≥ 70%:</p>
+        <code>single RKS = constant × ((ACC − 55) / 45)²</code>
+        <p>For ACC &lt; 70%, single RKS is 0. Your final RKS is <b>B27 + P3</b>: the 27 highest single-RKS charts plus the 3 highest-constant charts you Phi'd. A chart can appear in both.</p>
+      </div>
+      <div id="dataStatus" class="status">Loading song data…</div>
+    </section>
+
+    <section class="panel">
+      <div class="toolbar">
+        <input id="search" type="search" placeholder="Search songs…" autocomplete="off">
+        <select id="diffFilter">
+          <option value="ALL">All difficulties</option>
+          <option value="EZ">EZ</option>
+          <option value="HD">HD</option>
+          <option value="IN">IN</option>
+          <option value="AT">AT</option>
+          <option value="SP">SP</option>
+          <option value="Legacy">Legacy</option>
+        </select>
+        <select id="sort">
+          <option value="song">Song name</option>
+          <option value="constant">Constant ↓</option>
+          <option value="acc">ACC ↓</option>
+          <option value="rks">Single RKS ↓</option>
+        </select>
+      </div>
+      <div class="hint">Tip: type a song name, pick its chart, then enter your ACC. Scores are saved automatically in this browser.</div>
+      <div id="songs" class="songs"></div>
+    </section>
+
+    <section class="panel">
+      <div class="sectionHeader">
+        <div>
+          <h2>B27</h2>
+          <p class="muted">Your 27 highest single-chart RKS values.</p>
+        </div>
+        <div id="b27Sum" class="sum">0.0000</div>
+      </div>
+      <div id="b27" class="resultList empty">Not enough scores yet.</div>
+    </section>
+
+    <section class="panel">
+      <div class="sectionHeader">
+        <div>
+          <h2>P3</h2>
+          <p class="muted">Your 3 highest-constant Phi charts. These can overlap with B27.</p>
+        </div>
+        <div id="p3Sum" class="sum">0.0000</div>
+      </div>
+      <div id="p3" class="resultList empty">No Phi scores yet.</div>
+    </section>
+  </main>
+
+  <footer>
+    <p>Song/chart data is loaded from the public Phigros dataset maintained by <a href="https://github.com/sakimidare/Phigros" target="_blank" rel="noopener">sakimidare/Phigros</a>. RKS formula follows the current B27 + P3 convention.</p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
