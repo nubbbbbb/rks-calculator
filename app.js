@@ -5,18 +5,18 @@ const WIKI_BASE = "https://phigros.fandom.com";
 
 const ELIGIBLE_DIFFS = ["EZ", "HD", "IN", "AT"];
 const ALL_DIFFS = ["EZ", "HD", "IN", "AT", "SP", "Legacy"];
-const SIZES = { compact: 40, comfortable: 52, large: 68 };
+const SPECIAL_DIFFS = ["SP", "Legacy"];
+const SONG_JACKET_HEIGHT = 90; // left-panel song cards always use the compact size
 
 const DEFAULT_UI = {
   leftWidth: 380,
-  cardSize: "comfortable",
   diffFilters: ["EZ", "HD", "IN", "AT"],
   sortMode: "song",
   searchText: "",
 };
 
-let songs = [];   // all songs, entered manually: [{name, chapter, wikiUrl, jacket, charts:[{diff,constant}]}]
-let charts = [];  // flattened: [{song, diff, constant, chapter, jacket, wikiUrl, rksEligible}]
+let songs = [];   // all songs, entered manually: [{name, wikiUrl, jacket, charts:[{diff,constant}]}]
+let charts = [];  // flattened: [{song, diff, constant, jacket, wikiUrl, rksEligible}]
 let scores = {};
 let ui = { ...DEFAULT_UI };
 let selected = { song: null, diff: null };
@@ -74,7 +74,8 @@ function saveSongs() {
 // time `songs` changes. Call after every add/edit/delete.
 function rebuildCharts() {
   charts = flatten(songs);
-  $("chartCount").textContent = charts.length;
+  const chartCountEl = $("chartCount");
+  if (chartCountEl) chartCountEl.textContent = charts.length;
   $("dataStatus").textContent = songs.length
     ? `${songs.length} song${songs.length === 1 ? "" : "s"} · ${charts.length} chart${charts.length === 1 ? "" : "s"}`
     : `No songs yet — click "+ Add song" to get started.`;
@@ -142,13 +143,16 @@ function initials(name) {
   return (words[0][0] + (words[1]?.[0] || "")).toUpperCase();
 }
 
-function jacketHtml(c, size) {
+function jacketHtml(c, size, fill = false) {
   const label = initials(c.song);
-  const style = `width:${size}px;height:${size}px`;
+  const style = fill ? `width:100%;height:100%` : `width:${size}px;height:${size}px`;
   // The song's initials sit behind the <img> as a CSS ::before; if the
   // image is missing or fails to load, hiding it just reveals the initials.
+  // referrerpolicy="no-referrer" works around Fandom's CDN rejecting image
+  // requests whose Referer header isn't a fandom.com page (hotlink protection).
   const img = c.jacket
-    ? `<img src="${escapeAttr(c.jacket)}" alt="" loading="lazy" onerror="this.style.display='none'">`
+    ? `<img src="${escapeAttr(c.jacket)}" alt="" loading="lazy" referrerpolicy="no-referrer"
+         onerror="console.error('[jacket debug] failed to load image:', this.src); this.style.display='none'">`
     : "";
   return `<div class="jacket" style="${style}" data-initials="${escapeAttr(label)}">${img}</div>`;
 }
@@ -164,8 +168,10 @@ function renderTop() {
   const p3Pct = total > 0 ? (r.p3Sum / total) * 100 : 0;
 
   $("rksValue").textContent = r.rks.toFixed(2);
-  $("scoreCount").textContent = r.played.length;
-  $("phiCount").textContent = r.played.filter(isPhi).length;
+  const scoreCountEl = $("scoreCount");
+  const phiCountEl = $("phiCount");
+  if (scoreCountEl) scoreCountEl.textContent = r.played.length;
+  if (phiCountEl) phiCountEl.textContent = r.played.filter(isPhi).length;
   $("rksDetail").textContent = `${r.b27.length}/27 B27 charts + ${r.p3.length}/3 P3 charts`;
 
   $("b27Sum").textContent = r.b27Sum.toFixed(4);
@@ -256,7 +262,6 @@ function renderBottom() {
       ${jacketHtml({ song: song.name, jacket: song.jacket }, 72)}
       <div class="editorTitle">
         <div class="editorName">${escapeHtml(song.name)}</div>
-        <div class="editorChapter muted">${escapeHtml(song.chapter || "")}</div>
         ${song.wikiUrl
           ? `<a class="editorLink" href="${escapeAttr(song.wikiUrl)}" target="_blank" rel="noopener">View on Wiki ↗</a>`
           : ""}
@@ -267,7 +272,7 @@ function renderBottom() {
       ${song.charts.map(c => `
         <button type="button" class="diffPick diff-${escapeAttr(c.diff)}${c.diff === chart.diff ? " active" : ""}"
                 data-diff="${escapeAttr(c.diff)}">
-          ${escapeHtml(c.diff)} <span>${c.constant.toFixed(1)}</span>
+          ${escapeHtml(c.diff)}${SPECIAL_DIFFS.includes(c.diff) ? "" : ` <span>${c.constant.toFixed(1)}</span>`}
         </button>`).join("")}
     </div>
     <div class="editorAcc">
@@ -277,7 +282,7 @@ function renderBottom() {
              ${eligible ? "" : "disabled"}>
       <button type="button" id="accClear" class="secondary" ${acc == null ? "disabled" : ""}>Clear</button>
     </div>
-    <div class="editorResult">
+    <div class="editorResult" id="editorResult">
       ${eligible
         ? `Single RKS: <strong>${singleRks(flat).toFixed(4)}</strong>${isPhi(flat) ? " · Phi" : ""}`
         : `<span class="muted">${escapeHtml(chart.diff)} charts aren't used for RKS.</span>`}
@@ -302,9 +307,23 @@ function renderBottom() {
         if (Number.isFinite(value)) scores[key] = value;
       }
       saveScores();
-      renderBottom();
+
+      // Update everything the new ACC affects *except* the editor panel
+      // itself — re-rendering it would recreate this <input> and steal
+      // focus after every keystroke, making it impossible to type more
+      // than one digit at a time.
+      const clearBtnEl = $("accClear");
+      if (clearBtnEl) clearBtnEl.disabled = scores[key] == null;
+      const resultEl = $("editorResult");
+      if (resultEl) {
+        resultEl.innerHTML = eligible
+          ? `Single RKS: <strong>${singleRks(flat).toFixed(4)}</strong>${isPhi(flat) ? " · Phi" : ""}`
+          : `<span class="muted">${escapeHtml(chart.diff)} charts aren't used for RKS.</span>`;
+      }
+
       renderSongs();
-      renderAll();
+      const r = renderTop();
+      renderMiddle(r);
     });
   }
 
@@ -346,12 +365,53 @@ function filteredCharts() {
   return arr;
 }
 
+function diffSortIndex(d) {
+  const i = ALL_DIFFS.indexOf(d);
+  return i === -1 ? ALL_DIFFS.length : i;
+}
+
+// Groups the filtered charts by song, so the left panel shows one entry per
+// song with its matching difficulties attached as tags. Sort order is based
+// on an aggregate (best/max) value across each song's matched charts, so
+// "difficulty"/"acc"/"rks" sort modes still make sense at the song level.
+function filteredSongGroups() {
+  const matched = filteredCharts();
+
+  const bySong = new Map();
+  for (const c of matched) {
+    if (!bySong.has(c.song)) bySong.set(c.song, []);
+    bySong.get(c.song).push(c);
+  }
+
+  const groups = [...bySong.entries()].map(([song, list]) => ({
+    song,
+    charts: [...list].sort((a, b) => diffSortIndex(a.diff) - diffSortIndex(b.diff)),
+  }));
+
+  if (ui.sortMode === "difficulty") {
+    groups.sort((a, b) =>
+      Math.max(...b.charts.map(c => c.constant)) - Math.max(...a.charts.map(c => c.constant)) ||
+      a.song.localeCompare(b.song)
+    );
+  } else if (ui.sortMode === "acc") {
+    const bestAcc = g => Math.max(...g.charts.map(c => scores[chartKey(c)] ?? -1));
+    groups.sort((a, b) => bestAcc(b) - bestAcc(a) || a.song.localeCompare(b.song));
+  } else if (ui.sortMode === "rks") {
+    const bestRks = g => Math.max(...g.charts.map(c => singleRks(c)));
+    groups.sort((a, b) => bestRks(b) - bestRks(a) || a.song.localeCompare(b.song));
+  } else {
+    groups.sort((a, b) => a.song.localeCompare(b.song));
+  }
+
+  return groups;
+}
+
 function renderSongs() {
-  const list = filteredCharts();
-  const size = SIZES[ui.cardSize] ?? SIZES.comfortable;
+  const groups = filteredSongGroups();
+  const jacketHeight = SONG_JACKET_HEIGHT;
   const frag = document.createDocumentFragment();
 
-  if (!list.length) {
+  if (!groups.length) {
     $("songs").innerHTML = charts.length
       ? `<div class="empty">No songs match this search/filter.</div>`
       : `<div class="empty">No songs yet. Click <strong>+ Add song</strong> above to enter your first chart.</div>`;
@@ -360,29 +420,55 @@ function renderSongs() {
   }
   $("songs").className = "songList";
 
-  for (const c of list) {
-    const key = chartKey(c);
-    const acc = scores[key];
-    const rks = singleRks(c);
-    const isSelected = selected.song === c.song && selected.diff === c.diff;
+  for (const g of groups) {
+    const tagCharts = g.charts;
+    // Only show a single difficulty's full detail (badge + constant, acc,
+    // single RKS) when the song has exactly one matched tag and it isn't a
+    // special (SP/Legacy) chart. Otherwise just show the difficulty tags.
+    const singleTagCase = tagCharts.length === 1 && !SPECIAL_DIFFS.includes(tagCharts[0].diff);
+    const anyEligible = tagCharts.some(isRksEligible);
+    const isSongSelected = selected.song === g.song;
+    const defaultDiff = (tagCharts.find(c => c.diff === "IN") || tagCharts[0]).diff;
 
-    const row = document.createElement("button");
-    row.type = "button";
-    row.className = "song" + (!isRksEligible(c) ? " nonRks" : "") + (isSelected ? " selected" : "");
+    const row = document.createElement("div");
+    row.className = "song groupRow" + (!anyEligible ? " nonRks" : "") + (isSongSelected ? " selected" : "");
+
+    let topTagsHtml = "";
+    let overlayHtml = "";
+    if (singleTagCase) {
+      const c = tagCharts[0];
+      const acc = scores[chartKey(c)];
+      const rks = singleRks(c);
+      topTagsHtml = `<span class="diffBadge diff-${escapeAttr(c.diff)}">${escapeHtml(c.diff)} ${c.constant.toFixed(1)}</span>`;
+      overlayHtml = `
+        ${acc == null ? "" : `<span class="jacketBadge jacketBadgeAcc">${acc.toFixed(2)}%</span>`}
+        <span class="jacketBadge jacketBadgeRks">${acc == null || !isRksEligible(c) ? "—" : Math.round(rks)}</span>
+      `;
+    } else {
+      topTagsHtml = tagCharts.map(c => `
+        <button type="button" class="diffTagBtn diff-${escapeAttr(c.diff)}${isSongSelected && selected.diff === c.diff ? " active" : ""}" data-diff="${escapeAttr(c.diff)}">${escapeHtml(c.diff)}</button>
+      `).join("");
+    }
 
     row.innerHTML = `
-      ${jacketHtml(c, size)}
-      <div class="songName" title="${escapeAttr(c.song)}">
-        <div class="songTitle">${escapeHtml(c.song)}</div>
-        <div class="songMeta">
-          <span class="diffBadge diff-${escapeAttr(c.diff)}">${escapeHtml(c.diff)} ${c.constant.toFixed(1)}</span>
-          ${acc == null ? "" : `<span class="accBadge">${acc.toFixed(2)}%</span>`}
-        </div>
+      <div class="songTop">
+        <div class="songTitle" title="${escapeAttr(g.song)}">${escapeHtml(g.song)}</div>
+        <div class="songTopTags">${topTagsHtml}</div>
       </div>
-      <div class="singleRks">${acc == null || !isRksEligible(c) ? "—" : Math.round(rks)}</div>
+      <div class="songJacketWrap" style="height:${jacketHeight}px">
+        ${jacketHtml(tagCharts[0], null, true)}
+        ${overlayHtml}
+      </div>
     `;
 
-    row.addEventListener("click", () => select(c.song, c.diff));
+    row.addEventListener("click", () => select(g.song, defaultDiff));
+    row.querySelectorAll(".diffTagBtn").forEach(btn => {
+      btn.addEventListener("click", e => {
+        e.stopPropagation();
+        select(g.song, btn.dataset.diff);
+      });
+    });
+
     frag.appendChild(row);
   }
 
@@ -410,12 +496,6 @@ function renderDiffChips() {
       renderDiffChips();
       renderSongs();
     });
-  });
-}
-
-function renderSizeControl() {
-  $("sizeControl").querySelectorAll("button").forEach(btn => {
-    btn.classList.toggle("active", btn.dataset.size === ui.cardSize);
   });
 }
 
@@ -463,15 +543,6 @@ function setupControls() {
     ui.sortMode = e.target.value;
     saveUi();
     renderSongs();
-  });
-
-  $("sizeControl").querySelectorAll("button").forEach(btn => {
-    btn.addEventListener("click", () => {
-      ui.cardSize = btn.dataset.size;
-      saveUi();
-      renderSizeControl();
-      renderSongs();
-    });
   });
 
   $("exportBtn").addEventListener("click", exportScores);
@@ -534,7 +605,6 @@ function flatten(songList) {
         song: s.name,
         diff: c.diff,
         constant: c.constant,
-        chapter: s.chapter,
         jacket: s.jacket,
         wikiUrl: s.wikiUrl,
       });
@@ -555,9 +625,10 @@ function renderAll() {
 // jacket art either fetched from that Wiki page or uploaded from disk
 // ---------------------------------------------------------------------------
 
-let jacketMode = "wiki";     // "wiki" | "upload" — which jacket panel is active
+let jacketMode = "wiki";     // "wiki" | "link" | "upload" — which jacket panel is active
 let pendingJacket = null;    // the jacket value about to be saved (image URL or data: URL)
 let pendingWikiUrl = null;   // the wiki page URL about to be saved
+let selectedSpecialCharts = [];
 
 // Phigros Wiki page URLs follow a fixed pattern: spaces become underscores.
 // e.g. "ENERGY SYNERGY MATRIX" -> https://phigros.fandom.com/wiki/ENERGY_SYNERGY_MATRIX
@@ -577,22 +648,105 @@ async function fetchJacketFromWiki(name) {
   const infoUrl =
     `${WIKI_BASE}/api.php?action=query&titles=${encodeURIComponent(title)}` +
     `&prop=pageimages|info&piprop=original&inprop=url&redirects=1&format=json&origin=*`;
+  console.log("[jacket debug] request:", infoUrl);
+
   const infoRes = await fetch(infoUrl);
   if (!infoRes.ok) throw new Error(`Wiki lookup failed (HTTP ${infoRes.status}).`);
   const infoData = await infoRes.json();
+  console.log("[jacket debug] response:", infoData);
+
   const page = Object.values(infoData?.query?.pages || {})[0];
   if (!page || page.missing !== undefined) {
     throw new Error(`No Wiki page found at /wiki/${title} — check the spelling/capitalization.`);
   }
 
-  return {
-    jacket: page.original?.source || null,
-    wikiUrl: page.fullurl || computeWikiUrl(trimmed),
-  };
+  const jacket = page.original?.source || null;
+  const wikiUrl = page.fullurl || computeWikiUrl(trimmed);
+  console.log("[jacket debug] image link:", jacket);
+
+  return { jacket, wikiUrl };
+}
+
+// Maps the Wiki's human-readable difficulty names (used as column headers in
+// the "Difficulty" row of the infobox table) to this app's difficulty codes.
+const WIKI_DIFF_NAMES = {
+  easy: "EZ",
+  hard: "HD",
+  insane: "IN",
+  another: "AT",
+};
+
+// The Phigros Wiki's infobox is template-generated ({{SongAuto|...}}), so the
+// numbers don't exist as plain wikitext parameters on the page — they only
+// appear in the rendered table. Its shape is a header row starting with
+// "Difficulty" (followed by cells named Easy/Hard/Insane/Another — as many as
+// the song has, since most songs have no AT chart), immediately followed by a
+// "Level" row whose cells are the constants, lined up column-for-column with
+// the header row above it. e.g.:
+//   Difficulty | Easy | Hard | Insane | Another
+//   Level      |  7   | 12.7 | 16.1   | 17.6
+// Fetches the song's Wiki page and reads off its EZ/HD/IN/AT difficulty
+// constants. On Phigros Wiki a chart's "difficulty" *is* its difficulty
+// constant (e.g. IN 16.1) — there's no separate number to look up.
+async function fetchConstantsFromWiki(name) {
+  const trimmed = name.trim();
+  if (!trimmed) throw new Error("Enter a song name first.");
+  const title = trimmed.replace(/\s+/g, "_");
+
+  const htmlUrl =
+    `${WIKI_BASE}/api.php?action=parse&page=${encodeURIComponent(title)}` +
+    `&prop=text&redirects=1&format=json&origin=*`;
+  console.log("[const debug] request:", htmlUrl);
+
+  const res = await fetch(htmlUrl);
+  if (!res.ok) throw new Error(`Wiki lookup failed (HTTP ${res.status}).`);
+  const data = await res.json();
+  console.log("[const debug] response:", data);
+
+  if (data.error || !data.parse) {
+    throw new Error(`No Wiki page found at /wiki/${title} — check the spelling/capitalization.`);
+  }
+
+  const html = data.parse.text?.["*"] || "";
+  const result = parseConstantsFromInfoboxHtml(html);
+
+  if (!Object.keys(result).length) {
+    throw new Error("Could not find difficulty constants on this Wiki page — enter them manually.");
+  }
+  return result;
+}
+
+function parseConstantsFromInfoboxHtml(html) {
+  const doc = new DOMParser().parseFromString(html, "text/html");
+  const rows = [...doc.querySelectorAll("tr")];
+  const result = {};
+
+  for (let r = 0; r < rows.length; r++) {
+    const headerCells = [...rows[r].children];
+    if (!headerCells.length) continue;
+    if (headerCells[0].textContent.trim().toLowerCase() !== "difficulty") continue;
+
+    const diffCodes = headerCells.slice(1).map(c => WIKI_DIFF_NAMES[c.textContent.trim().toLowerCase()] || null);
+
+    const valueRow = rows[r + 1];
+    const valueCells = valueRow ? [...valueRow.children] : [];
+    if (valueCells[0]?.textContent.trim().toLowerCase() !== "level") continue;
+
+    const values = valueCells.slice(1);
+    diffCodes.forEach((diff, i) => {
+      if (!diff) return; // an unrecognized/blank column (e.g. a song with no AT chart)
+      const raw = values[i]?.textContent.trim();
+      if (raw && /^\d+(?:\.\d+)?$/.test(raw)) result[diff] = Number(raw);
+    });
+
+    break; // a song page has exactly one such table
+  }
+
+  return result;
 }
 
 function renderConstGrid() {
-  $("constGrid").innerHTML = ALL_DIFFS.map(d => `
+  $("constGrid").innerHTML = ELIGIBLE_DIFFS.map(d => `
     <div class="constField diff-${d}">
       <label>${d}</label>
       <input type="number" min="0.1" max="20" step="0.1" data-diff="${d}" placeholder="—">
@@ -604,7 +758,8 @@ function updateJacketPreview(url, name) {
   const el = $("jacketPreview");
   el.dataset.initials = initials(name || "?");
   el.innerHTML = url
-    ? `<img src="${escapeAttr(url)}" alt="" onerror="this.style.display='none'">`
+    ? `<img src="${escapeAttr(url)}" alt="" referrerpolicy="no-referrer"
+         onerror="console.error('[jacket debug] failed to load image:', this.src); this.style.display='none'">`
     : "";
 }
 
@@ -615,13 +770,41 @@ function updateWikiUrlPreview() {
     : "Enter a song name to see the Wiki URL.";
 }
 
+function syncSpecialChartToggles() {
+  $("specialChartToggle")?.querySelectorAll(".specialChartBtn").forEach(btn => {
+    const diff = btn.dataset.special;
+    btn.classList.toggle("active", selectedSpecialCharts.includes(diff));
+  });
+}
+
+function toggleSpecialChart(diff) {
+  if (selectedSpecialCharts.includes(diff)) {
+    selectedSpecialCharts = selectedSpecialCharts.filter(d => d !== diff);
+  } else {
+    selectedSpecialCharts = [...selectedSpecialCharts, diff];
+  }
+  syncSpecialChartToggles();
+}
+
 function setJacketMode(mode) {
   jacketMode = mode;
   $("jacketModeToggle").querySelectorAll(".jacketModeBtn").forEach(btn => {
     btn.classList.toggle("active", btn.dataset.mode === mode);
   });
   $("jacketWikiPanel").classList.toggle("hidden", mode !== "wiki");
+  $("jacketLinkPanel").classList.toggle("hidden", mode !== "link");
   $("jacketUploadPanel").classList.toggle("hidden", mode !== "upload");
+}
+
+// Guesses which jacket-source panel a saved jacket value came from, so
+// reopening a song's editor starts on the right tab: an uploaded image is
+// always a data: URL, a Wiki-fetched jacket comes off Fandom's image CDN,
+// and anything else is a plain pasted link.
+function guessJacketMode(jacket) {
+  if (!jacket) return "wiki";
+  if (jacket.startsWith("data:")) return "upload";
+  if (/fandom\.com|wikia\.nocookie\.net/i.test(jacket)) return "wiki";
+  return "link";
 }
 
 function openSongModal(name = null) {
@@ -631,20 +814,27 @@ function openSongModal(name = null) {
   $("addSongTitle").textContent = song ? "Edit song" : "Add a song";
   $("fName").value = song?.name || "";
   $("fName").disabled = !!song; // renaming would orphan saved ACCs, so lock it on edit
-  $("fChapter").value = song?.chapter || "";
 
   pendingJacket = song?.jacket || null;
   pendingWikiUrl = song?.wikiUrl || computeWikiUrl(song?.name || "");
   $("jacketStatus").textContent = "";
+  $("jacketLinkStatus").textContent = "";
   $("fJacketFile").value = "";
+  const initialJacketMode = guessJacketMode(pendingJacket);
+  $("fJacketLink").value = initialJacketMode === "link" ? pendingJacket : "";
   updateWikiUrlPreview();
   updateJacketPreview(pendingJacket, song?.name || "");
-  setJacketMode(pendingJacket && pendingJacket.startsWith("data:") ? "upload" : "wiki");
+  setJacketMode(initialJacketMode);
 
   $("constGrid").querySelectorAll("input").forEach(input => {
     const existing = song?.charts.find(c => c.diff === input.dataset.diff);
     input.value = existing ? existing.constant : "";
   });
+  if ($("constStatus")) $("constStatus").textContent = "";
+
+  const specialCharts = (song?.charts || []).filter(c => SPECIAL_DIFFS.includes(c.diff)).map(c => c.diff);
+  selectedSpecialCharts = [...new Set(specialCharts)];
+  syncSpecialChartToggles();
 
   $("addSongDelete").classList.toggle("hidden", !song);
   $("addSongModal").classList.remove("hidden");
@@ -670,6 +860,38 @@ function setupAddSongModal() {
     btn.addEventListener("click", () => setJacketMode(btn.dataset.mode));
   });
 
+  $("specialChartToggle")?.querySelectorAll(".specialChartBtn").forEach(btn => {
+    btn.addEventListener("click", () => toggleSpecialChart(btn.dataset.special));
+  });
+
+  $("fetchConstBtn")?.addEventListener("click", async () => {
+    const btn = $("fetchConstBtn");
+    const status = $("constStatus");
+    const name = $("fName").value.trim();
+    if (!name) { status.textContent = "Enter a song name first."; return; }
+
+    btn.disabled = true;
+    status.textContent = "Fetching difficulty constants from Phigros Wiki…";
+    try {
+      const result = await fetchConstantsFromWiki(name);
+      let filled = 0;
+      $("constGrid").querySelectorAll("input").forEach(input => {
+        const value = result[input.dataset.diff];
+        if (value != null) {
+          input.value = value;
+          filled++;
+        }
+      });
+      status.textContent = filled
+        ? `Filled in ${filled} difficult${filled === 1 ? "y" : "ies"} — double-check these against the Wiki page.`
+        : "Page found, but no difficulty constants were recognized. Enter them manually.";
+    } catch (err) {
+      status.textContent = err.message || "Could not fetch from the Wiki.";
+    } finally {
+      btn.disabled = false;
+    }
+  });
+
   $("fName").addEventListener("input", () => {
     updateWikiUrlPreview();
     if (jacketMode === "wiki") updateJacketPreview(pendingJacket, $("fName").value);
@@ -689,7 +911,7 @@ function setupAddSongModal() {
       if (result.jacket) {
         pendingJacket = result.jacket;
         updateJacketPreview(pendingJacket, name);
-        status.textContent = "Jacket found.";
+        status.textContent = `Jacket found: ${result.jacket}`;
       } else {
         status.textContent = "Page found, but it has no image on it.";
       }
@@ -698,6 +920,13 @@ function setupAddSongModal() {
     } finally {
       btn.disabled = false;
     }
+  });
+
+  $("fJacketLink").addEventListener("input", () => {
+    const url = $("fJacketLink").value.trim();
+    pendingJacket = url || null;
+    updateJacketPreview(pendingJacket, $("fName").value);
+    $("jacketLinkStatus").textContent = url ? "" : "Paste a direct link to an image.";
   });
 
   $("fJacketFile").addEventListener("change", () => {
@@ -717,7 +946,8 @@ function setupAddSongModal() {
     const name = $("fName").value.trim();
     if (!name) return;
 
-    const chartsList = [];
+    let chartsList = [];
+
     $("constGrid").querySelectorAll("input").forEach(input => {
       const raw = input.value.trim();
       if (raw === "") return;
@@ -727,8 +957,12 @@ function setupAddSongModal() {
       }
     });
 
+    selectedSpecialCharts.forEach(diff => {
+      chartsList.push({ diff, constant: 0 });
+    });
+
     if (!chartsList.length) {
-      alert("Enter at least one difficulty constant.");
+      alert("Enter at least one difficulty constant or add an SP/Legacy toggle.");
       return;
     }
 
@@ -739,7 +973,6 @@ function setupAddSongModal() {
 
     const songData = {
       name,
-      chapter: $("fChapter").value.trim(),
       jacket: pendingJacket || null,
       wikiUrl: pendingWikiUrl || computeWikiUrl(name),
       charts: chartsList,
@@ -800,7 +1033,6 @@ loadUi();
 loadSongs();
 applyLeftWidth();
 renderDiffChips();
-renderSizeControl();
 setupControls();
 setupResizer();
 setupAddSongModal();

@@ -36,11 +36,6 @@
             <option value="acc">Accuracy ↓</option>
             <option value="rks">RKS value ↓</option>
           </select>
-          <div class="sizeControl" id="sizeControl">
-            <button type="button" data-size="compact" title="Small">S</button>
-            <button type="button" data-size="comfortable" title="Medium">M</button>
-            <button type="button" data-size="large" title="Large">L</button>
-          </div>
         </div>
       </div>
       <div id="songs" class="songList"></div>
@@ -73,12 +68,6 @@
               <span id="p3Pct" class="muted">—</span>
             </div>
           </div>
-        </div>
-
-        <div class="statRow">
-          <div class="statCard"><span>Charts</span><strong id="chartCount">—</strong></div>
-          <div class="statCard"><span>Scores entered</span><strong id="scoreCount">0</strong></div>
-          <div class="statCard"><span>Phi scores</span><strong id="phiCount">0</strong></div>
         </div>
 
         <div id="dataStatus" class="status">No songs yet — click "+ Add song" to get started.</div>
@@ -117,14 +106,19 @@
           <input id="fName" type="text" placeholder="e.g. Rrhar'il" required>
         </label>
 
-        <label class="field">
-          <span>Chapter / album <span class="muted">(optional)</span></span>
-          <input id="fChapter" type="text" placeholder="e.g. Chapter 7">
-        </label>
-
         <div class="field">
+          <span>Additional special charts</span>
+          <div class="jacketModeToggle" id="specialChartToggle">
+            <button type="button" class="jacketModeBtn specialChartBtn" data-special="SP">SP</button>
+            <button type="button" class="jacketModeBtn specialChartBtn" data-special="Legacy">Legacy</button>
+          </div>
+        </div>
+
+        <div class="field" id="regularDiffPanel">
           <span>Difficulty constants <span class="muted">(leave blank to skip a difficulty)</span></span>
           <div class="constGrid" id="constGrid"></div>
+          <button type="button" id="fetchConstBtn" class="secondary" style="margin-top:8px">Fetch constants from this page</button>
+          <div id="constStatus" class="muted small"></div>
         </div>
 
         <div class="field">
@@ -133,6 +127,7 @@
             <div id="jacketPreview" class="jacket jacketPreview" style="width:56px;height:56px" data-initials="?"></div>
             <div class="jacketModeToggle" id="jacketModeToggle">
               <button type="button" class="jacketModeBtn" data-mode="wiki">Use Phigros Wiki</button>
+              <button type="button" class="jacketModeBtn" data-mode="link">Image link</button>
               <button type="button" class="jacketModeBtn" data-mode="upload">Upload image</button>
             </div>
           </div>
@@ -141,6 +136,11 @@
             <div id="wikiUrlPreview" class="wikiUrlPreview muted small">Enter a song name to see the Wiki URL.</div>
             <button type="button" id="fetchJacketBtn" class="secondary">Fetch jacket from this page</button>
             <div id="jacketStatus" class="muted small"></div>
+          </div>
+
+          <div id="jacketLinkPanel" class="jacketPanel hidden">
+            <input id="fJacketLink" type="url" placeholder="https://example.com/image.jpg" inputmode="url">
+            <div id="jacketLinkStatus" class="muted small"></div>
           </div>
 
           <div id="jacketUploadPanel" class="jacketPanel hidden">

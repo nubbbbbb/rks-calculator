@@ -10,13 +10,18 @@ There's no scraped dataset — every song is entered by hand. Click **+ Add song
 add a chart:
 
 1. Enter the song name.
-2. Enter a difficulty constant for whichever of EZ / HD / IN / AT / SP / Legacy apply
-   to that song — leave the rest blank.
+2. Pick a chart type:
+   - **EZ / HD / IN / AT** — enter a difficulty constant for whichever of these apply
+     to that song, leaving the rest blank.
+   - **SP or Legacy** — pick SP or Legacy for the chart. These don't carry a
+     difficulty rating (internally stored as `0`) since Phigros itself doesn't rate
+     them.
 3. Pick a jacket source:
    - **Use Phigros Wiki** — the page URL is derived automatically from the song name
      (spaces become underscores, e.g. `ENERGY SYNERGY MATRIX` →
      `phigros.fandom.com/wiki/ENERGY_SYNERGY_MATRIX`). Click **Fetch jacket from this
      page** to pull that page's image.
+   - **Image link** — paste a direct URL to an image instead.
    - **Upload image** — pick an image file from your device instead; it's embedded
      directly into the saved song (no external link needed).
 
@@ -35,7 +40,8 @@ the same browser/device but aren't shared between devices. Reopen a song's edito
 
 Only regular **EZ / HD / IN / AT** charts are RKS-eligible. **SP** and **Legacy**
 charts can still be added and toggled on in the left-panel filter chips (they're off
-by default), but they never contribute to your RKS since Phigros itself excludes them.
+by default), but they have no difficulty rating and never contribute to your RKS
+since Phigros itself excludes them.
 
 ## Score storage
 

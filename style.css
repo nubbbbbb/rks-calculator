@@ -7,25 +7,31 @@
   --text: #eef1fa;
   --muted: #929bb2;
   --accent: #7180ff;
-  --accent2: #9a7cff;
+  --accent2: #9bdfff;
   --good: #65d69a;
   --warn: #e7b85d;
   --danger: #e36c78;
   --radius: 14px;
   --radius-sm: 10px;
 
-  --diff-ez: #3fd0c9;
-  --diff-hd: #f2c14e;
-  --diff-in: #ef6461;
-  --diff-at: #9b6bff;
-  --diff-sp: #ff6fae;
-  --diff-legacy: #7c88a6;
+  --diff-ez: #4cc38a;
+  --diff-hd: #4a90e2;
+  --diff-in: #e0525f;
+  --diff-at: #6b7280;
+  --diff-sp: #22d3ee;
+  --diff-legacy: #c7ccd6;
 }
 
 * { box-sizing: border-box; }
+.hidden { display: none !important; }
+
+html, body {
+  height: 100%;
+  margin: 0;
+}
 
 body {
-  margin: 0;
+  overflow: hidden;
   background:
     radial-gradient(circle at 15% -10%, rgba(91, 91, 190, .18), transparent 32rem),
     radial-gradient(circle at 90% 0%, rgba(90, 50, 140, .13), transparent 30rem),
@@ -80,10 +86,12 @@ button:hover, .fileBtn:hover { border-color: #3e4968; }
 .appLayout {
   max-width: 1500px;
   margin: 0 auto;
-  padding: 0 22px 30px;
+  padding: 0 22px 12px;
   display: flex;
   align-items: stretch;
   gap: 0;
+  min-height: 0;
+  height: calc(100vh - 170px);
 }
 
 .leftPanel {
@@ -95,7 +103,8 @@ button:hover, .fileBtn:hover { border-color: #3e4968; }
   background: rgba(17, 21, 34, .88);
   border: 1px solid var(--border);
   border-radius: var(--radius);
-  max-height: 82vh;
+  height: 100%;
+  max-height: none;
   overflow: hidden;
 }
 
@@ -142,17 +151,6 @@ input:focus, select:focus { border-color: var(--accent); }
 .chip.diff-SP.active { background: var(--diff-sp); color: #2a0f1e; }
 .chip.diff-Legacy.active { background: var(--diff-legacy); color: #12141c; }
 
-.sizeControl { display: flex; border: 1px solid var(--border); border-radius: 9px; overflow: hidden; }
-.sizeControl button {
-  border: none;
-  border-radius: 0;
-  background: #0c101a;
-  padding: 9px 11px;
-  color: var(--muted);
-}
-.sizeControl button + button { border-left: 1px solid var(--border); }
-.sizeControl button.active { background: var(--accent); color: #fff; }
-
 .songList {
   flex: 1;
   min-height: 0;
@@ -166,13 +164,12 @@ input:focus, select:focus { border-color: var(--accent); }
 
 .song {
   display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 7px 10px 7px 7px;
+  flex-direction: column;
+  gap: 6px;
+  padding: 7px 7px 8px;
   background: #0d111c;
   border: 1px solid #20263a;
   border-radius: var(--radius-sm);
-  text-align: left;
   width: 100%;
   cursor: pointer;
 }
@@ -180,12 +177,61 @@ input:focus, select:focus { border-color: var(--accent); }
 .song.selected { border-color: var(--accent); background: #141a2c; }
 .song.nonRks { opacity: .6; }
 
-.songName { min-width: 0; flex: 1; }
-.songTitle {
-  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-  font-weight: 600; font-size: 13px;
+.songTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  min-width: 0;
 }
-.songMeta { display: flex; align-items: center; gap: 6px; margin-top: 3px; }
+.songTitle {
+  min-width: 0;
+  flex: 1;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  font-weight: 600; font-size: 12px;
+}
+.songTopTags { display: flex; align-items: center; gap: 4px; flex: 0 0 auto; flex-wrap: wrap; justify-content: flex-end; }
+
+.diffTagBtn {
+  font-size: 10px;
+  font-weight: 800;
+  padding: 3px 7px;
+  border-radius: 6px;
+  border: 1px solid transparent;
+  background: #202742;
+  color: var(--text);
+  cursor: pointer;
+}
+.diffTagBtn.diff-EZ { background: color-mix(in srgb, var(--diff-ez) 24%, #202742); color: var(--diff-ez); }
+.diffTagBtn.diff-HD { background: color-mix(in srgb, var(--diff-hd) 24%, #202742); color: var(--diff-hd); }
+.diffTagBtn.diff-IN { background: color-mix(in srgb, var(--diff-in) 24%, #202742); color: var(--diff-in); }
+.diffTagBtn.diff-AT { background: color-mix(in srgb, var(--diff-at) 28%, #202742); color: #d3d7de; }
+.diffTagBtn.diff-SP { background: color-mix(in srgb, var(--diff-sp) 24%, #202742); color: var(--diff-sp); }
+.diffTagBtn.diff-Legacy { background: color-mix(in srgb, var(--diff-legacy) 24%, #202742); color: var(--diff-legacy); }
+.diffTagBtn.active { border-color: var(--accent); }
+
+.songJacketWrap {
+  position: relative;
+  width: 100%;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+}
+.songJacketWrap .jacket { border-radius: var(--radius-sm); }
+
+.jacketBadge {
+  position: absolute;
+  bottom: 6px;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 2px 7px;
+  border-radius: 999px;
+  background: rgba(9, 11, 18, .78);
+  backdrop-filter: blur(2px);
+  color: var(--good);
+  font-variant-numeric: tabular-nums;
+}
+.jacketBadgeAcc { left: 6px; color: var(--text); }
+.jacketBadgeRks { right: 6px; }
 
 .diffBadge {
   font-size: 10px;
@@ -199,19 +245,9 @@ input:focus, select:focus { border-color: var(--accent); }
 .diffBadge.diff-EZ { background: color-mix(in srgb, var(--diff-ez) 24%, #202742); color: var(--diff-ez); }
 .diffBadge.diff-HD { background: color-mix(in srgb, var(--diff-hd) 24%, #202742); color: var(--diff-hd); }
 .diffBadge.diff-IN { background: color-mix(in srgb, var(--diff-in) 24%, #202742); color: var(--diff-in); }
-.diffBadge.diff-AT { background: color-mix(in srgb, var(--diff-at) 28%, #202742); color: #c6b1ff; }
+.diffBadge.diff-AT { background: color-mix(in srgb, var(--diff-at) 28%, #202742); color: #d3d7de; }
 .diffBadge.diff-SP { background: color-mix(in srgb, var(--diff-sp) 24%, #202742); color: var(--diff-sp); }
 .diffBadge.diff-Legacy { background: color-mix(in srgb, var(--diff-legacy) 24%, #202742); color: var(--diff-legacy); }
-
-.accBadge { font-size: 11px; color: var(--good); font-variant-numeric: tabular-nums; }
-.singleRks {
-  flex: 0 0 auto;
-  color: var(--good);
-  font-variant-numeric: tabular-nums;
-  font-weight: 700;
-  min-width: 28px;
-  text-align: right;
-}
 
 .jacket {
   flex: 0 0 auto;
@@ -261,6 +297,8 @@ input:focus, select:focus { border-color: var(--accent); }
   display: flex;
   flex-direction: column;
   gap: 12px;
+  height: 100%;
+  min-height: 0;
 }
 
 /* Top: RKS value + contribution breakdown */
@@ -270,7 +308,16 @@ input:focus, select:focus { border-color: var(--accent); }
   grid-template-columns: minmax(220px, 1fr) minmax(260px, 1.3fr) auto;
   gap: 18px;
   align-items: center;
+  flex: 0 0 122px;
 }
+
+.middleDiv {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
 .rksCard { padding: 4px 0; }
 .eyebrow { color: var(--muted); font-size: 11px; letter-spacing: 1.5px; }
 .rksValue { font-size: 42px; font-weight: 750; line-height: 1.1; margin: 4px 0; }
@@ -312,7 +359,9 @@ input:focus, select:focus { border-color: var(--accent); }
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 8px;
-  max-height: 440px;
+  min-height: 120px;
+  max-height: 100%;
+  flex: 1 1 auto;
   overflow-y: auto;
   padding-right: 3px;
 }
@@ -344,11 +393,18 @@ input:focus, select:focus { border-color: var(--accent); }
 
 /* Bottom: selected-song accuracy editor */
 
-.bottomDiv { min-height: 150px; }
+.bottomDiv {
+  min-height: 0;
+  height: auto;
+  flex: 0 0 auto;
+  display: flex;
+  flex-direction: column;
+  overflow: visible;
+  padding-bottom: 8px;
+}
 .editorHeader { display: flex; align-items: center; gap: 14px; }
 .editorTitle { min-width: 0; }
 .editorName { font-size: 17px; font-weight: 700; }
-.editorChapter { font-size: 12px; margin-top: 2px; }
 .editorLink { font-size: 12px; color: #9ca8ff; display: inline-block; margin-top: 4px; }
 
 .editorDiffs { display: flex; gap: 7px; flex-wrap: wrap; margin: 14px 0; }
@@ -376,14 +432,14 @@ input:focus, select:focus { border-color: var(--accent); }
 footer {
   max-width: 1500px;
   margin: 0 auto;
-  padding: 0 22px 35px;
+  padding: 0 22px 12px;
   color: #6f778b;
   font-size: 11px;
 }
 a { color: #9ca8ff; }
 
 @media (max-width: 980px) {
-  .appLayout { flex-direction: column; }
+  .appLayout { flex-direction: column; min-height: 0; }
   .leftPanel { width: 100% !important; max-height: 50vh; }
   .resizer { display: none; }
   .topDiv { grid-template-columns: 1fr; }
@@ -516,6 +572,9 @@ a { color: #9ca8ff; }
 .jacketPanel.hidden { display: none; }
 .wikiUrlPreview { word-break: break-all; }
 .small { font-size: 11px; }
+
+.specialDiffRow { display: flex; gap: 8px; }
+.specialDiffRow select { flex: 1; }
 
 .modalActions {
   display: flex;
