@@ -20,6 +20,9 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 22
+      
+      - name: Install scraper dependencies
+        run: npm install --no-save --no-package-lock json5
 
       - name: Scrape Phigros Wiki
         run: node scripts/scrape-wiki.mjs
