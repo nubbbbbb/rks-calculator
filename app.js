@@ -242,6 +242,24 @@ function select(songName, diff) {
   renderAll();
 }
 
+function getRequiredAccForChart(chart, currentAcc = null) {
+  if (!isRksEligible(chart) || SPECIAL_DIFFS.includes(chart.diff)) return null;
+
+  const r = calculate();
+  const b27Cutoff = r.b27.length ? Math.min(...r.b27.map(c => singleRks(c))) : 0;
+  const p3Cutoff = r.p3.length ? Math.min(...r.p3.map(c => c.constant)) : 0;
+  const cutoff = Math.max(b27Cutoff, p3Cutoff);
+
+  if (chart.constant <= cutoff) {
+    return { tooEasy: true };
+  }
+
+  const computedRequired = 55 + 45 * Math.sqrt(cutoff / chart.constant);
+  const chartCurrentAcc = Number.isFinite(Number(currentAcc)) ? Number(currentAcc) : null;
+  const required = chartCurrentAcc == null ? computedRequired : Math.max(chartCurrentAcc, computedRequired);
+  return { tooEasy: false, value: required };
+}
+
 function renderBottom() {
   const el = $("bottomDiv");
   const song = songs.find(s => s.name === selected.song);
@@ -256,6 +274,7 @@ function renderBottom() {
   const key = chartKey(flat);
   const acc = scores[key];
   const eligible = isRksEligible(flat);
+  const requiredAcc = eligible ? getRequiredAccForChart(flat, acc) : null;
 
   el.innerHTML = `
     <div class="editorHeader">
@@ -283,8 +302,13 @@ function renderBottom() {
       <button type="button" id="accClear" class="secondary" ${acc == null ? "disabled" : ""}>Clear</button>
     </div>
     <div class="editorResult" id="editorResult">
+      ${requiredAcc && !requiredAcc.tooEasy
+        ? `<div>Required Acc: <strong>${requiredAcc.value.toFixed(2)}%</strong></div>`
+        : requiredAcc?.tooEasy
+          ? `<div>Required Acc: This chart is too easy to gain RKS</div>`
+          : ""}
       ${eligible
-        ? `Single RKS: <strong>${singleRks(flat).toFixed(4)}</strong>${isPhi(flat) ? " · Phi" : ""}`
+        ? `<div>Single RKS: <strong>${singleRks(flat).toFixed(4)}</strong>${isPhi(flat) ? " · Phi" : ""}</div>`
         : `<span class="muted">${escapeHtml(chart.diff)} charts aren't used for RKS.</span>`}
     </div>
   `;
@@ -316,9 +340,17 @@ function renderBottom() {
       if (clearBtnEl) clearBtnEl.disabled = scores[key] == null;
       const resultEl = $("editorResult");
       if (resultEl) {
-        resultEl.innerHTML = eligible
-          ? `Single RKS: <strong>${singleRks(flat).toFixed(4)}</strong>${isPhi(flat) ? " · Phi" : ""}`
-          : `<span class="muted">${escapeHtml(chart.diff)} charts aren't used for RKS.</span>`;
+        const requiredAcc = eligible ? getRequiredAccForChart(flat, scores[key]) : null;
+        resultEl.innerHTML = `
+          ${requiredAcc && !requiredAcc.tooEasy
+            ? `<div>Required Acc: <strong>${requiredAcc.value.toFixed(2)}%</strong></div>`
+            : requiredAcc?.tooEasy
+              ? `<div>Required Acc: This chart is too easy to gain RKS</div>`
+              : ""}
+          ${eligible
+            ? `<div>Single RKS: <strong>${singleRks(flat).toFixed(4)}</strong>${isPhi(flat) ? " · Phi" : ""}</div>`
+            : `<span class="muted">${escapeHtml(chart.diff)} charts aren't used for RKS.</span>`}
+        `;
       }
 
       renderSongs();
