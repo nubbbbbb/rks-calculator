@@ -14,6 +14,7 @@
       <p class="subtitle">Enter your ACCs and see exactly what contributes to your RKS.</p>
     </div>
     <div class="actions">
+      <button id="addSongBtn" class="secondary">+ Add song</button>
       <button id="exportBtn" class="secondary">Export scores</button>
       <label class="fileBtn secondary">
         Import scores
@@ -80,7 +81,7 @@
           <div class="statCard"><span>Phi scores</span><strong id="phiCount">0</strong></div>
         </div>
 
-        <div id="dataStatus" class="status">Loading song data…</div>
+        <div id="dataStatus" class="status">No songs yet — click "+ Add song" to get started.</div>
       </section>
 
       <section class="middleDiv panel">
@@ -100,8 +101,55 @@
   </div>
 
   <footer>
-    <p>Song, chart, and jacket data is scraped from the <a href="https://phigros.fandom.com/wiki/Songs" target="_blank" rel="noopener">Phigros Wiki</a> by <code>scripts/scrape-wiki.mjs</code>, run daily via GitHub Actions. RKS formula follows the current B27 + P3 convention.</p>
+    <p>All songs and charts are entered manually — use <strong>+ Add song</strong> to build your own library, with optional jacket art looked up from the <a href="https://phigros.fandom.com/wiki/Songs" target="_blank" rel="noopener">Phigros Wiki</a>. RKS formula follows the current B27 + P3 convention.</p>
   </footer>
+
+  <div id="addSongModal" class="modalOverlay hidden">
+    <div class="modal">
+      <div class="modalHeader">
+        <h2 id="addSongTitle">Add a song</h2>
+        <button type="button" id="addSongClose" class="modalClose" aria-label="Close">&times;</button>
+      </div>
+
+      <form id="addSongForm">
+        <label class="field">
+          <span>Song name</span>
+          <input id="fName" type="text" placeholder="e.g. Rrhar'il" required>
+        </label>
+
+        <label class="field">
+          <span>Chapter / album <span class="muted">(optional)</span></span>
+          <input id="fChapter" type="text" placeholder="e.g. Chapter 7">
+        </label>
+
+        <div class="field">
+          <span>Difficulty constants <span class="muted">(leave blank to skip a difficulty)</span></span>
+          <div class="constGrid" id="constGrid"></div>
+        </div>
+
+        <div class="field">
+          <span>Jacket art</span>
+          <div class="jacketFetchRow">
+            <div id="jacketPreview" class="jacket jacketPreview" style="width:56px;height:56px" data-initials="?"></div>
+            <div class="jacketFetchCol">
+              <button type="button" id="fetchJacketBtn" class="secondary">Fetch from Phigros Wiki</button>
+              <div id="jacketStatus" class="muted small"></div>
+            </div>
+          </div>
+          <input id="fJacket" type="text" placeholder="Jacket image URL (auto-filled by fetch, or paste your own)">
+          <input id="fWikiUrl" type="text" placeholder="Wiki page URL (auto-filled by fetch, or paste your own)">
+        </div>
+
+        <div class="modalActions">
+          <button type="button" id="addSongDelete" class="danger hidden">Delete this song</button>
+          <div class="modalActionsRight">
+            <button type="button" id="addSongCancel" class="secondary">Cancel</button>
+            <button type="submit" id="addSongSave">Save song</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
 
   <script src="app.js"></script>
 </body>

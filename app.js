@@ -1,6 +1,7 @@
 const SCORE_KEY = "phigros-rks-scores-v2";
 const UI_KEY = "phigros-rks-ui-v1";
-const DATA_URL = "./songs.json";
+const SONGS_KEY = "phigros-rks-custom-songs-v1";
+const WIKI_BASE = "https://phigros.fandom.com";
 
 const ELIGIBLE_DIFFS = ["EZ", "HD", "IN", "AT"];
 const ALL_DIFFS = ["EZ", "HD", "IN", "AT", "SP", "Legacy"];
@@ -14,11 +15,12 @@ const DEFAULT_UI = {
   searchText: "",
 };
 
-let songs = [];   // grouped: [{name, chapter, wikiUrl, jacket, charts:[{diff,constant}]}]
+let songs = [];   // all songs, entered manually: [{name, chapter, wikiUrl, jacket, charts:[{diff,constant}]}]
 let charts = [];  // flattened: [{song, diff, constant, chapter, jacket, wikiUrl, rksEligible}]
 let scores = {};
 let ui = { ...DEFAULT_UI };
 let selected = { song: null, diff: null };
+let editingSongName = null; // name of the song currently open in the modal, or null when adding a new one
 
 const $ = id => document.getElementById(id);
 
@@ -52,6 +54,30 @@ function loadUi() {
 
 function saveUi() {
   localStorage.setItem(UI_KEY, JSON.stringify(ui));
+}
+
+function loadSongs() {
+  try {
+    const stored = JSON.parse(localStorage.getItem(SONGS_KEY) || "[]");
+    songs = Array.isArray(stored) ? stored : [];
+  } catch {
+    songs = [];
+  }
+  rebuildCharts();
+}
+
+function saveSongs() {
+  localStorage.setItem(SONGS_KEY, JSON.stringify(songs));
+}
+
+// Rebuilds the flattened chart list (and the on-screen counters/status) any
+// time `songs` changes. Call after every add/edit/delete.
+function rebuildCharts() {
+  charts = flatten(songs);
+  $("chartCount").textContent = charts.length;
+  $("dataStatus").textContent = songs.length
+    ? `${songs.length} song${songs.length === 1 ? "" : "s"} · ${charts.length} chart${charts.length === 1 ? "" : "s"}`
+    : `No songs yet — click "+ Add song" to get started.`;
 }
 
 // ---------------------------------------------------------------------------
@@ -231,7 +257,10 @@ function renderBottom() {
       <div class="editorTitle">
         <div class="editorName">${escapeHtml(song.name)}</div>
         <div class="editorChapter muted">${escapeHtml(song.chapter || "")}</div>
-        <a class="editorLink" href="${escapeAttr(song.wikiUrl)}" target="_blank" rel="noopener">View on Wiki ↗</a>
+        ${song.wikiUrl
+          ? `<a class="editorLink" href="${escapeAttr(song.wikiUrl)}" target="_blank" rel="noopener">View on Wiki ↗</a>`
+          : ""}
+        <button type="button" id="editSongBtn" class="secondary small" style="margin-left:${song.wikiUrl ? "10px" : "0"};margin-top:4px">Edit song</button>
       </div>
     </div>
     <div class="editorDiffs" id="editorDiffs">
@@ -258,6 +287,9 @@ function renderBottom() {
   el.querySelectorAll(".diffPick").forEach(btn => {
     btn.addEventListener("click", () => select(song.name, btn.dataset.diff));
   });
+
+  const editBtn = $("editSongBtn");
+  if (editBtn) editBtn.addEventListener("click", () => openSongModal(song.name));
 
   const input = $("accInput");
   if (input) {
@@ -320,7 +352,9 @@ function renderSongs() {
   const frag = document.createDocumentFragment();
 
   if (!list.length) {
-    $("songs").innerHTML = `<div class="empty">No songs match this search/filter.</div>`;
+    $("songs").innerHTML = charts.length
+      ? `<div class="empty">No songs match this search/filter.</div>`
+      : `<div class="empty">No songs yet. Click <strong>+ Add song</strong> above to enter your first chart.</div>`;
     $("songs").className = "songList empty";
     return;
   }
@@ -360,7 +394,7 @@ function renderSongs() {
 // ---------------------------------------------------------------------------
 
 function renderDiffChips() {
-  $("diffChips").innerHTML = ELIGIBLE_DIFFS.map(d => `
+  $("diffChips").innerHTML = ALL_DIFFS.map(d => `
     <button type="button" class="chip diff-${d}${ui.diffFilters.includes(d) ? " active" : ""}" data-diff="${d}">${d}</button>
   `).join("");
 
@@ -489,7 +523,7 @@ function importScores(file) {
 }
 
 // ---------------------------------------------------------------------------
-// Data loading
+// Song data (all entries are added manually — see the modal below)
 // ---------------------------------------------------------------------------
 
 function flatten(songList) {
@@ -509,39 +543,191 @@ function flatten(songList) {
   return out;
 }
 
-async function loadData() {
-  $("dataStatus").textContent = "Loading Wiki song data…";
-
-  try {
-    const response = await fetch(DATA_URL, { cache: "no-store" });
-    if (!response.ok) throw new Error(`HTTP ${response.status}`);
-
-    const data = await response.json();
-    songs = Array.isArray(data.songs) ? data.songs : [];
-    charts = flatten(songs);
-
-    $("chartCount").textContent = charts.length;
-    $("dataStatus").textContent =
-      `Wiki snapshot: ${data.sourceVersion || "unknown"} · updated ${data.generatedAt || "unknown"} · ${songs.length} songs`;
-
-    renderAll();
-  } catch (err) {
-    $("dataStatus").textContent = "Could not load Wiki data.";
-    $("songs").innerHTML = `
-      <div class="empty">
-        Failed to load <code>songs.json</code>.<br>
-        ${escapeHtml(String(err))}<br><br>
-        If you just cloned the repository, run the Wiki scraper once
-        or wait for the GitHub Action to generate the dataset.
-      </div>`;
-  }
-}
-
 function renderAll() {
   renderSongs();
   const r = renderTop();
   renderMiddle(r);
   renderBottom();
+}
+
+// ---------------------------------------------------------------------------
+// Manual song entry: add/edit modal + Phigros Wiki jacket lookup
+// ---------------------------------------------------------------------------
+
+// Queries the Phigros Fandom Wiki's MediaWiki API (CORS-enabled via
+// origin=*) for the page matching `name`, then reads its page image and
+// canonical URL. Throws with a user-facing message on any failure.
+async function fetchJacketFromWiki(name) {
+  const trimmed = name.trim();
+  if (!trimmed) throw new Error("Enter a song name first.");
+
+  const searchUrl =
+    `${WIKI_BASE}/api.php?action=query&list=search&srsearch=${encodeURIComponent(trimmed)}` +
+    `&srlimit=1&format=json&origin=*`;
+  const searchRes = await fetch(searchUrl);
+  if (!searchRes.ok) throw new Error(`Wiki search failed (HTTP ${searchRes.status}).`);
+  const searchData = await searchRes.json();
+  const hit = searchData?.query?.search?.[0];
+  if (!hit) throw new Error("No matching page found on the Phigros Wiki.");
+
+  const infoUrl =
+    `${WIKI_BASE}/api.php?action=query&titles=${encodeURIComponent(hit.title)}` +
+    `&prop=pageimages|info&piprop=original&inprop=url&format=json&origin=*`;
+  const infoRes = await fetch(infoUrl);
+  if (!infoRes.ok) throw new Error(`Wiki lookup failed (HTTP ${infoRes.status}).`);
+  const infoData = await infoRes.json();
+  const page = Object.values(infoData?.query?.pages || {})[0];
+  if (!page) throw new Error("Could not read that Wiki page.");
+
+  return {
+    title: hit.title,
+    jacket: page.original?.source || null,
+    wikiUrl: page.fullurl || `${WIKI_BASE}/wiki/${encodeURIComponent(hit.title.replace(/ /g, "_"))}`,
+  };
+}
+
+function renderConstGrid() {
+  $("constGrid").innerHTML = ALL_DIFFS.map(d => `
+    <div class="constField diff-${d}">
+      <label>${d}</label>
+      <input type="number" min="0.1" max="20" step="0.1" data-diff="${d}" placeholder="—">
+    </div>
+  `).join("");
+}
+
+function updateJacketPreview(url, name) {
+  const el = $("jacketPreview");
+  el.dataset.initials = initials(name || "?");
+  el.innerHTML = url
+    ? `<img src="${escapeAttr(url)}" alt="" onerror="this.style.display='none'">`
+    : "";
+}
+
+function openSongModal(name = null) {
+  editingSongName = name;
+  const song = name ? songs.find(s => s.name === name) : null;
+
+  $("addSongTitle").textContent = song ? "Edit song" : "Add a song";
+  $("fName").value = song?.name || "";
+  $("fName").disabled = !!song; // renaming would orphan saved ACCs, so lock it on edit
+  $("fChapter").value = song?.chapter || "";
+  $("fJacket").value = song?.jacket || "";
+  $("fWikiUrl").value = song?.wikiUrl || "";
+  $("jacketStatus").textContent = "";
+  updateJacketPreview(song?.jacket, song?.name || "");
+
+  $("constGrid").querySelectorAll("input").forEach(input => {
+    const existing = song?.charts.find(c => c.diff === input.dataset.diff);
+    input.value = existing ? existing.constant : "";
+  });
+
+  $("addSongDelete").classList.toggle("hidden", !song);
+  $("addSongModal").classList.remove("hidden");
+  $("fName").focus();
+}
+
+function closeSongModal() {
+  $("addSongModal").classList.add("hidden");
+  editingSongName = null;
+}
+
+function setupAddSongModal() {
+  renderConstGrid();
+
+  $("addSongBtn").addEventListener("click", () => openSongModal(null));
+  $("addSongClose").addEventListener("click", closeSongModal);
+  $("addSongCancel").addEventListener("click", closeSongModal);
+  $("addSongModal").addEventListener("click", e => {
+    if (e.target.id === "addSongModal") closeSongModal();
+  });
+
+  $("fName").addEventListener("input", () => updateJacketPreview($("fJacket").value, $("fName").value));
+  $("fJacket").addEventListener("input", () => updateJacketPreview($("fJacket").value, $("fName").value));
+
+  $("fetchJacketBtn").addEventListener("click", async () => {
+    const btn = $("fetchJacketBtn");
+    const status = $("jacketStatus");
+    btn.disabled = true;
+    status.textContent = "Searching Phigros Wiki…";
+    try {
+      const result = await fetchJacketFromWiki($("fName").value);
+      if (result.jacket) $("fJacket").value = result.jacket;
+      if (result.wikiUrl) $("fWikiUrl").value = result.wikiUrl;
+      updateJacketPreview($("fJacket").value, $("fName").value);
+      status.textContent = result.jacket
+        ? `Found "${result.title}".`
+        : `Found "${result.title}", but it has no page image — paste a jacket URL manually.`;
+    } catch (err) {
+      status.textContent = err.message || "Could not fetch from the Wiki.";
+    } finally {
+      btn.disabled = false;
+    }
+  });
+
+  $("addSongForm").addEventListener("submit", e => {
+    e.preventDefault();
+
+    const name = $("fName").value.trim();
+    if (!name) return;
+
+    const chartsList = [];
+    $("constGrid").querySelectorAll("input").forEach(input => {
+      const raw = input.value.trim();
+      if (raw === "") return;
+      const value = Number(raw);
+      if (Number.isFinite(value) && value > 0) {
+        chartsList.push({ diff: input.dataset.diff, constant: value });
+      }
+    });
+
+    if (!chartsList.length) {
+      alert("Enter at least one difficulty constant.");
+      return;
+    }
+
+    if (!editingSongName && songs.some(s => s.name.toLowerCase() === name.toLowerCase())) {
+      alert("A song with this name already exists.");
+      return;
+    }
+
+    const songData = {
+      name,
+      chapter: $("fChapter").value.trim(),
+      jacket: $("fJacket").value.trim() || null,
+      wikiUrl: $("fWikiUrl").value.trim() || null,
+      charts: chartsList,
+    };
+
+    if (editingSongName) {
+      const idx = songs.findIndex(s => s.name === editingSongName);
+      if (idx !== -1) songs[idx] = songData;
+    } else {
+      songs.push(songData);
+    }
+
+    saveSongs();
+    rebuildCharts();
+    closeSongModal();
+    select(name, chartsList[0].diff);
+  });
+
+  $("addSongDelete").addEventListener("click", () => {
+    if (!editingSongName) return;
+    if (!confirm(`Delete "${editingSongName}"? This also removes its saved ACCs.`)) return;
+
+    const removedName = editingSongName;
+    songs = songs.filter(s => s.name !== removedName);
+    for (const key of Object.keys(scores)) {
+      if (key.startsWith(`${removedName}\u0000`)) delete scores[key];
+    }
+
+    saveScores();
+    saveSongs();
+    rebuildCharts();
+    if (selected.song === removedName) { selected.song = null; selected.diff = null; }
+    closeSongModal();
+    renderAll();
+  });
 }
 
 // ---------------------------------------------------------------------------
@@ -564,9 +750,11 @@ function escapeAttr(s) {
 
 loadScores();
 loadUi();
+loadSongs();
 applyLeftWidth();
 renderDiffChips();
 renderSizeControl();
 setupControls();
 setupResizer();
-loadData();
+setupAddSongModal();
+renderAll();
