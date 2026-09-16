@@ -167,7 +167,7 @@ function renderTop() {
   const b27Pct = total > 0 ? (r.b27Sum / total) * 100 : 0;
   const p3Pct = total > 0 ? (r.p3Sum / total) * 100 : 0;
 
-  $("rksValue").textContent = r.rks.toFixed(2);
+  $("rksValue").textContent = r.rks.toFixed(3);
   const scoreCountEl = $("scoreCount");
   const phiCountEl = $("phiCount");
   if (scoreCountEl) scoreCountEl.textContent = r.played.length;
@@ -247,14 +247,14 @@ function getRequiredAccForChart(chart, currentAcc = null) {
 
   const r = calculate();
   const b27Cutoff = r.b27.length ? Math.min(...r.b27.map(c => singleRks(c))) : 0;
-  const p3Cutoff = r.p3.length ? Math.min(...r.p3.map(c => c.constant)) : 0;
-  const cutoff = Math.max(b27Cutoff, p3Cutoff);
-
-  if (chart.constant <= cutoff) {
-    return { tooEasy: true };
+  if (chart.constant <= b27Cutoff) {
+    const p3Cutoff = r.p3.length ? Math.min(...r.p3.map(c => c.constant)) : null;
+    return p3Cutoff != null && chart.constant > p3Cutoff
+      ? { tooEasy: false, value: 100 }
+      : { tooEasy: true };
   }
 
-  const computedRequired = 55 + 45 * Math.sqrt(cutoff / chart.constant);
+  const computedRequired = 55 + 45 * Math.sqrt(b27Cutoff / chart.constant);
   const chartCurrentAcc = Number.isFinite(Number(currentAcc)) ? Number(currentAcc) : null;
   const required = chartCurrentAcc == null ? computedRequired : Math.max(chartCurrentAcc, computedRequired);
   return { tooEasy: false, value: required };
