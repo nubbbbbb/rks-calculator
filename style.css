@@ -118,6 +118,14 @@ button:hover, .fileBtn:hover { border-color: #3e4968; }
 
 .leftControlsRow { display: flex; gap: 8px; }
 .leftControlsRow select { flex: 1; min-width: 0; }
+.sortDirectionButton { flex: 0 0 38px; padding: 7px 8px; font-size: 18px; line-height: 1; }
+.formatToggle { display: inline-flex; align-items: center; gap: 6px; color: var(--muted); font-size: 11px; white-space: nowrap; cursor: pointer; }
+.formatToggle input { position: absolute; opacity: 0; pointer-events: none; }
+.formatToggleTrack { width: 34px; height: 19px; padding: 2px; border: 1px solid var(--border); border-radius: 999px; background: #0c101a; }
+.formatToggleTrack > span { display: block; width: 13px; height: 13px; border-radius: 50%; background: var(--muted); transition: transform .15s ease, background .15s ease; }
+.formatToggle input:checked + .formatToggleTrack { border-color: var(--accent); background: #202742; }
+.formatToggle input:checked + .formatToggleTrack > span { transform: translateX(15px); background: var(--accent); }
+.formatToggle input:focus-visible + .formatToggleTrack { outline: 2px solid var(--accent); outline-offset: 2px; }
 
 input[type="search"], input[type="number"], select {
   width: 100%;
@@ -176,6 +184,31 @@ input:focus, select:focus { border-color: var(--accent); }
 .song:hover { border-color: #3e4968; }
 .song.selected { border-color: var(--accent); background: #141a2c; }
 .song.nonRks { opacity: .6; }
+
+.normalSong { gap: 8px; }
+.normalSong > .songTitle { flex: none; }
+.normalDiffList { display: flex; flex-direction: column; gap: 4px; }
+.normalDiffRow {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 5px 6px;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  background: #141a2c;
+  color: var(--text);
+  text-align: left;
+  cursor: pointer;
+}
+.normalDiffRow:hover { border-color: #3e4968; }
+.normalDiffRow.active { border-color: var(--accent); }
+.normalDiffAccuracy { justify-self: center; font-size: 11px; font-variant-numeric: tabular-nums; }
+.normalCurrentAcc, .normalRequiredAcc { color: #fff; }
+.normalCurrentAcc.perfect, .normalRequiredAcc.perfect { color: var(--warn); }
+.normalAccuracySlash { color: var(--muted); padding: 0 3px; }
+.normalDiffRks { color: var(--good); font-size: 12px; font-weight: 700; font-variant-numeric: tabular-nums; }
 
 .songTop {
   display: flex;

@@ -31,12 +31,19 @@
         <input id="search" type="search" placeholder="Search songs…" autocomplete="off">
         <div class="diffChips" id="diffChips"></div>
         <div class="leftControlsRow">
+          <button id="sortDirection" type="button" class="secondary sortDirectionButton" aria-label="Increasing sort" title="Increasing sort">↓</button>
           <select id="sort">
             <option value="song">Alphabetical</option>
-            <option value="difficulty">Difficulty ↓</option>
-            <option value="acc">Accuracy ↓</option>
-            <option value="rks">RKS value ↓</option>
+            <option value="difficulty">Difficulty</option>
+            <option value="acc">Accuracy</option>
+            <option value="rks">RKS value</option>
           </select>
+          <label class="formatToggle" title="Toggle sidebar format">
+            <span>Normal</span>
+            <input id="sidebarFormat" type="checkbox" aria-label="Compact sidebar format">
+            <span class="formatToggleTrack" aria-hidden="true"><span></span></span>
+            <span>Compact</span>
+          </label>
         </div>
       </div>
       <div id="songs" class="songList"></div>

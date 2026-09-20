@@ -12,6 +12,8 @@ const DEFAULT_UI = {
   leftWidth: 380,
   diffFilters: ["EZ", "HD", "IN", "AT"],
   sortMode: "song",
+  sortDirection: "increasing",
+  sidebarFormat: "compact",
   searchText: "",
 };
 
@@ -377,6 +379,10 @@ function renderBottom() {
 
 function filteredCharts() {
   const search = ui.searchText.toLowerCase();
+  const direction = ui.sortDirection === "decreasing" ? -1 : 1;
+
+  const compareText = (a, b) => (a < b ? -1 : a > b ? 1 : 0) * direction;
+  const compareNumber = (a, b) => (a - b) * direction;
 
   let arr = charts.filter(c => {
     const matchesText = !search || c.song.toLowerCase().includes(search);
@@ -385,13 +391,13 @@ function filteredCharts() {
   });
 
   if (ui.sortMode === "difficulty") {
-    arr.sort((a, b) => b.constant - a.constant || a.song.localeCompare(b.song));
+    arr.sort((a, b) => compareNumber(a.constant, b.constant) || compareText(a.song, b.song));
   } else if (ui.sortMode === "acc") {
-    arr.sort((a, b) => (scores[chartKey(b)] ?? -1) - (scores[chartKey(a)] ?? -1));
+    arr.sort((a, b) => compareNumber(scores[chartKey(a)] ?? -1, scores[chartKey(b)] ?? -1));
   } else if (ui.sortMode === "rks") {
-    arr.sort((a, b) => singleRks(b) - singleRks(a));
+    arr.sort((a, b) => compareNumber(singleRks(a), singleRks(b)));
   } else {
-    arr.sort((a, b) => a.song.localeCompare(b.song) || a.diff.localeCompare(b.diff));
+    arr.sort((a, b) => compareText(a.song, b.song) || compareText(a.diff, b.diff));
   }
 
   return arr;
@@ -403,37 +409,26 @@ function diffSortIndex(d) {
 }
 
 // Groups the filtered charts by song, so the left panel shows one entry per
-// song with its matching difficulties attached as tags. Sort order is based
-// on an aggregate (best/max) value across each song's matched charts, so
-// "difficulty"/"acc"/"rks" sort modes still make sense at the song level.
+// song with its matching difficulties attached as tags. Song order follows
+// the first matching chart's position in the already sorted chart list.
 function filteredSongGroups() {
   const matched = filteredCharts();
 
   const bySong = new Map();
-  for (const c of matched) {
+  const firstPosition = new Map();
+  matched.forEach((c, index) => {
     if (!bySong.has(c.song)) bySong.set(c.song, []);
     bySong.get(c.song).push(c);
-  }
+    if (!firstPosition.has(c.song)) firstPosition.set(c.song, index);
+  });
 
   const groups = [...bySong.entries()].map(([song, list]) => ({
     song,
     charts: [...list].sort((a, b) => diffSortIndex(a.diff) - diffSortIndex(b.diff)),
+    firstPosition: firstPosition.get(song),
   }));
 
-  if (ui.sortMode === "difficulty") {
-    groups.sort((a, b) =>
-      Math.max(...b.charts.map(c => c.constant)) - Math.max(...a.charts.map(c => c.constant)) ||
-      a.song.localeCompare(b.song)
-    );
-  } else if (ui.sortMode === "acc") {
-    const bestAcc = g => Math.max(...g.charts.map(c => scores[chartKey(c)] ?? -1));
-    groups.sort((a, b) => bestAcc(b) - bestAcc(a) || a.song.localeCompare(b.song));
-  } else if (ui.sortMode === "rks") {
-    const bestRks = g => Math.max(...g.charts.map(c => singleRks(c)));
-    groups.sort((a, b) => bestRks(b) - bestRks(a) || a.song.localeCompare(b.song));
-  } else {
-    groups.sort((a, b) => a.song.localeCompare(b.song));
-  }
+  groups.sort((a, b) => a.firstPosition - b.firstPosition);
 
   return groups;
 }
@@ -465,6 +460,46 @@ function renderSongs() {
     const row = document.createElement("div");
     row.className = "song groupRow" + (!anyEligible ? " nonRks" : "") + (isSongSelected ? " selected" : "");
 
+    if (ui.sidebarFormat === "normal") {
+      row.classList.add("normalSong");
+      row.innerHTML = `
+        <div class="songTitle" title="${escapeAttr(g.song)}">${escapeHtml(g.song)}</div>
+        <div class="songJacketWrap" style="height:${jacketHeight}px">
+          ${jacketHtml(tagCharts[0], null, true)}
+        </div>
+        <div class="normalDiffList">
+          ${tagCharts.map(c => `
+            ${(() => {
+              const acc = scores[chartKey(c)];
+              const requiredAcc = getRequiredAccForChart(c, acc);
+              const requiredLabel = requiredAcc?.tooEasy
+                ? "-"
+                : requiredAcc
+                  ? `${requiredAcc.value.toFixed(2)}%`
+                  : "—";
+              const currentAccClass = Number(acc) === 100 ? " perfect" : "";
+              const requiredAccClass = requiredAcc && !requiredAcc.tooEasy && requiredAcc.value === 100 ? " perfect" : "";
+              return `
+            <button type="button" class="normalDiffRow${isSongSelected && selected.diff === c.diff ? " active" : ""}" data-diff="${escapeAttr(c.diff)}">
+              <span class="diffBadge diff-${escapeAttr(c.diff)}">${escapeHtml(c.diff)} ${SPECIAL_DIFFS.includes(c.diff) ? "" : c.constant.toFixed(1)}</span>
+              <span class="normalDiffAccuracy"><span class="normalCurrentAcc${currentAccClass}">${acc == null ? "—" : `${Number(acc).toFixed(2)}%`}</span><span class="normalAccuracySlash">/</span><span class="normalRequiredAcc${requiredAccClass}">${requiredLabel}</span></span>
+              <span class="normalDiffRks">${!isRksEligible(c) || scores[chartKey(c)] == null ? "—" : singleRks(c).toFixed(3)}</span>
+            </button>
+          `;
+            })()}
+          `).join("")}
+        </div>
+      `;
+      row.querySelectorAll(".normalDiffRow").forEach(btn => {
+        btn.addEventListener("click", e => {
+          e.stopPropagation();
+          select(g.song, btn.dataset.diff);
+        });
+      });
+      frag.appendChild(row);
+      continue;
+    }
+
     let topTagsHtml = "";
     let overlayHtml = "";
     if (singleTagCase) {
@@ -474,7 +509,7 @@ function renderSongs() {
       topTagsHtml = `<span class="diffBadge diff-${escapeAttr(c.diff)}">${escapeHtml(c.diff)} ${c.constant.toFixed(1)}</span>`;
       overlayHtml = `
         ${acc == null ? "" : `<span class="jacketBadge jacketBadgeAcc">${acc.toFixed(2)}%</span>`}
-        <span class="jacketBadge jacketBadgeRks">${acc == null || !isRksEligible(c) ? "—" : Math.round(rks)}</span>
+        <span class="jacketBadge jacketBadgeRks">${acc == null || !isRksEligible(c) ? "—" : rks.toFixed(3)}</span>
       `;
     } else {
       topTagsHtml = tagCharts.map(c => `
@@ -508,7 +543,7 @@ function renderSongs() {
 }
 
 // ---------------------------------------------------------------------------
-// UI controls: search, diff chips, sort, card size, resizer
+// UI controls: search, diff chips, sort, sidebar format, resizer
 // ---------------------------------------------------------------------------
 
 function renderDiffChips() {
@@ -573,6 +608,29 @@ function setupControls() {
   $("sort").value = ui.sortMode;
   $("sort").addEventListener("change", e => {
     ui.sortMode = e.target.value;
+    saveUi();
+    renderSongs();
+  });
+
+  const sortDirectionButton = $("sortDirection");
+  const updateSortDirectionButton = () => {
+    const isDecreasing = ui.sortDirection === "decreasing";
+    sortDirectionButton.textContent = isDecreasing ? "↑" : "↓";
+    sortDirectionButton.setAttribute("aria-label", `${isDecreasing ? "Decreasing" : "Increasing"} sort`);
+    sortDirectionButton.title = `${isDecreasing ? "Decreasing" : "Increasing"} sort`;
+  };
+  updateSortDirectionButton();
+  sortDirectionButton.addEventListener("click", () => {
+    ui.sortDirection = ui.sortDirection === "decreasing" ? "increasing" : "decreasing";
+    saveUi();
+    updateSortDirectionButton();
+    renderSongs();
+  });
+
+  const sidebarFormatToggle = $("sidebarFormat");
+  sidebarFormatToggle.checked = ui.sidebarFormat === "compact";
+  sidebarFormatToggle.addEventListener("change", e => {
+    ui.sidebarFormat = e.target.checked ? "compact" : "normal";
     saveUi();
     renderSongs();
   });
