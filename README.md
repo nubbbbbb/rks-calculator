@@ -3,6 +3,8 @@
 Track your Phigros scores, see your current RKS, and find out which charts are
 contributing to it.
 
+Note: This project is made with usage of AI.
+
 ## Getting Started
 
 1. Click **+ Add song**.
