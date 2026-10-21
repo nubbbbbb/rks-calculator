@@ -15,7 +15,6 @@
       <p class="subtitle">Enter your ACCs and see exactly what contributes to your RKS.</p>
     </div>
     <div class="actions">
-      <button id="addSongBtn" class="secondary">+ Add song</button>
       <button id="exportBtn" class="secondary">Export scores</button>
       <label class="fileBtn secondary">
         Import scores
@@ -78,7 +77,7 @@
           </div>
         </div>
 
-        <div id="dataStatus" class="status">No songs yet — click "+ Add song" to get started.</div>
+        <div id="dataStatus" class="status">Loading chart library…</div>
       </section>
 
       <section class="middleDiv panel">
@@ -98,75 +97,10 @@
   </div>
 
   <footer>
-    <p>All songs and charts are entered manually — use <strong>+ Add song</strong> to build your own library, with optional jacket art looked up from the <a href="https://phigros.fandom.com/wiki/Songs" target="_blank" rel="noopener">Phigros Wiki</a>. RKS formula follows the current B27 + P3 convention.</p>
+    <p>Chart titles and difficulty constants are bundled from the <a href="https://phigros.tools/charts" target="_blank" rel="noopener">phigros.tools chart catalog</a>. RKS formula follows the current B27 + P3 convention.</p>
   </footer>
 
-  <div id="addSongModal" class="modalOverlay hidden">
-    <div class="modal">
-      <div class="modalHeader">
-        <h2 id="addSongTitle">Add a song</h2>
-        <button type="button" id="addSongClose" class="modalClose" aria-label="Close">&times;</button>
-      </div>
-
-      <form id="addSongForm">
-        <label class="field">
-          <span>Song name</span>
-          <input id="fName" type="text" placeholder="e.g. Rrhar'il" required>
-        </label>
-
-        <div class="field">
-          <span>Additional special charts</span>
-          <div class="jacketModeToggle" id="specialChartToggle">
-            <button type="button" class="jacketModeBtn specialChartBtn" data-special="SP">SP</button>
-            <button type="button" class="jacketModeBtn specialChartBtn" data-special="Legacy">Legacy</button>
-          </div>
-        </div>
-
-        <div class="field" id="regularDiffPanel">
-          <span>Difficulty constants <span class="muted">(leave blank to skip a difficulty)</span></span>
-          <div class="constGrid" id="constGrid"></div>
-          <button type="button" id="fetchConstBtn" class="secondary" style="margin-top:8px">Fetch constants from this page</button>
-          <div id="constStatus" class="muted small"></div>
-        </div>
-
-        <div class="field">
-          <span>Jacket art</span>
-          <div class="jacketPreviewRow">
-            <div id="jacketPreview" class="jacket jacketPreview" style="width:56px;height:56px" data-initials="?"></div>
-            <div class="jacketModeToggle" id="jacketModeToggle">
-              <button type="button" class="jacketModeBtn" data-mode="wiki">Use Phigros Wiki</button>
-              <button type="button" class="jacketModeBtn" data-mode="link">Image link</button>
-              <button type="button" class="jacketModeBtn" data-mode="upload">Upload image</button>
-            </div>
-          </div>
-
-          <div id="jacketWikiPanel" class="jacketPanel">
-            <div id="wikiUrlPreview" class="wikiUrlPreview muted small">Enter a song name to see the Wiki URL.</div>
-            <button type="button" id="fetchJacketBtn" class="secondary">Fetch jacket from this page</button>
-            <div id="jacketStatus" class="muted small"></div>
-          </div>
-
-          <div id="jacketLinkPanel" class="jacketPanel hidden">
-            <input id="fJacketLink" type="url" placeholder="https://example.com/image.jpg" inputmode="url">
-            <div id="jacketLinkStatus" class="muted small"></div>
-          </div>
-
-          <div id="jacketUploadPanel" class="jacketPanel hidden">
-            <input id="fJacketFile" type="file" accept="image/*">
-          </div>
-        </div>
-
-        <div class="modalActions">
-          <button type="button" id="addSongDelete" class="danger hidden">Delete this song</button>
-          <div class="modalActionsRight">
-            <button type="button" id="addSongCancel" class="secondary">Cancel</button>
-            <button type="submit" id="addSongSave">Save song</button>
-          </div>
-        </div>
-      </form>
-    </div>
-  </div>
-
-  <script src="app.js?v=20260916"></script>
+  <script src="chart-library.js?v=20261021"></script>
+  <script src="app.js?v=20261021"></script>
 </body>
 </html>

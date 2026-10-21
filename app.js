@@ -1,11 +1,8 @@
 const SCORE_KEY = "phigros-rks-scores-v2";
 const UI_KEY = "phigros-rks-ui-v1";
-const SONGS_KEY = "phigros-rks-custom-songs-v1";
-const WIKI_BASE = "https://phigros.fandom.com";
 
 const ELIGIBLE_DIFFS = ["EZ", "HD", "IN", "AT"];
-const ALL_DIFFS = ["EZ", "HD", "IN", "AT", "SP", "Legacy"];
-const SPECIAL_DIFFS = ["SP", "Legacy"];
+const ALL_DIFFS = ["EZ", "HD", "IN", "AT"];
 const SONG_JACKET_HEIGHT = 90; // left-panel song cards always use the compact size
 
 const DEFAULT_UI = {
@@ -17,12 +14,18 @@ const DEFAULT_UI = {
   searchText: "",
 };
 
-let songs = [];   // all songs, entered manually: [{name, wikiUrl, jacket, charts:[{diff,constant}]}]
-let charts = [];  // flattened: [{song, diff, constant, jacket, wikiUrl, rksEligible}]
+const chartLibrary = window.PHIGROS_CHART_LIBRARY;
+if (!chartLibrary || !Array.isArray(chartLibrary.songs) || !chartLibrary.songs.length) {
+  throw new Error("The checked-in Phigros chart library could not be loaded.");
+}
+
+const songs = chartLibrary.songs;
+const songsById = new Map(songs.map(song => [song.id, song]));
+let charts = [];  // flattened: [{song, songId, scoreKey, diff, constant}]
 let scores = {};
+let calculationCache = null;
 let ui = { ...DEFAULT_UI };
 let selected = { song: null, diff: null };
-let editingSongName = null; // name of the song currently open in the modal, or null when adding a new one
 
 const $ = id => document.getElementById(id);
 
@@ -36,6 +39,7 @@ function loadScores() {
   } catch {
     scores = {};
   }
+  calculationCache = null;
 }
 
 function saveScores() {
@@ -46,8 +50,11 @@ function loadUi() {
   try {
     const stored = JSON.parse(localStorage.getItem(UI_KEY) || "{}");
     ui = { ...DEFAULT_UI, ...stored };
-    if (!Array.isArray(ui.diffFilters) || !ui.diffFilters.length) {
+    if (!Array.isArray(ui.diffFilters)) {
       ui.diffFilters = [...DEFAULT_UI.diffFilters];
+    } else {
+      ui.diffFilters = ui.diffFilters.filter(diff => ALL_DIFFS.includes(diff));
+      if (!ui.diffFilters.length) ui.diffFilters = [...DEFAULT_UI.diffFilters];
     }
   } catch {
     ui = { ...DEFAULT_UI };
@@ -58,29 +65,10 @@ function saveUi() {
   localStorage.setItem(UI_KEY, JSON.stringify(ui));
 }
 
-function loadSongs() {
-  try {
-    const stored = JSON.parse(localStorage.getItem(SONGS_KEY) || "[]");
-    songs = Array.isArray(stored) ? stored : [];
-  } catch {
-    songs = [];
-  }
-  rebuildCharts();
-}
-
-function saveSongs() {
-  localStorage.setItem(SONGS_KEY, JSON.stringify(songs));
-}
-
-// Rebuilds the flattened chart list (and the on-screen counters/status) any
-// time `songs` changes. Call after every add/edit/delete.
-function rebuildCharts() {
+function loadChartLibrary() {
   charts = flatten(songs);
-  const chartCountEl = $("chartCount");
-  if (chartCountEl) chartCountEl.textContent = charts.length;
-  $("dataStatus").textContent = songs.length
-    ? `${songs.length} song${songs.length === 1 ? "" : "s"} · ${charts.length} chart${charts.length === 1 ? "" : "s"}`
-    : `No songs yet — click "+ Add song" to get started.`;
+  $("dataStatus").textContent =
+    `${songs.length} songs · ${charts.length} charts · phigros.tools game v${chartLibrary.gameVersion}`;
 }
 
 // ---------------------------------------------------------------------------
@@ -88,7 +76,7 @@ function rebuildCharts() {
 // ---------------------------------------------------------------------------
 
 function chartKey(c) {
-  return `${c.song}\u0000${c.diff}`;
+  return `${c.scoreKey}\u0000${c.diff}`;
 }
 
 function isRksEligible(c) {
@@ -108,7 +96,13 @@ function isPhi(c) {
   return acc != null && Number(acc) >= 99.999999;
 }
 
+function invalidateCalculation() {
+  calculationCache = null;
+}
+
 function calculate() {
+  if (calculationCache) return calculationCache;
+
   const played = charts.filter(c => isRksEligible(c) && scores[chartKey(c)] != null);
 
   const b27 = [...played].sort((a, b) => singleRks(b) - singleRks(a)).slice(0, 27);
@@ -129,10 +123,11 @@ function calculate() {
     (a, b) => singleRks(b.chart) - singleRks(a.chart)
   );
 
-  return {
+  calculationCache = {
     played, b27, p3, b27Sum, p3Sum, contributing,
     rks: (b27Sum + p3Sum) / 30,
   };
+  return calculationCache;
 }
 
 // ---------------------------------------------------------------------------
@@ -150,11 +145,10 @@ function jacketHtml(c, size, fill = false) {
   const style = fill ? `width:100%;height:100%` : `width:${size}px;height:${size}px`;
   // The song's initials sit behind the <img> as a CSS ::before; if the
   // image is missing or fails to load, hiding it just reveals the initials.
-  // referrerpolicy="no-referrer" works around Fandom's CDN rejecting image
-  // requests whose Referer header isn't a fandom.com page (hotlink protection).
+  // The cover images are hosted by phigros.tools and aren't copied into this repo.
   const img = c.jacket
     ? `<img src="${escapeAttr(c.jacket)}" alt="" loading="lazy" referrerpolicy="no-referrer"
-         onerror="console.error('[jacket debug] failed to load image:', this.src); this.style.display='none'">`
+         onerror="this.style.display='none'">`
     : "";
   return `<div class="jacket" style="${style}" data-initials="${escapeAttr(label)}">${img}</div>`;
 }
@@ -204,9 +198,9 @@ function renderMiddle(r) {
   el.innerHTML = r.contributing.slice(0, 30).map(({ chart: c, tags }) => {
     const acc = Number(scores[chartKey(c)]);
     const tagLabel = [...tags].join("+");
-    const isSelected = selected.song === c.song && selected.diff === c.diff;
+    const isSelected = selected.song === c.songId && selected.diff === c.diff;
     return `
-      <button type="button" class="contribCard${isSelected ? " selected" : ""}" data-song="${escapeAttr(c.song)}" data-diff="${escapeAttr(c.diff)}">
+      <button type="button" class="contribCard${isSelected ? " selected" : ""}" data-song="${escapeAttr(c.songId)}" data-diff="${escapeAttr(c.diff)}">
         ${jacketHtml(c, 40)}
         <div class="contribInfo">
           <div class="contribTitle" title="${escapeAttr(c.song)}">${escapeHtml(c.song)}</div>
@@ -219,33 +213,47 @@ function renderMiddle(r) {
       </button>`;
   }).join("");
 
-  el.querySelectorAll(".contribCard").forEach(card => {
-    card.addEventListener("click", () => {
-      select(card.dataset.song, card.dataset.diff);
-    });
-  });
 }
 
 // ---------------------------------------------------------------------------
 // Bottom: selected-song editor
 // ---------------------------------------------------------------------------
 
-function select(songName, diff) {
-  const song = songs.find(s => s.name === songName);
+function select(songId, diff) {
+  const song = songsById.get(songId);
   if (!song) return;
 
-  selected.song = songName;
+  selected.song = songId;
   // Keep the requested diff if that chart exists, otherwise fall back to
   // the first available chart on this song.
   selected.diff = song.charts.some(c => c.diff === diff) ? diff : song.charts[0]?.diff ?? null;
 
   renderBottom();
-  renderSongs();
-  renderAll();
+  updateSelectionStyles();
+}
+
+function updateSelectionStyles() {
+  $("songs").querySelectorAll(".groupRow").forEach(row => {
+    const isSelected = row.dataset.songId === selected.song;
+    row.classList.toggle("selected", isSelected);
+    row.querySelectorAll(".normalDiffRow, .diffTagBtn").forEach(button => {
+      button.classList.toggle(
+        "active",
+        isSelected && button.dataset.diff === selected.diff
+      );
+    });
+  });
+
+  $("contribGrid").querySelectorAll(".contribCard").forEach(card => {
+    card.classList.toggle(
+      "selected",
+      card.dataset.song === selected.song && card.dataset.diff === selected.diff
+    );
+  });
 }
 
 function getRequiredAccForChart(chart, currentAcc = null) {
-  if (!isRksEligible(chart) || SPECIAL_DIFFS.includes(chart.diff)) return null;
+  if (!isRksEligible(chart)) return null;
 
   const r = calculate();
   const b27Cutoff = r.b27.length ? Math.min(...r.b27.map(c => singleRks(c))) : 0;
@@ -264,7 +272,7 @@ function getRequiredAccForChart(chart, currentAcc = null) {
 
 function renderBottom() {
   const el = $("bottomDiv");
-  const song = songs.find(s => s.name === selected.song);
+  const song = songsById.get(selected.song);
 
   if (!song) {
     el.innerHTML = `<div class="empty">Select a song from the list on the left to edit its accuracy.</div>`;
@@ -272,7 +280,7 @@ function renderBottom() {
   }
 
   const chart = song.charts.find(c => c.diff === selected.diff) || song.charts[0];
-  const flat = { song: song.name, diff: chart.diff, constant: chart.constant };
+  const flat = { scoreKey: song.scoreKey, diff: chart.diff, constant: chart.constant };
   const key = chartKey(flat);
   const acc = scores[key];
   const eligible = isRksEligible(flat);
@@ -280,20 +288,16 @@ function renderBottom() {
 
   el.innerHTML = `
     <div class="editorHeader">
-      ${jacketHtml({ song: song.name, jacket: song.jacket }, 72)}
+      ${jacketHtml({ song: song.label, jacket: song.jacket }, 72)}
       <div class="editorTitle">
-        <div class="editorName">${escapeHtml(song.name)}</div>
-        ${song.wikiUrl
-          ? `<a class="editorLink" href="${escapeAttr(song.wikiUrl)}" target="_blank" rel="noopener">View on Wiki ↗</a>`
-          : ""}
-        <button type="button" id="editSongBtn" class="secondary small" style="margin-left:${song.wikiUrl ? "10px" : "0"};margin-top:4px">Edit song</button>
+        <div class="editorName">${escapeHtml(song.label)}</div>
       </div>
     </div>
     <div class="editorDiffs" id="editorDiffs">
       ${song.charts.map(c => `
         <button type="button" class="diffPick diff-${escapeAttr(c.diff)}${c.diff === chart.diff ? " active" : ""}"
                 data-diff="${escapeAttr(c.diff)}">
-          ${escapeHtml(c.diff)}${SPECIAL_DIFFS.includes(c.diff) ? "" : ` <span>${c.constant.toFixed(1)}</span>`}
+          ${escapeHtml(c.diff)} <span>${c.constant.toFixed(1)}</span>
         </button>`).join("")}
     </div>
     <div class="editorAcc">
@@ -316,11 +320,8 @@ function renderBottom() {
   `;
 
   el.querySelectorAll(".diffPick").forEach(btn => {
-    btn.addEventListener("click", () => select(song.name, btn.dataset.diff));
+    btn.addEventListener("click", () => select(song.id, btn.dataset.diff));
   });
-
-  const editBtn = $("editSongBtn");
-  if (editBtn) editBtn.addEventListener("click", () => openSongModal(song.name));
 
   const input = $("accInput");
   if (input) {
@@ -332,6 +333,7 @@ function renderBottom() {
         const value = Math.max(0, Math.min(100, Number(raw)));
         if (Number.isFinite(value)) scores[key] = value;
       }
+      invalidateCalculation();
       saveScores();
 
       // Update everything the new ACC affects *except* the editor panel
@@ -365,9 +367,8 @@ function renderBottom() {
   if (clearBtn) {
     clearBtn.addEventListener("click", () => {
       delete scores[key];
+      invalidateCalculation();
       saveScores();
-      renderBottom();
-      renderSongs();
       renderAll();
     });
   }
@@ -417,16 +418,20 @@ function filteredSongGroups() {
   const bySong = new Map();
   const firstPosition = new Map();
   matched.forEach((c, index) => {
-    if (!bySong.has(c.song)) bySong.set(c.song, []);
-    bySong.get(c.song).push(c);
-    if (!firstPosition.has(c.song)) firstPosition.set(c.song, index);
+    if (!bySong.has(c.songId)) bySong.set(c.songId, []);
+    bySong.get(c.songId).push(c);
+    if (!firstPosition.has(c.songId)) firstPosition.set(c.songId, index);
   });
 
-  const groups = [...bySong.entries()].map(([song, list]) => ({
-    song,
-    charts: [...list].sort((a, b) => diffSortIndex(a.diff) - diffSortIndex(b.diff)),
-    firstPosition: firstPosition.get(song),
-  }));
+  const groups = [...bySong.entries()].map(([songId, list]) => {
+    const song = songsById.get(songId);
+    return {
+      songId,
+      name: song.label,
+      charts: [...list].sort((a, b) => diffSortIndex(a.diff) - diffSortIndex(b.diff)),
+      firstPosition: firstPosition.get(songId),
+    };
+  });
 
   groups.sort((a, b) => a.firstPosition - b.firstPosition);
 
@@ -441,7 +446,7 @@ function renderSongs() {
   if (!groups.length) {
     $("songs").innerHTML = charts.length
       ? `<div class="empty">No songs match this search/filter.</div>`
-      : `<div class="empty">No songs yet. Click <strong>+ Add song</strong> above to enter your first chart.</div>`;
+      : `<div class="empty">The chart library is empty.</div>`;
     $("songs").className = "songList empty";
     return;
   }
@@ -449,21 +454,21 @@ function renderSongs() {
 
   for (const g of groups) {
     const tagCharts = g.charts;
-    // Only show a single difficulty's full detail (badge + constant, acc,
-    // single RKS) when the song has exactly one matched tag and it isn't a
-    // special (SP/Legacy) chart. Otherwise just show the difficulty tags.
-    const singleTagCase = tagCharts.length === 1 && !SPECIAL_DIFFS.includes(tagCharts[0].diff);
+    // Show full chart detail when the song has exactly one matched difficulty.
+    const singleTagCase = tagCharts.length === 1;
     const anyEligible = tagCharts.some(isRksEligible);
-    const isSongSelected = selected.song === g.song;
+    const isSongSelected = selected.song === g.songId;
     const defaultDiff = (tagCharts.find(c => c.diff === "IN") || tagCharts[0]).diff;
 
     const row = document.createElement("div");
     row.className = "song groupRow" + (!anyEligible ? " nonRks" : "") + (isSongSelected ? " selected" : "");
+    row.dataset.songId = g.songId;
+    row.dataset.defaultDiff = defaultDiff;
 
     if (ui.sidebarFormat === "normal") {
       row.classList.add("normalSong");
       row.innerHTML = `
-        <div class="songTitle" title="${escapeAttr(g.song)}">${escapeHtml(g.song)}</div>
+        <div class="songTitle" title="${escapeAttr(g.name)}">${escapeHtml(g.name)}</div>
         <div class="songJacketWrap" style="height:${jacketHeight}px">
           ${jacketHtml(tagCharts[0], null, true)}
         </div>
@@ -481,7 +486,7 @@ function renderSongs() {
               const requiredAccClass = requiredAcc && !requiredAcc.tooEasy && requiredAcc.value === 100 ? " perfect" : "";
               return `
             <button type="button" class="normalDiffRow${isSongSelected && selected.diff === c.diff ? " active" : ""}" data-diff="${escapeAttr(c.diff)}">
-              <span class="diffBadge diff-${escapeAttr(c.diff)}">${escapeHtml(c.diff)} ${SPECIAL_DIFFS.includes(c.diff) ? "" : c.constant.toFixed(1)}</span>
+              <span class="diffBadge diff-${escapeAttr(c.diff)}">${escapeHtml(c.diff)} ${c.constant.toFixed(1)}</span>
               <span class="normalDiffAccuracy"><span class="normalCurrentAcc${currentAccClass}">${acc == null ? "—" : `${Number(acc).toFixed(2)}%`}</span><span class="normalAccuracySlash">/</span><span class="normalRequiredAcc${requiredAccClass}">${requiredLabel}</span></span>
               <span class="normalDiffRks">${!isRksEligible(c) || scores[chartKey(c)] == null ? "—" : singleRks(c).toFixed(3)}</span>
             </button>
@@ -490,12 +495,6 @@ function renderSongs() {
           `).join("")}
         </div>
       `;
-      row.querySelectorAll(".normalDiffRow").forEach(btn => {
-        btn.addEventListener("click", e => {
-          e.stopPropagation();
-          select(g.song, btn.dataset.diff);
-        });
-      });
       frag.appendChild(row);
       continue;
     }
@@ -519,7 +518,7 @@ function renderSongs() {
 
     row.innerHTML = `
       <div class="songTop">
-        <div class="songTitle" title="${escapeAttr(g.song)}">${escapeHtml(g.song)}</div>
+        <div class="songTitle" title="${escapeAttr(g.name)}">${escapeHtml(g.name)}</div>
         <div class="songTopTags">${topTagsHtml}</div>
       </div>
       <div class="songJacketWrap" style="height:${jacketHeight}px">
@@ -527,14 +526,6 @@ function renderSongs() {
         ${overlayHtml}
       </div>
     `;
-
-    row.addEventListener("click", () => select(g.song, defaultDiff));
-    row.querySelectorAll(".diffTagBtn").forEach(btn => {
-      btn.addEventListener("click", e => {
-        e.stopPropagation();
-        select(g.song, btn.dataset.diff);
-      });
-    });
 
     frag.appendChild(row);
   }
@@ -598,6 +589,20 @@ function setupResizer() {
 }
 
 function setupControls() {
+  $("songs").addEventListener("click", e => {
+    const row = e.target.closest(".groupRow");
+    if (!row) return;
+
+    const chartButton = e.target.closest(".normalDiffRow, .diffTagBtn");
+    if (ui.sidebarFormat === "normal" && !chartButton?.classList.contains("normalDiffRow")) return;
+    select(row.dataset.songId, chartButton?.dataset.diff || row.dataset.defaultDiff);
+  });
+
+  $("contribGrid").addEventListener("click", e => {
+    const card = e.target.closest(".contribCard");
+    if (card) select(card.dataset.song, card.dataset.diff);
+  });
+
   $("search").value = ui.searchText;
   $("search").addEventListener("input", e => {
     ui.searchText = e.target.value;
@@ -642,6 +647,7 @@ function setupControls() {
   $("clearBtn").addEventListener("click", () => {
     if (!confirm("Clear every saved ACC from this browser?")) return;
     scores = {};
+    invalidateCalculation();
     saveScores();
     renderAll();
   });
@@ -674,6 +680,7 @@ function importScores(file) {
         const n = Number(v);
         if (Number.isFinite(n) && n >= 0 && n <= 100) scores[k] = n;
       }
+      invalidateCalculation();
       saveScores();
       renderAll();
     } catch {
@@ -684,7 +691,7 @@ function importScores(file) {
 }
 
 // ---------------------------------------------------------------------------
-// Song data (all entries are added manually — see the modal below)
+// Flatten the checked-in song catalog for chart-level calculations and views.
 // ---------------------------------------------------------------------------
 
 function flatten(songList) {
@@ -692,11 +699,12 @@ function flatten(songList) {
   for (const s of songList) {
     for (const c of s.charts) {
       out.push({
-        song: s.name,
+        song: s.label,
+        songId: s.id,
+        scoreKey: s.scoreKey,
         diff: c.diff,
         constant: c.constant,
         jacket: s.jacket,
-        wikiUrl: s.wikiUrl,
       });
     }
   }
@@ -708,396 +716,6 @@ function renderAll() {
   const r = renderTop();
   renderMiddle(r);
   renderBottom();
-}
-
-// ---------------------------------------------------------------------------
-// Manual song entry: add/edit modal, deterministic Phigros Wiki URL, and
-// jacket art either fetched from that Wiki page or uploaded from disk
-// ---------------------------------------------------------------------------
-
-let jacketMode = "wiki";     // "wiki" | "link" | "upload" — which jacket panel is active
-let pendingJacket = null;    // the jacket value about to be saved (image URL or data: URL)
-let pendingWikiUrl = null;   // the wiki page URL about to be saved
-let selectedSpecialCharts = [];
-
-// Phigros Wiki page URLs follow a fixed pattern: spaces become underscores.
-// e.g. "ENERGY SYNERGY MATRIX" -> https://phigros.fandom.com/wiki/ENERGY_SYNERGY_MATRIX
-function computeWikiUrl(name) {
-  const trimmed = (name || "").trim();
-  if (!trimmed) return null;
-  return `${WIKI_BASE}/wiki/${encodeURIComponent(trimmed.replace(/\s+/g, "_"))}`;
-}
-
-// Reads the page image off that exact Wiki URL via the Fandom MediaWiki API
-// (CORS-enabled via origin=*). Throws with a user-facing message on failure.
-async function fetchJacketFromWiki(name) {
-  const trimmed = name.trim();
-  if (!trimmed) throw new Error("Enter a song name first.");
-  const title = trimmed.replace(/\s+/g, "_");
-
-  const infoUrl =
-    `${WIKI_BASE}/api.php?action=query&titles=${encodeURIComponent(title)}` +
-    `&prop=pageimages|info&piprop=original&inprop=url&redirects=1&format=json&origin=*`;
-  console.log("[jacket debug] request:", infoUrl);
-
-  const infoRes = await fetch(infoUrl);
-  if (!infoRes.ok) throw new Error(`Wiki lookup failed (HTTP ${infoRes.status}).`);
-  const infoData = await infoRes.json();
-  console.log("[jacket debug] response:", infoData);
-
-  const page = Object.values(infoData?.query?.pages || {})[0];
-  if (!page || page.missing !== undefined) {
-    throw new Error(`No Wiki page found at /wiki/${title} — check the spelling/capitalization.`);
-  }
-
-  const jacket = page.original?.source || null;
-  const wikiUrl = page.fullurl || computeWikiUrl(trimmed);
-  console.log("[jacket debug] image link:", jacket);
-
-  return { jacket, wikiUrl };
-}
-
-// Maps the Wiki's human-readable difficulty names (used as column headers in
-// the "Difficulty" row of the infobox table) to this app's difficulty codes.
-const WIKI_DIFF_NAMES = {
-  easy: "EZ",
-  hard: "HD",
-  insane: "IN",
-  another: "AT",
-};
-
-// The Phigros Wiki's infobox is template-generated ({{SongAuto|...}}), so the
-// numbers don't exist as plain wikitext parameters on the page — they only
-// appear in the rendered table. Its shape is a header row starting with
-// "Difficulty" (followed by cells named Easy/Hard/Insane/Another — as many as
-// the song has, since most songs have no AT chart), immediately followed by a
-// "Level" row whose cells are the constants, lined up column-for-column with
-// the header row above it. e.g.:
-//   Difficulty | Easy | Hard | Insane | Another
-//   Level      |  7   | 12.7 | 16.1   | 17.6
-// Fetches the song's Wiki page and reads off its EZ/HD/IN/AT difficulty
-// constants. On Phigros Wiki a chart's "difficulty" *is* its difficulty
-// constant (e.g. IN 16.1) — there's no separate number to look up.
-async function fetchConstantsFromWiki(name) {
-  const trimmed = name.trim();
-  if (!trimmed) throw new Error("Enter a song name first.");
-  const title = trimmed.replace(/\s+/g, "_");
-
-  const htmlUrl =
-    `${WIKI_BASE}/api.php?action=parse&page=${encodeURIComponent(title)}` +
-    `&prop=text&redirects=1&format=json&origin=*`;
-  console.log("[const debug] request:", htmlUrl);
-
-  const res = await fetch(htmlUrl);
-  if (!res.ok) throw new Error(`Wiki lookup failed (HTTP ${res.status}).`);
-  const data = await res.json();
-  console.log("[const debug] response:", data);
-
-  if (data.error || !data.parse) {
-    throw new Error(`No Wiki page found at /wiki/${title} — check the spelling/capitalization.`);
-  }
-
-  const html = data.parse.text?.["*"] || "";
-  const result = parseConstantsFromInfoboxHtml(html);
-
-  if (!Object.keys(result).length) {
-    throw new Error("Could not find difficulty constants on this Wiki page — enter them manually.");
-  }
-  return result;
-}
-
-function parseConstantsFromInfoboxHtml(html) {
-  const doc = new DOMParser().parseFromString(html, "text/html");
-  const rows = [...doc.querySelectorAll("tr")];
-  const result = {};
-
-  for (let r = 0; r < rows.length; r++) {
-    const headerCells = [...rows[r].children];
-    if (!headerCells.length) continue;
-    if (headerCells[0].textContent.trim().toLowerCase() !== "difficulty") continue;
-
-    const diffCodes = headerCells.slice(1).map(c => WIKI_DIFF_NAMES[c.textContent.trim().toLowerCase()] || null);
-
-    const valueRow = rows[r + 1];
-    const valueCells = valueRow ? [...valueRow.children] : [];
-    if (valueCells[0]?.textContent.trim().toLowerCase() !== "level") continue;
-
-    const values = valueCells.slice(1);
-    diffCodes.forEach((diff, i) => {
-      if (!diff) return; // an unrecognized/blank column (e.g. a song with no AT chart)
-      const raw = values[i]?.textContent.trim();
-      if (raw && /^\d+(?:\.\d+)?$/.test(raw)) result[diff] = Number(raw);
-    });
-
-    break; // a song page has exactly one such table
-  }
-
-  return result;
-}
-
-function renderConstGrid() {
-  $("constGrid").innerHTML = ELIGIBLE_DIFFS.map(d => `
-    <div class="constField diff-${d}">
-      <label>${d}</label>
-      <input type="number" min="0.1" max="20" step="0.1" data-diff="${d}" placeholder="—">
-    </div>
-  `).join("");
-}
-
-function updateJacketPreview(url, name) {
-  const el = $("jacketPreview");
-  el.dataset.initials = initials(name || "?");
-  el.innerHTML = url
-    ? `<img src="${escapeAttr(url)}" alt="" referrerpolicy="no-referrer"
-         onerror="console.error('[jacket debug] failed to load image:', this.src); this.style.display='none'">`
-    : "";
-}
-
-function updateWikiUrlPreview() {
-  const url = computeWikiUrl($("fName").value);
-  $("wikiUrlPreview").textContent = url
-    ? url.replace(/^https?:\/\//, "")
-    : "Enter a song name to see the Wiki URL.";
-}
-
-function syncSpecialChartToggles() {
-  $("specialChartToggle")?.querySelectorAll(".specialChartBtn").forEach(btn => {
-    const diff = btn.dataset.special;
-    btn.classList.toggle("active", selectedSpecialCharts.includes(diff));
-  });
-}
-
-function toggleSpecialChart(diff) {
-  if (selectedSpecialCharts.includes(diff)) {
-    selectedSpecialCharts = selectedSpecialCharts.filter(d => d !== diff);
-  } else {
-    selectedSpecialCharts = [...selectedSpecialCharts, diff];
-  }
-  syncSpecialChartToggles();
-}
-
-function setJacketMode(mode) {
-  jacketMode = mode;
-  $("jacketModeToggle").querySelectorAll(".jacketModeBtn").forEach(btn => {
-    btn.classList.toggle("active", btn.dataset.mode === mode);
-  });
-  $("jacketWikiPanel").classList.toggle("hidden", mode !== "wiki");
-  $("jacketLinkPanel").classList.toggle("hidden", mode !== "link");
-  $("jacketUploadPanel").classList.toggle("hidden", mode !== "upload");
-}
-
-// Guesses which jacket-source panel a saved jacket value came from, so
-// reopening a song's editor starts on the right tab: an uploaded image is
-// always a data: URL, a Wiki-fetched jacket comes off Fandom's image CDN,
-// and anything else is a plain pasted link.
-function guessJacketMode(jacket) {
-  if (!jacket) return "wiki";
-  if (jacket.startsWith("data:")) return "upload";
-  if (/fandom\.com|wikia\.nocookie\.net/i.test(jacket)) return "wiki";
-  return "link";
-}
-
-function openSongModal(name = null) {
-  editingSongName = name;
-  const song = name ? songs.find(s => s.name === name) : null;
-
-  $("addSongTitle").textContent = song ? "Edit song" : "Add a song";
-  $("fName").value = song?.name || "";
-  $("fName").disabled = !!song; // renaming would orphan saved ACCs, so lock it on edit
-
-  pendingJacket = song?.jacket || null;
-  pendingWikiUrl = song?.wikiUrl || computeWikiUrl(song?.name || "");
-  $("jacketStatus").textContent = "";
-  $("jacketLinkStatus").textContent = "";
-  $("fJacketFile").value = "";
-  const initialJacketMode = guessJacketMode(pendingJacket);
-  $("fJacketLink").value = initialJacketMode === "link" ? pendingJacket : "";
-  updateWikiUrlPreview();
-  updateJacketPreview(pendingJacket, song?.name || "");
-  setJacketMode(initialJacketMode);
-
-  $("constGrid").querySelectorAll("input").forEach(input => {
-    const existing = song?.charts.find(c => c.diff === input.dataset.diff);
-    input.value = existing ? existing.constant : "";
-  });
-  if ($("constStatus")) $("constStatus").textContent = "";
-
-  const specialCharts = (song?.charts || []).filter(c => SPECIAL_DIFFS.includes(c.diff)).map(c => c.diff);
-  selectedSpecialCharts = [...new Set(specialCharts)];
-  syncSpecialChartToggles();
-
-  $("addSongDelete").classList.toggle("hidden", !song);
-  $("addSongModal").classList.remove("hidden");
-  $("fName").focus();
-}
-
-function closeSongModal() {
-  $("addSongModal").classList.add("hidden");
-  editingSongName = null;
-}
-
-function setupAddSongModal() {
-  renderConstGrid();
-
-  $("addSongBtn").addEventListener("click", () => openSongModal(null));
-  $("addSongClose").addEventListener("click", closeSongModal);
-  $("addSongCancel").addEventListener("click", closeSongModal);
-  $("addSongModal").addEventListener("click", e => {
-    if (e.target.id === "addSongModal") closeSongModal();
-  });
-
-  $("jacketModeToggle").querySelectorAll(".jacketModeBtn").forEach(btn => {
-    btn.addEventListener("click", () => setJacketMode(btn.dataset.mode));
-  });
-
-  $("specialChartToggle")?.querySelectorAll(".specialChartBtn").forEach(btn => {
-    btn.addEventListener("click", () => toggleSpecialChart(btn.dataset.special));
-  });
-
-  $("fetchConstBtn")?.addEventListener("click", async () => {
-    const btn = $("fetchConstBtn");
-    const status = $("constStatus");
-    const name = $("fName").value.trim();
-    if (!name) { status.textContent = "Enter a song name first."; return; }
-
-    btn.disabled = true;
-    status.textContent = "Fetching difficulty constants from Phigros Wiki…";
-    try {
-      const result = await fetchConstantsFromWiki(name);
-      let filled = 0;
-      $("constGrid").querySelectorAll("input").forEach(input => {
-        const value = result[input.dataset.diff];
-        if (value != null) {
-          input.value = value;
-          filled++;
-        }
-      });
-      status.textContent = filled
-        ? `Filled in ${filled} difficult${filled === 1 ? "y" : "ies"} — double-check these against the Wiki page.`
-        : "Page found, but no difficulty constants were recognized. Enter them manually.";
-    } catch (err) {
-      status.textContent = err.message || "Could not fetch from the Wiki.";
-    } finally {
-      btn.disabled = false;
-    }
-  });
-
-  $("fName").addEventListener("input", () => {
-    updateWikiUrlPreview();
-    if (jacketMode === "wiki") updateJacketPreview(pendingJacket, $("fName").value);
-  });
-
-  $("fetchJacketBtn").addEventListener("click", async () => {
-    const btn = $("fetchJacketBtn");
-    const status = $("jacketStatus");
-    const name = $("fName").value.trim();
-    if (!name) { status.textContent = "Enter a song name first."; return; }
-
-    btn.disabled = true;
-    status.textContent = "Fetching from Phigros Wiki…";
-    try {
-      const result = await fetchJacketFromWiki(name);
-      pendingWikiUrl = result.wikiUrl;
-      if (result.jacket) {
-        pendingJacket = result.jacket;
-        updateJacketPreview(pendingJacket, name);
-        status.textContent = `Jacket found: ${result.jacket}`;
-      } else {
-        status.textContent = "Page found, but it has no image on it.";
-      }
-    } catch (err) {
-      status.textContent = err.message || "Could not fetch from the Wiki.";
-    } finally {
-      btn.disabled = false;
-    }
-  });
-
-  $("fJacketLink").addEventListener("input", () => {
-    const url = $("fJacketLink").value.trim();
-    pendingJacket = url || null;
-    updateJacketPreview(pendingJacket, $("fName").value);
-    $("jacketLinkStatus").textContent = url ? "" : "Paste a direct link to an image.";
-  });
-
-  $("fJacketFile").addEventListener("change", () => {
-    const file = $("fJacketFile").files[0];
-    if (!file) return;
-    const reader = new FileReader();
-    reader.onload = () => {
-      pendingJacket = reader.result;
-      updateJacketPreview(pendingJacket, $("fName").value);
-    };
-    reader.readAsDataURL(file);
-  });
-
-  $("addSongForm").addEventListener("submit", e => {
-    e.preventDefault();
-
-    const name = $("fName").value.trim();
-    if (!name) return;
-
-    let chartsList = [];
-
-    $("constGrid").querySelectorAll("input").forEach(input => {
-      const raw = input.value.trim();
-      if (raw === "") return;
-      const value = Number(raw);
-      if (Number.isFinite(value) && value > 0) {
-        chartsList.push({ diff: input.dataset.diff, constant: value });
-      }
-    });
-
-    selectedSpecialCharts.forEach(diff => {
-      chartsList.push({ diff, constant: 0 });
-    });
-
-    if (!chartsList.length) {
-      alert("Enter at least one difficulty constant or add an SP/Legacy toggle.");
-      return;
-    }
-
-    if (!editingSongName && songs.some(s => s.name.toLowerCase() === name.toLowerCase())) {
-      alert("A song with this name already exists.");
-      return;
-    }
-
-    const songData = {
-      name,
-      jacket: pendingJacket || null,
-      wikiUrl: pendingWikiUrl || computeWikiUrl(name),
-      charts: chartsList,
-    };
-
-    if (editingSongName) {
-      const idx = songs.findIndex(s => s.name === editingSongName);
-      if (idx !== -1) songs[idx] = songData;
-    } else {
-      songs.push(songData);
-    }
-
-    saveSongs();
-    rebuildCharts();
-    closeSongModal();
-    select(name, chartsList[0].diff);
-  });
-
-  $("addSongDelete").addEventListener("click", () => {
-    if (!editingSongName) return;
-    if (!confirm(`Delete "${editingSongName}"? This also removes its saved ACCs.`)) return;
-
-    const removedName = editingSongName;
-    songs = songs.filter(s => s.name !== removedName);
-    for (const key of Object.keys(scores)) {
-      if (key.startsWith(`${removedName}\u0000`)) delete scores[key];
-    }
-
-    saveScores();
-    saveSongs();
-    rebuildCharts();
-    if (selected.song === removedName) { selected.song = null; selected.diff = null; }
-    closeSongModal();
-    renderAll();
-  });
 }
 
 // ---------------------------------------------------------------------------
@@ -1120,10 +738,9 @@ function escapeAttr(s) {
 
 loadScores();
 loadUi();
-loadSongs();
+loadChartLibrary();
 applyLeftWidth();
 renderDiffChips();
 setupControls();
 setupResizer();
-setupAddSongModal();
 renderAll();

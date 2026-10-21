@@ -1,0 +1,46 @@
+name: Update chart library
+
+on:
+  workflow_dispatch:
+    inputs:
+      ref:
+        description: phigros-tools branch, tag, or commit
+        required: false
+        default: main
+        type: string
+
+permissions:
+  contents: write
+
+concurrency:
+  group: update-chart-library
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+
+      - name: Fetch latest chart data and jacket URLs
+        env:
+          PHIGROS_TOOLS_REF: ${{ inputs.ref }}
+        run: python update_chart_library.py --ref "${PHIGROS_TOOLS_REF:-main}"
+
+      - name: Commit catalog update
+        run: |
+          git add chart-library.js
+          if git diff --cached --quiet; then
+            echo "Chart library is already up to date."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "Update chart library"
+          git push

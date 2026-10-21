@@ -5,19 +5,6 @@ contributing to it.
 
 Note: This project is made with usage of AI.
 
-## Getting Started
-
-1. Click **+ Add song**.
-2. Enter the song name.
-3. Add the difficulty constants for the charts you have. Leave unused
-   difficulties blank.
-4. Optionally add a jacket from the Phigros Wiki, an image link, or an image
-   file.
-5. Click **Save song**.
-
-Select a song from the left sidebar to enter or update its accuracy. Use **Edit
-song** in the editor to change the song details or delete the song.
-
 ## Sidebar
 
 Use the difficulty buttons to filter the song list. Search by song name with the
@@ -34,11 +21,11 @@ decreasing order.
 
 The format toggle changes the sidebar between:
 
-- **Normal**: shows the song title, jacket, and one clickable row for every
-  filtered difficulty. Each row shows the chart constant, current accuracy,
-  required accuracy, and single-chart RKS.
+- **Normal**: shows the song title, an initials tile, and one clickable row for
+  every filtered difficulty. Each row shows the chart constant, current
+  accuracy, required accuracy, and single-chart RKS.
 - **Compact**: shows a smaller song card. When only one filtered difficulty is
-  present, its accuracy and single-chart RKS are shown on the jacket.
+  present, its accuracy and single-chart RKS are shown on the initials tile.
 
 ## Accuracy And RKS
 
@@ -54,11 +41,10 @@ Your total RKS is calculated from:
 - **B27**: your 27 highest chart RKS values
 - **P3**: your 3 highest-difficulty charts with 100% accuracy
 
-Only EZ, HD, IN, and AT charts contribute to RKS. SP and Legacy charts can be
-stored and filtered, but do not contribute.
+Only EZ, HD, IN, and AT charts are included and contribute to RKS.
 
 ## Backups
 
 Use **Export scores** to download a backup of your entered accuracies. Use
-**Import scores** to restore them later. Song entries and scores are managed
-separately, so exporting scores does not include your song list.
+**Import scores** to restore them later. The chart catalog is part of the
+repository and is not included in score exports.
