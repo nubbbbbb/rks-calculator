@@ -120,6 +120,7 @@ def build_library(source, commit):
             "name": title,
             "label": label,
             "scoreKey": label,
+            "artist": artist,
             "jacket": f"https://phigros.tools/covers/{quote(song_id, safe='')}.avif",
             "charts": charts,
         })

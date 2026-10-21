@@ -1,9 +1,12 @@
 const SCORE_KEY = "phigros-rks-scores-v2";
 const UI_KEY = "phigros-rks-ui-v1";
+const CHART_EDITS_KEY = "phigros-rks-chart-edits-v1";
+const LEGACY_SONGS_KEY = "phigros-rks-custom-songs-v1";
 
 const ELIGIBLE_DIFFS = ["EZ", "HD", "IN", "AT"];
 const ALL_DIFFS = ["EZ", "HD", "IN", "AT"];
 const SONG_JACKET_HEIGHT = 90; // left-panel song cards always use the compact size
+const MAX_JACKET_UPLOAD_BYTES = 512 * 1024;
 
 const DEFAULT_UI = {
   leftWidth: 380,
@@ -19,13 +22,16 @@ if (!chartLibrary || !Array.isArray(chartLibrary.songs) || !chartLibrary.songs.l
   throw new Error("The checked-in Phigros chart library could not be loaded.");
 }
 
-const songs = chartLibrary.songs;
-const songsById = new Map(songs.map(song => [song.id, song]));
+let songs = [];
+const songsById = new Map();
 let charts = [];  // flattened: [{song, songId, scoreKey, diff, constant}]
 let scores = {};
 let calculationCache = null;
 let ui = { ...DEFAULT_UI };
 let selected = { song: null, diff: null };
+let chartEdits = { overrides: {}, customSongs: [] };
+let editingSongId = null;
+let pendingJacket = null;
 
 const $ = id => document.getElementById(id);
 
@@ -66,7 +72,178 @@ function saveUi() {
 }
 
 function loadChartLibrary() {
+  try {
+    const savedEdits = localStorage.getItem(CHART_EDITS_KEY);
+    if (!savedEdits) {
+      const legacySongs = localStorage.getItem(LEGACY_SONGS_KEY);
+      if (legacySongs) {
+        chartEdits = migrateLegacySongs(JSON.parse(legacySongs));
+        try {
+          localStorage.setItem(CHART_EDITS_KEY, JSON.stringify(chartEdits));
+          localStorage.removeItem(LEGACY_SONGS_KEY);
+        } catch (error) {
+          console.error("Could not save migrated chart edits.", error);
+        }
+      }
+    } else {
+      const stored = JSON.parse(savedEdits);
+      if (stored && typeof stored === "object" && !Array.isArray(stored)) {
+        const overrides = {};
+        if (stored.overrides && typeof stored.overrides === "object" && !Array.isArray(stored.overrides)) {
+          for (const base of chartLibrary.songs) {
+            const override = stored.overrides[base.id];
+            if (
+              override &&
+              typeof override === "object" &&
+              !Array.isArray(override) &&
+              override.id === base.id &&
+              isValidSongRecord(override)
+            ) {
+              overrides[base.id] = override;
+            } else if (override != null) {
+              console.error(`Ignoring invalid saved chart edit for ${base.id}.`);
+            }
+          }
+        }
+        const knownIds = new Set(chartLibrary.songs.map(song => song.id));
+        const customSongs = Array.isArray(stored.customSongs)
+          ? stored.customSongs.filter(song => {
+            const valid = isValidSongRecord(song) && song.id.startsWith("custom-") && !knownIds.has(song.id);
+            if (valid) knownIds.add(song.id);
+            if (!valid) console.error("Ignoring invalid saved custom chart entry.");
+            return valid;
+          })
+          : [];
+        chartEdits = {
+          overrides,
+          customSongs,
+        };
+      }
+    }
+  } catch (error) {
+    console.error("Could not load locally saved chart edits.", error);
+    chartEdits = { overrides: {}, customSongs: [] };
+  }
+
+  songs = chartLibrary.songs.map(base => {
+    const override = chartEdits.overrides[base.id];
+    return override ? { ...base, ...override, charts: override.charts } : base;
+  }).concat(chartEdits.customSongs);
+  rebuildChartData();
+}
+
+function createCustomSongId() {
+  const uniqueId = crypto.randomUUID
+    ? crypto.randomUUID()
+    : `${Date.now()}-${Math.random().toString(16).slice(2)}`;
+  return `custom-${uniqueId}`;
+}
+
+function migrateLegacySongs(legacySongs) {
+  const migrated = { overrides: {}, customSongs: [] };
+  if (!Array.isArray(legacySongs)) {
+    console.error("Ignoring invalid legacy chart data.");
+    return migrated;
+  }
+
+  for (const legacy of legacySongs) {
+    if (
+      !legacy ||
+      typeof legacy.name !== "string" ||
+      !Array.isArray(legacy.charts)
+    ) {
+      console.error("Ignoring invalid legacy chart entry.");
+      continue;
+    }
+    const chartsList = legacy.charts.filter(chart =>
+      chart &&
+      ALL_DIFFS.includes(chart.diff) &&
+      Number.isFinite(chart.constant) &&
+      chart.constant > 0 &&
+      chart.constant <= 20
+    ).map(chart => ({ diff: chart.diff, constant: chart.constant }));
+    if (!chartsList.length) continue;
+
+    const name = legacy.name.trim();
+    const matches = chartLibrary.songs.filter(song =>
+      song.name.toLowerCase() === name.toLowerCase() ||
+      song.label.toLowerCase() === name.toLowerCase()
+    );
+    const jacket = typeof legacy.jacket === "string" ? legacy.jacket : null;
+    if (matches.length === 1) {
+      const base = matches[0];
+      migrated.overrides[base.id] = {
+        ...base,
+        name,
+        label: name,
+        artist: typeof legacy.artist === "string" ? legacy.artist.trim() : base.artist || "",
+        jacket: jacket || base.jacket || null,
+        charts: chartsList,
+      };
+      continue;
+    }
+
+    const id = createCustomSongId();
+    migrated.customSongs.push({
+      id,
+      name,
+      label: name,
+      artist: typeof legacy.artist === "string" ? legacy.artist.trim() : "",
+      scoreKey: name,
+      jacket,
+      charts: chartsList,
+    });
+  }
+  return migrated;
+}
+
+function isValidSongRecord(song) {
+  if (!song || typeof song !== "object" || Array.isArray(song)) return false;
+  if (
+    typeof song.id !== "string" ||
+    typeof song.name !== "string" ||
+    !song.name.trim() ||
+    typeof song.label !== "string" ||
+    (song.artist != null && typeof song.artist !== "string") ||
+    typeof song.scoreKey !== "string" ||
+    (song.jacket != null && typeof song.jacket !== "string") ||
+    !Array.isArray(song.charts) ||
+    !song.charts.length
+  ) return false;
+
+  const seen = new Set();
+  return song.charts.every(chart => {
+    if (
+      !chart ||
+      !ALL_DIFFS.includes(chart.diff) ||
+      seen.has(chart.diff) ||
+      !Number.isFinite(chart.constant) ||
+      chart.constant <= 0 ||
+      chart.constant > 20
+    ) return false;
+    seen.add(chart.diff);
+    return true;
+  });
+}
+
+function saveChartEdits(nextEdits) {
+  try {
+    localStorage.setItem(CHART_EDITS_KEY, JSON.stringify(nextEdits));
+  } catch (error) {
+    console.error("Could not save chart changes.", error);
+    $("chartFormStatus").textContent =
+      "Could not save changes in this browser. Check available local storage and try again.";
+    return false;
+  }
+  chartEdits = nextEdits;
+  return true;
+}
+
+function rebuildChartData() {
+  songsById.clear();
+  songs.forEach(song => songsById.set(song.id, song));
   charts = flatten(songs);
+  invalidateCalculation();
   $("dataStatus").textContent =
     `${songs.length} songs · ${charts.length} charts · phigros.tools game v${chartLibrary.gameVersion}`;
 }
@@ -204,6 +381,7 @@ function renderMiddle(r) {
         ${jacketHtml(c, 40)}
         <div class="contribInfo">
           <div class="contribTitle" title="${escapeAttr(c.song)}">${escapeHtml(c.song)}</div>
+          ${c.artist ? `<div class="contribArtist">${escapeHtml(c.artist)}</div>` : ""}
           <div class="contribMeta">
             <span class="diffBadge diff-${escapeAttr(c.diff)}">${escapeHtml(c.diff)} ${c.constant.toFixed(1)}</span>
             <span class="tagBadge">${escapeHtml(tagLabel)}</span>
@@ -288,9 +466,11 @@ function renderBottom() {
 
   el.innerHTML = `
     <div class="editorHeader">
-      ${jacketHtml({ song: song.label, jacket: song.jacket }, 72)}
+      ${jacketHtml({ song: song.name, jacket: song.jacket }, 72)}
       <div class="editorTitle">
-        <div class="editorName">${escapeHtml(song.label)}</div>
+        <div class="editorName">${escapeHtml(song.name)}</div>
+        ${song.artist ? `<div class="editorArtist">${escapeHtml(song.artist)}</div>` : ""}
+        <button type="button" id="editChartBtn" class="secondary small">Edit chart info</button>
       </div>
     </div>
     <div class="editorDiffs" id="editorDiffs">
@@ -322,6 +502,7 @@ function renderBottom() {
   el.querySelectorAll(".diffPick").forEach(btn => {
     btn.addEventListener("click", () => select(song.id, btn.dataset.diff));
   });
+  $("editChartBtn").addEventListener("click", () => openChartModal(song.id));
 
   const input = $("accInput");
   if (input) {
@@ -374,6 +555,214 @@ function renderBottom() {
   }
 }
 
+function renderJacketPreview(url, name) {
+  const preview = $("chartJacketPreview");
+  preview.dataset.initials = initials(name || "?");
+  preview.innerHTML = url
+    ? `<img src="${escapeAttr(url)}" alt="" referrerpolicy="no-referrer"
+         onerror="this.style.display='none'">`
+    : "";
+}
+
+function openChartModal(songId = null) {
+  editingSongId = songId;
+  const song = songId ? songsById.get(songId) : null;
+  $("chartModalTitle").textContent = song ? "Edit chart information" : "Add a chart";
+  $("chartDeleteBtn").classList.toggle("hidden", !song?.id.startsWith("custom-"));
+  $("chartName").value = song?.name || "";
+  $("chartName").disabled = false;
+  $("chartArtist").value = song?.artist || "";
+  $("chartJacketUrl").value = song?.jacket && !song.jacket.startsWith("data:")
+    ? song.jacket
+    : "";
+  $("chartJacketFile").value = "";
+  pendingJacket = song?.jacket || null;
+  $("chartFormStatus").textContent = "";
+
+  $("chartConstGrid").querySelectorAll("input").forEach(input => {
+    const chart = song?.charts.find(item => item.diff === input.dataset.diff);
+    input.value = chart ? chart.constant : "";
+  });
+  renderJacketPreview(pendingJacket, song?.label || song?.name || "");
+  $("chartModal").classList.remove("hidden");
+  $("chartName").focus();
+}
+
+function closeChartModal() {
+  $("chartModal").classList.add("hidden");
+  editingSongId = null;
+  pendingJacket = null;
+}
+
+function setupChartModal() {
+  $("addChartBtn").addEventListener("click", () => openChartModal());
+  $("chartModalClose").addEventListener("click", closeChartModal);
+  $("chartCancelBtn").addEventListener("click", closeChartModal);
+  $("chartModal").addEventListener("click", event => {
+    if (event.target.id === "chartModal") closeChartModal();
+  });
+  $("chartDeleteBtn").addEventListener("click", () => {
+    const song = editingSongId ? songsById.get(editingSongId) : null;
+    if (!song?.id.startsWith("custom-")) return;
+    if (!confirm(`Delete "${song.label}" and its saved accuracies?`)) return;
+
+    const nextEdits = {
+      overrides: { ...chartEdits.overrides },
+      customSongs: chartEdits.customSongs.filter(entry => entry.id !== song.id),
+    };
+    if (!saveChartEdits(nextEdits)) return;
+
+    songs = songs.filter(entry => entry.id !== song.id);
+    for (const key of Object.keys(scores)) {
+      if (key.startsWith(`${song.scoreKey}\u0000`)) delete scores[key];
+    }
+    saveScores();
+    if (selected.song === song.id) selected = { song: null, diff: null };
+    rebuildChartData();
+    closeChartModal();
+    renderAll();
+  });
+
+  $("chartJacketUrl").addEventListener("input", event => {
+    const url = event.target.value.trim();
+    pendingJacket = url || null;
+    $("chartJacketFile").value = "";
+    renderJacketPreview(pendingJacket, $("chartName").value);
+  });
+  $("chartName").addEventListener("input", () => {
+    if (!pendingJacket) renderJacketPreview(null, $("chartName").value);
+  });
+  $("clearJacketBtn").addEventListener("click", () => {
+    pendingJacket = null;
+    $("chartJacketUrl").value = "";
+    $("chartJacketFile").value = "";
+    renderJacketPreview(null, $("chartName").value);
+  });
+  $("chartJacketFile").addEventListener("change", () => {
+    const file = $("chartJacketFile").files[0];
+    if (!file) return;
+    const imageTypes = ["image/png", "image/jpeg", "image/webp", "image/avif", "image/gif"];
+    if (!imageTypes.includes(file.type)) {
+      $("chartFormStatus").textContent = "Choose a PNG, JPEG, WebP, AVIF, or GIF image.";
+      $("chartJacketFile").value = "";
+      return;
+    }
+    if (file.size > MAX_JACKET_UPLOAD_BYTES) {
+      $("chartFormStatus").textContent = "Image files must be 512 KB or smaller.";
+      $("chartJacketFile").value = "";
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = () => {
+      if (typeof reader.result !== "string") {
+        $("chartFormStatus").textContent = "Could not read the selected image.";
+        return;
+      }
+      pendingJacket = reader.result;
+      $("chartJacketUrl").value = "";
+      $("chartFormStatus").textContent = "";
+      renderJacketPreview(pendingJacket, $("chartName").value);
+    };
+    reader.onerror = () => {
+      $("chartFormStatus").textContent = "Could not read the selected image.";
+    };
+    reader.readAsDataURL(file);
+  });
+
+  $("chartForm").addEventListener("submit", event => {
+    event.preventDefault();
+    const name = $("chartName").value.trim();
+    if (!name) {
+      $("chartFormStatus").textContent = "Enter a chart name.";
+      return;
+    }
+    const artist = $("chartArtist").value.trim();
+
+    const chartsList = [];
+    let invalidConstant = false;
+    $("chartConstGrid").querySelectorAll("input").forEach(input => {
+      const raw = input.value.trim();
+      if (!raw) return;
+      const constant = Number(raw);
+      if (!Number.isFinite(constant) || constant <= 0 || constant > 20) {
+        invalidConstant = true;
+        return;
+      }
+      chartsList.push({ diff: input.dataset.diff, constant });
+    });
+    if (invalidConstant) {
+      $("chartFormStatus").textContent = "Difficulty constants must be greater than 0 and no more than 20.";
+      return;
+    }
+    if (!chartsList.length) {
+      $("chartFormStatus").textContent = "Enter at least one difficulty constant.";
+      return;
+    }
+
+    const jacketUrl = $("chartJacketUrl").value.trim();
+    if (jacketUrl) {
+      try {
+        const parsedUrl = new URL(jacketUrl);
+        if (!["http:", "https:"].includes(parsedUrl.protocol)) throw new Error("Unsupported image URL scheme");
+      } catch {
+        $("chartFormStatus").textContent = "Enter a valid http or https image URL.";
+        return;
+      }
+    }
+
+    const existing = editingSongId ? songsById.get(editingSongId) : null;
+    const uniqueId = crypto.randomUUID
+      ? crypto.randomUUID()
+      : `${Date.now()}-${Math.random().toString(16).slice(2)}`;
+    const id = existing?.id || `custom-${uniqueId}`;
+    const jacket = jacketUrl || pendingJacket || null;
+    const song = {
+      id,
+      name,
+      label: name,
+      artist,
+      scoreKey: existing?.scoreKey || `custom:${id}`,
+      jacket,
+      charts: chartsList,
+    };
+    if (!isValidSongRecord(song)) {
+      $("chartFormStatus").textContent = "Chart information is incomplete or invalid.";
+      return;
+    }
+
+    const nextEdits = {
+      overrides: { ...chartEdits.overrides },
+      customSongs: [...chartEdits.customSongs],
+    };
+    if (existing && !existing.id.startsWith("custom-")) {
+      nextEdits.overrides[id] = song;
+    } else if (existing) {
+      const index = nextEdits.customSongs.findIndex(entry => entry.id === id);
+      if (index === -1) {
+        $("chartFormStatus").textContent = "Could not find the saved custom chart.";
+        return;
+      }
+      nextEdits.customSongs[index] = song;
+    } else {
+      nextEdits.customSongs.push(song);
+    }
+    if (!saveChartEdits(nextEdits)) return;
+
+    if (existing) {
+      const index = songs.findIndex(entry => entry.id === id);
+      songs[index] = song;
+    } else {
+      songs.push(song);
+    }
+    rebuildChartData();
+    selected.song = id;
+    selected.diff = chartsList[0].diff;
+    closeChartModal();
+    renderAll();
+  });
+}
+
 // ---------------------------------------------------------------------------
 // Left: filterable/sortable/searchable song list
 // ---------------------------------------------------------------------------
@@ -386,7 +775,9 @@ function filteredCharts() {
   const compareNumber = (a, b) => (a - b) * direction;
 
   let arr = charts.filter(c => {
-    const matchesText = !search || c.song.toLowerCase().includes(search);
+    const matchesText = !search ||
+      c.song.toLowerCase().includes(search) ||
+      c.artist.toLowerCase().includes(search);
     const matchesDiff = ui.diffFilters.includes(c.diff);
     return matchesText && matchesDiff;
   });
@@ -427,7 +818,8 @@ function filteredSongGroups() {
     const song = songsById.get(songId);
     return {
       songId,
-      name: song.label,
+      name: song.name,
+      artist: song.artist || "",
       charts: [...list].sort((a, b) => diffSortIndex(a.diff) - diffSortIndex(b.diff)),
       firstPosition: firstPosition.get(songId),
     };
@@ -458,7 +850,8 @@ function renderSongs() {
     const singleTagCase = tagCharts.length === 1;
     const anyEligible = tagCharts.some(isRksEligible);
     const isSongSelected = selected.song === g.songId;
-    const defaultDiff = (tagCharts.find(c => c.diff === "IN") || tagCharts[0]).diff;
+    const defaultDiff = ["IN", "AT", "HD", "EZ"]
+      .find(diff => tagCharts.some(chart => chart.diff === diff)) || tagCharts[0].diff;
 
     const row = document.createElement("div");
     row.className = "song groupRow" + (!anyEligible ? " nonRks" : "") + (isSongSelected ? " selected" : "");
@@ -468,7 +861,10 @@ function renderSongs() {
     if (ui.sidebarFormat === "normal") {
       row.classList.add("normalSong");
       row.innerHTML = `
-        <div class="songTitle" title="${escapeAttr(g.name)}">${escapeHtml(g.name)}</div>
+        <div class="songHeading">
+          <div class="songTitle" title="${escapeAttr(g.name)}">${escapeHtml(g.name)}</div>
+          ${g.artist ? `<div class="songArtist">${escapeHtml(g.artist)}</div>` : ""}
+        </div>
         <div class="songJacketWrap" style="height:${jacketHeight}px">
           ${jacketHtml(tagCharts[0], null, true)}
         </div>
@@ -518,7 +914,10 @@ function renderSongs() {
 
     row.innerHTML = `
       <div class="songTop">
-        <div class="songTitle" title="${escapeAttr(g.name)}">${escapeHtml(g.name)}</div>
+        <div class="songHeading">
+          <div class="songTitle" title="${escapeAttr(g.name)}">${escapeHtml(g.name)}</div>
+          ${g.artist ? `<div class="songArtist">${escapeHtml(g.artist)}</div>` : ""}
+        </div>
         <div class="songTopTags">${topTagsHtml}</div>
       </div>
       <div class="songJacketWrap" style="height:${jacketHeight}px">
@@ -594,7 +993,6 @@ function setupControls() {
     if (!row) return;
 
     const chartButton = e.target.closest(".normalDiffRow, .diffTagBtn");
-    if (ui.sidebarFormat === "normal" && !chartButton?.classList.contains("normalDiffRow")) return;
     select(row.dataset.songId, chartButton?.dataset.diff || row.dataset.defaultDiff);
   });
 
@@ -699,9 +1097,10 @@ function flatten(songList) {
   for (const s of songList) {
     for (const c of s.charts) {
       out.push({
-        song: s.label,
+        song: s.name,
         songId: s.id,
         scoreKey: s.scoreKey,
+        artist: s.artist || "",
         diff: c.diff,
         constant: c.constant,
         jacket: s.jacket,
@@ -743,4 +1142,5 @@ applyLeftWidth();
 renderDiffChips();
 setupControls();
 setupResizer();
+setupChartModal();
 renderAll();

@@ -10,6 +10,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "000 -Ain Soph Aur-",
       "label": "000 -Ain Soph Aur-",
       "scoreKey": "000 -Ain Soph Aur-",
+      "artist": "Yumeji",
       "jacket": "https://phigros.tools/covers/000AinSophAur.Yumeji.avif",
       "charts": [
         {
@@ -31,6 +32,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "70 Minutes Fighters",
       "label": "70 Minutes Fighters",
       "scoreKey": "70 Minutes Fighters",
+      "artist": "かたぎり",
       "jacket": "https://phigros.tools/covers/70MinutesFighters.%E3%81%8B%E3%81%9F%E3%81%8E%E3%82%8A.avif",
       "charts": [
         {
@@ -52,6 +54,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "996",
       "label": "996",
       "scoreKey": "996",
+      "artist": "李化禹",
       "jacket": "https://phigros.tools/covers/996.%E6%9D%8E%E5%8C%96%E7%A6%B9.avif",
       "charts": [
         {
@@ -73,6 +76,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "About The Universe",
       "label": "About The Universe",
       "scoreKey": "About The Universe",
+      "artist": "SOTUI & MIssionary",
       "jacket": "https://phigros.tools/covers/AboutTheUniverse.SOTUIMIssionary.avif",
       "charts": [
         {
@@ -94,6 +98,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "AbsoluTe disoRdeR",
       "label": "AbsoluTe disoRdeR",
       "scoreKey": "AbsoluTe disoRdeR",
+      "artist": "Acute Disarray",
       "jacket": "https://phigros.tools/covers/AbsoluTedisoRdeR.AcuteDisarray.avif",
       "charts": [
         {
@@ -119,6 +124,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "ABYSS MOTION 192.333",
       "label": "ABYSS MOTION 192.333",
       "scoreKey": "ABYSS MOTION 192.333",
+      "artist": "ariiol & 奏Sou",
       "jacket": "https://phigros.tools/covers/ABYSSMOTION192333.ariiolTSAR%E5%A5%8FSou.avif",
       "charts": [
         {
@@ -140,6 +146,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "Ad astra per aspera",
       "label": "Ad astra per aspera",
       "scoreKey": "Ad astra per aspera",
+      "artist": "Rabbit House",
       "jacket": "https://phigros.tools/covers/Adastraperaspera.RabbitHouse.avif",
       "charts": [
         {
@@ -161,6 +168,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "After Dawn",
       "label": "After Dawn",
       "scoreKey": "After Dawn",
+      "artist": "S9ryne",
       "jacket": "https://phigros.tools/covers/AfterDawn.S9ryne.avif",
       "charts": [
         {
@@ -182,6 +190,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "After ZABANIYA (MUG Edit)",
       "label": "After ZABANIYA (MUG Edit)",
       "scoreKey": "After ZABANIYA (MUG Edit)",
+      "artist": "Daily天利",
       "jacket": "https://phigros.tools/covers/AfterZABANIYAMUGEdit.Daily%E5%A4%A9%E5%88%A9.avif",
       "charts": [
         {
@@ -203,6 +212,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "A journey to the moonlight",
       "label": "A journey to the moonlight",
       "scoreKey": "A journey to the moonlight",
+      "artist": "Yesod",
       "jacket": "https://phigros.tools/covers/Ajourneytothemoonlight.Yesod.avif",
       "charts": [
         {
@@ -224,6 +234,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "Alb",
       "label": "Alb",
       "scoreKey": "Alb",
+      "artist": "Avans",
       "jacket": "https://phigros.tools/covers/Alb.Avans.avif",
       "charts": [
         {
@@ -245,6 +256,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "Aleph-0",
       "label": "Aleph-0",
       "scoreKey": "Aleph-0",
+      "artist": "LeaF",
       "jacket": "https://phigros.tools/covers/Aleph0.LeaF.avif",
       "charts": [
         {
@@ -266,6 +278,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "Alice in a xxxxxxxx",
       "label": "Alice in a xxxxxxxx",
       "scoreKey": "Alice in a xxxxxxxx",
+      "artist": "Nagiha",
       "jacket": "https://phigros.tools/covers/Aliceinaxxxxxxxx.Nagiha.avif",
       "charts": [
         {
@@ -287,6 +300,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "Ametrine",
       "label": "Ametrine",
       "scoreKey": "Ametrine",
+      "artist": "GRYSCL & MIssionary",
       "jacket": "https://phigros.tools/covers/Ametrine.GRYSCLMIssionary.avif",
       "charts": [
         {
@@ -312,6 +326,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "Another Me",
       "label": "Another Me (D_AAN)",
       "scoreKey": "Another Me (D_AAN)",
+      "artist": "D_AAN",
       "jacket": "https://phigros.tools/covers/AnotherMe.DAAN.avif",
       "charts": [
         {
@@ -333,6 +348,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "Another Me",
       "label": "Another Me (Neutral Moon)",
       "scoreKey": "Another Me (Neutral Moon)",
+      "artist": "Neutral Moon",
       "jacket": "https://phigros.tools/covers/AnotherMe.NeutralMoon.avif",
       "charts": [
         {
@@ -354,6 +370,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "Another Round",
       "label": "Another Round",
       "scoreKey": "Another Round",
+      "artist": "Justin Dai",
       "jacket": "https://phigros.tools/covers/AnotherRound.JustinDai.avif",
       "charts": [
         {
@@ -375,6 +392,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "Antithese",
       "label": "Antithese",
       "scoreKey": "Antithese",
+      "artist": "Blacklolita",
       "jacket": "https://phigros.tools/covers/Antithese.Blacklolita.avif",
       "charts": [
         {
@@ -400,6 +418,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "Aphasia",
       "label": "Aphasia",
       "scoreKey": "Aphasia",
+      "artist": "闫东炜",
       "jacket": "https://phigros.tools/covers/Aphasia.%E9%97%AB%E4%B8%9C%E7%82%9C.avif",
       "charts": [
         {
@@ -421,6 +440,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "Aphrodite's Child (short ver.)",
       "label": "Aphrodite's Child (short ver.)",
       "scoreKey": "Aphrodite's Child (short ver.)",
+      "artist": "RUQOA",
       "jacket": "https://phigros.tools/covers/AphroditesChildshortver.RUQOA.avif",
       "charts": [
         {
@@ -442,6 +462,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "Apocalypse",
       "label": "Apocalypse",
       "scoreKey": "Apocalypse",
+      "artist": "アリスシャッハと魔法の楽団",
       "jacket": "https://phigros.tools/covers/Apocalypse.%E3%82%A2%E3%83%AA%E3%82%B9%E3%82%B7%E3%83%A3%E3%83%83%E3%83%8F%E3%81%A8%E9%AD%94%E6%B3%95%E3%81%AE%E6%A5%BD%E5%9B%A3.avif",
       "charts": [
         {
@@ -463,6 +484,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "Apocalyptic",
       "label": "Apocalyptic",
       "scoreKey": "Apocalyptic",
+      "artist": "Z ClaxX & SumaiLight",
       "jacket": "https://phigros.tools/covers/Apocalyptic.ZClaxxSumaiLight.avif",
       "charts": [
         {
@@ -484,6 +506,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "Archidoxen",
       "label": "Archidoxen",
       "scoreKey": "Archidoxen",
+      "artist": "Se_IRA",
       "jacket": "https://phigros.tools/covers/Archidoxen.Se_IRA.avif",
       "charts": [
         {
@@ -509,6 +532,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "Ark",
       "label": "Ark",
       "scoreKey": "Ark",
+      "artist": "kanoryo",
       "jacket": "https://phigros.tools/covers/Ark.kanoryo.avif",
       "charts": [
         {
@@ -534,6 +558,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "-Arkhei-",
       "label": "-Arkhei-",
       "scoreKey": "-Arkhei-",
+      "artist": "Sera Amagi",
       "jacket": "https://phigros.tools/covers/Arkhei.SeraAmagi.avif",
       "charts": [
         {
@@ -555,6 +580,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "Artificial Existence",
       "label": "Artificial Existence",
       "scoreKey": "Artificial Existence",
+      "artist": "Jun Kuroda",
       "jacket": "https://phigros.tools/covers/ArtificialExistence.JunKuroda.avif",
       "charts": [
         {
@@ -576,6 +602,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "ATHAZA",
       "label": "ATHAZA",
       "scoreKey": "ATHAZA",
+      "artist": "LeaF",
       "jacket": "https://phigros.tools/covers/ATHAZA.LeaF.avif",
       "charts": [
         {
@@ -601,6 +628,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "a truth seeker -Communication with Utopia will be lost-",
       "label": "a truth seeker -Communication with Utopia will be lost-",
       "scoreKey": "a truth seeker -Communication with Utopia will be lost-",
+      "artist": "kuro",
       "jacket": "https://phigros.tools/covers/atruthseekerCommunicationwithUtopiawillbelost.kuro.avif",
       "charts": [
         {
@@ -622,6 +650,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "Avataar ~Reincarnation of Kalpa~",
       "label": "Avataar ~Reincarnation of Kalpa~",
       "scoreKey": "Avataar ~Reincarnation of Kalpa~",
+      "artist": "Scarlette a.k.a CrYmson",
       "jacket": "https://phigros.tools/covers/AvataarReincarnationofKalpa.ScarletteakaCrYmson.avif",
       "charts": [
         {
@@ -647,6 +676,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "Äventyr",
       "label": "Äventyr",
       "scoreKey": "Äventyr",
+      "artist": "Grand Thaw / Rigël Theatre",
       "jacket": "https://phigros.tools/covers/Aventyr.GrandThawRigelTheatre.avif",
       "charts": [
         {
@@ -668,6 +698,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "BANGING STRIKE",
       "label": "BANGING STRIKE",
       "scoreKey": "BANGING STRIKE",
+      "artist": "Dew Pleiades",
       "jacket": "https://phigros.tools/covers/BANGINGSTRIKE.DewPleiades.avif",
       "charts": [
         {
@@ -693,6 +724,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "Believe Light (feat. 果丸哒呦)",
       "label": "Believe Light (feat. 果丸哒呦)",
       "scoreKey": "Believe Light (feat. 果丸哒呦)",
+      "artist": "Scaler & Mestie & 果丸哒呦",
       "jacket": "https://phigros.tools/covers/BelieveLightfeat%E6%9E%9C%E4%B8%B8%E5%93%92%E5%91%A6.ScalerMestie%E6%9E%9C%E4%B8%B8%E5%93%92%E5%91%A6.avif",
       "charts": [
         {
@@ -714,6 +746,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "Better Graphic Animation",
       "label": "Better Graphic Animation",
       "scoreKey": "Better Graphic Animation",
+      "artist": "ルゼ",
       "jacket": "https://phigros.tools/covers/BetterGraphicAnimation.%E3%83%AB%E3%82%BC.avif",
       "charts": [
         {
@@ -735,6 +768,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "Bitterblossom",
       "label": "Bitterblossom",
       "scoreKey": "Bitterblossom",
+      "artist": "imvi",
       "jacket": "https://phigros.tools/covers/Bitterblossom.imvi.avif",
       "charts": [
         {
@@ -756,6 +790,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "Bloom",
       "label": "Bloom",
       "scoreKey": "Bloom",
+      "artist": "targ & 麻团qwq",
       "jacket": "https://phigros.tools/covers/Bloom.targ%E9%BA%BB%E5%9B%A2qwq.avif",
       "charts": [
         {
@@ -777,6 +812,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "Bonus Time",
       "label": "Bonus Time",
       "scoreKey": "Bonus Time",
+      "artist": "Megalo_PaleWhite",
       "jacket": "https://phigros.tools/covers/BonusTime.MegaloPaleWhite.avif",
       "charts": [
         {
@@ -798,6 +834,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "Bougainvillea",
       "label": "Bougainvillea",
       "scoreKey": "Bougainvillea",
+      "artist": "Jade",
       "jacket": "https://phigros.tools/covers/Bougainvillea.Jade.avif",
       "charts": [
         {
@@ -819,6 +856,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "Bounded Quietude",
       "label": "Bounded Quietude",
       "scoreKey": "Bounded Quietude",
+      "artist": "Finite Limit vs SiLiS",
       "jacket": "https://phigros.tools/covers/BoundedQuietude.FiniteLimitvsSiLiS.avif",
       "charts": [
         {
@@ -840,6 +878,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "BRAIN HACKER",
       "label": "BRAIN HACKER",
       "scoreKey": "BRAIN HACKER",
+      "artist": "SOMON",
       "jacket": "https://phigros.tools/covers/BRAINHACKER.SOMON.avif",
       "charts": [
         {
@@ -861,6 +900,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "Brave Notes",
       "label": "Brave Notes",
       "scoreKey": "Brave Notes",
+      "artist": "Turquoise(DRIVE.+Nota)",
       "jacket": "https://phigros.tools/covers/BraveNotes.TurquoiseDRIVENota.avif",
       "charts": [
         {
@@ -882,6 +922,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "Break Over",
       "label": "Break Over",
       "scoreKey": "Break Over",
+      "artist": "K-forest",
       "jacket": "https://phigros.tools/covers/BreakOver.Kforest.avif",
       "charts": [
         {
@@ -907,6 +948,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "Break Through The Barrier",
       "label": "Break Through The Barrier",
       "scoreKey": "Break Through The Barrier",
+      "artist": "lixound",
       "jacket": "https://phigros.tools/covers/BreakThroughTheBarrier.lixound.avif",
       "charts": [
         {
@@ -928,6 +970,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "Broken Sky",
       "label": "Broken Sky",
       "scoreKey": "Broken Sky",
+      "artist": "Jungo & MAX 3 feat. 刘佳宜Snow & 幻影刃shadow",
       "jacket": "https://phigros.tools/covers/BrokenSky.JungoMAX3feat%E5%88%98%E4%BD%B3%E5%AE%9CSnow%E5%B9%BB%E5%BD%B1%E5%88%83shadow.avif",
       "charts": [
         {
@@ -949,6 +992,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "Burn",
       "label": "Burn",
       "scoreKey": "Burn",
+      "artist": "NceS",
       "jacket": "https://phigros.tools/covers/Burn.NceS.avif",
       "charts": [
         {
@@ -970,6 +1014,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "bye",
       "label": "bye",
       "scoreKey": "bye",
+      "artist": "DingerBox",
       "jacket": "https://phigros.tools/covers/bye.DingerBox.avif",
       "charts": [
         {
@@ -991,6 +1036,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "Cereris",
       "label": "Cereris",
       "scoreKey": "Cereris",
+      "artist": "SunsetRay/NceS",
       "jacket": "https://phigros.tools/covers/Cereris.SunsetRayNceS.avif",
       "charts": [
         {
@@ -1012,6 +1058,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "Cervelle Connexion",
       "label": "Cervelle Connexion",
       "scoreKey": "Cervelle Connexion",
+      "artist": "SCTL",
       "jacket": "https://phigros.tools/covers/CervelleConnexion.SCTL.avif",
       "charts": [
         {
@@ -1033,6 +1080,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "Chronologika",
       "label": "Chronologika",
       "scoreKey": "Chronologika",
+      "artist": "Hundotte",
       "jacket": "https://phigros.tools/covers/Chronologika.Hundotte.avif",
       "charts": [
         {
@@ -1054,6 +1102,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "Chronomia",
       "label": "Chronomia",
       "scoreKey": "Chronomia",
+      "artist": "Lime",
       "jacket": "https://phigros.tools/covers/Chronomia.Lime.avif",
       "charts": [
         {
@@ -1075,6 +1124,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "Chronos Collapse - La Campanella",
       "label": "Chronos Collapse - La Campanella",
       "scoreKey": "Chronos Collapse - La Campanella",
+      "artist": "SunsetRay",
       "jacket": "https://phigros.tools/covers/ChronosCollapseLaCampanella.SunsetRay.avif",
       "charts": [
         {
@@ -1096,6 +1146,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "Chronostasis",
       "label": "Chronostasis",
       "scoreKey": "Chronostasis",
+      "artist": "黒皇帝",
       "jacket": "https://phigros.tools/covers/Chronostasis.%E9%BB%92%E7%9A%87%E5%B8%9D.avif",
       "charts": [
         {
@@ -1117,6 +1168,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "Cipher : /2&//<|0",
       "label": "Cipher : /2&//<|0",
       "scoreKey": "Cipher : /2&//<|0",
+      "artist": "Tetrajectory feat. Ctymax",
       "jacket": "https://phigros.tools/covers/Cipher20.TetrajectoryfeatCtymax.avif",
       "charts": [
         {
@@ -1138,6 +1190,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "Class Memories",
       "label": "Class Memories",
       "scoreKey": "Class Memories",
+      "artist": "Antistar feat. Ctymax",
       "jacket": "https://phigros.tools/covers/ClassMemories.AntistarfeatCtymax.avif",
       "charts": [
         {
@@ -1159,6 +1212,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "Cleyera",
       "label": "Cleyera",
       "scoreKey": "Cleyera",
+      "artist": "Riya",
       "jacket": "https://phigros.tools/covers/Cleyera.Riya.avif",
       "charts": [
         {
@@ -1180,6 +1234,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "Clock Paradox",
       "label": "Clock Paradox",
       "scoreKey": "Clock Paradox",
+      "artist": "WyvernP",
       "jacket": "https://phigros.tools/covers/ClockParadox.WyvernP.avif",
       "charts": [
         {
@@ -1201,6 +1256,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "Colorful Days♪",
       "label": "Colorful Days♪",
       "scoreKey": "Colorful Days♪",
+      "artist": "P4koo feat. つゆり花鈴",
       "jacket": "https://phigros.tools/covers/ColorfulDays.P4koofeat%E3%81%A4%E3%82%86%E3%82%8A%E8%8A%B1%E9%88%B4.avif",
       "charts": [
         {
@@ -1222,6 +1278,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "Comet",
       "label": "Comet",
       "scoreKey": "Comet",
+      "artist": "CNHKSS feat. 符白牙",
       "jacket": "https://phigros.tools/covers/CometFeat%E7%AC%A6%E7%99%BD%E7%89%99.CNHKSS.avif",
       "charts": [
         {
@@ -1243,6 +1300,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "Compute It With Some Devilish Alcoholic Steampunk Engines",
       "label": "Compute It With Some Devilish Alcoholic Steampunk Engines",
       "scoreKey": "Compute It With Some Devilish Alcoholic Steampunk Engines",
+      "artist": "かめりあ",
       "jacket": "https://phigros.tools/covers/ComputeItWithSomeDevilishAlcoholicSteampunkEngines.%E3%81%8B%E3%82%81%E3%82%8A%E3%81%82.avif",
       "charts": [
         {
@@ -1264,6 +1322,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "Concvssion",
       "label": "Concvssion",
       "scoreKey": "Concvssion",
+      "artist": "Halv",
       "jacket": "https://phigros.tools/covers/Concvssion.Halv.avif",
       "charts": [
         {
@@ -1285,6 +1344,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "Crave Wave",
       "label": "Crave Wave",
       "scoreKey": "Crave Wave",
+      "artist": "LandRoot",
       "jacket": "https://phigros.tools/covers/CraveWave.LandRoot.avif",
       "charts": [
         {
@@ -1306,6 +1366,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "Credits",
       "label": "Credits",
       "scoreKey": "Credits",
+      "artist": "Frums",
       "jacket": "https://phigros.tools/covers/Credits.Frums.avif",
       "charts": [
         {
@@ -1331,6 +1392,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "Cristalisia",
       "label": "Cristalisia",
       "scoreKey": "Cristalisia",
+      "artist": "onoken",
       "jacket": "https://phigros.tools/covers/Cristalisia.onoken.avif",
       "charts": [
         {
@@ -1352,6 +1414,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "CROSS†SOUL",
       "label": "CROSS†SOUL",
       "scoreKey": "CROSS†SOUL",
+      "artist": "HyuN feat. Syepias",
       "jacket": "https://phigros.tools/covers/CROSSSOUL.HyuNfeatSyepias.avif",
       "charts": [
         {
@@ -1373,6 +1436,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "Crush BETA",
       "label": "Crush BETA",
       "scoreKey": "Crush BETA",
+      "artist": "shadow_bling",
       "jacket": "https://phigros.tools/covers/CrushBETA.shadow_bling.avif",
       "charts": [
         {
@@ -1394,6 +1458,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "Cryogenic",
       "label": "Cryogenic",
       "scoreKey": "Cryogenic",
+      "artist": "Camellia ft. Petra Gurin",
       "jacket": "https://phigros.tools/covers/Cryogenic.CamelliaftPetraGurin.avif",
       "charts": [
         {
@@ -1415,6 +1480,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "cryout",
       "label": "cryout",
       "scoreKey": "cryout",
+      "artist": "Ju_E",
       "jacket": "https://phigros.tools/covers/cryout.JuE.avif",
       "charts": [
         {
@@ -1436,6 +1502,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "c.s.q.n.",
       "label": "c.s.q.n.",
       "scoreKey": "c.s.q.n.",
+      "artist": "Aoi",
       "jacket": "https://phigros.tools/covers/csqn.Aoi.avif",
       "charts": [
         {
@@ -1457,6 +1524,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "Cthugha",
       "label": "Cthugha",
       "scoreKey": "Cthugha",
+      "artist": "USAO",
       "jacket": "https://phigros.tools/covers/Cthugha.USAO.avif",
       "charts": [
         {
@@ -1482,6 +1550,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "Cuvism³",
       "label": "Cuvism³",
       "scoreKey": "Cuvism³",
+      "artist": "Fl00t vs Halv",
       "jacket": "https://phigros.tools/covers/Cuvism.Fl00tvsHalv.avif",
       "charts": [
         {
@@ -1507,6 +1576,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "Dance with Silence",
       "label": "Dance with Silence",
       "scoreKey": "Dance with Silence",
+      "artist": "かめりあ",
       "jacket": "https://phigros.tools/covers/DancewithSilence.%E3%81%8B%E3%82%81%E3%82%8A%E3%81%82.avif",
       "charts": [
         {
@@ -1528,6 +1598,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "Dash",
       "label": "Dash",
       "scoreKey": "Dash",
+      "artist": "小红Akane，李祥晖",
       "jacket": "https://phigros.tools/covers/Dash.%E5%B0%8F%E7%BA%A2Akane%E6%9D%8E%E7%A5%A5%E8%BE%89.avif",
       "charts": [
         {
@@ -1549,6 +1620,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "DataErr0r",
       "label": "DataErr0r",
       "scoreKey": "DataErr0r",
+      "artist": "Cosmograph",
       "jacket": "https://phigros.tools/covers/DataErr0r.Cosmograph.avif",
       "charts": [
         {
@@ -1570,6 +1642,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "dB doll",
       "label": "dB doll",
       "scoreKey": "dB doll",
+      "artist": "YUE.STEVEN/uen",
       "jacket": "https://phigros.tools/covers/dBdoll.YUESTEVENuen.avif",
       "charts": [
         {
@@ -1595,6 +1668,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "Dead Soul",
       "label": "Dead Soul",
       "scoreKey": "Dead Soul",
+      "artist": "Sound Souler",
       "jacket": "https://phigros.tools/covers/DeadSoul.SoundSouler.avif",
       "charts": [
         {
@@ -1616,6 +1690,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "Demiurge",
       "label": "Demiurge",
       "scoreKey": "Demiurge",
+      "artist": "Rabpit",
       "jacket": "https://phigros.tools/covers/Demiurge.Rabpit.avif",
       "charts": [
         {
@@ -1637,6 +1712,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "Demonkin",
       "label": "Demonkin",
       "scoreKey": "Demonkin",
+      "artist": "Forged Reigns",
       "jacket": "https://phigros.tools/covers/Demonkin.ForgedReigns.avif",
       "charts": [
         {
@@ -1658,6 +1734,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "Der Richter",
       "label": "Der Richter",
       "scoreKey": "Der Richter",
+      "artist": "Ωμεγα",
       "jacket": "https://phigros.tools/covers/DerRichter.%CE%A9%CE%BC%CE%B5%CE%B3%CE%B1.avif",
       "charts": [
         {
@@ -1683,6 +1760,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "Der Schneid",
       "label": "Der Schneid",
       "scoreKey": "Der Schneid",
+      "artist": "Ωμεγα",
       "jacket": "https://phigros.tools/covers/DerSchneid.%CE%A9%CE%BC%CE%B5%CE%B3%CE%B1.avif",
       "charts": [
         {
@@ -1708,6 +1786,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "DESTRUCTION 3,2,1",
       "label": "DESTRUCTION 3,2,1",
       "scoreKey": "DESTRUCTION 3,2,1",
+      "artist": "Normal1zer vs. Broken Nerdz",
       "jacket": "https://phigros.tools/covers/DESTRUCTION321.Normal1zervsBrokenNerdz.avif",
       "charts": [
         {
@@ -1733,6 +1812,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "Desultory Signals",
       "label": "Desultory Signals",
       "scoreKey": "Desultory Signals",
+      "artist": "technoplanet",
       "jacket": "https://phigros.tools/covers/DesultorySignals.technoplanet.avif",
       "charts": [
         {
@@ -1758,6 +1838,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "Devastating History",
       "label": "Devastating History",
       "scoreKey": "Devastating History",
+      "artist": "NAMV",
       "jacket": "https://phigros.tools/covers/DevastatingHistory.NAMV.avif",
       "charts": [
         {
@@ -1779,6 +1860,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "DevIAtiOn (short ver.)",
       "label": "DevIAtiOn (short ver.)",
       "scoreKey": "DevIAtiOn (short ver.)",
+      "artist": "polysha",
       "jacket": "https://phigros.tools/covers/DevIAtiOnshortver.polysha.avif",
       "charts": [
         {
@@ -1800,6 +1882,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "Devotion",
       "label": "Devotion",
       "scoreKey": "Devotion",
+      "artist": "Connexio",
       "jacket": "https://phigros.tools/covers/Devotion.Connexio.avif",
       "charts": [
         {
@@ -1821,6 +1904,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "Diamond Dust",
       "label": "Diamond Dust",
       "scoreKey": "Diamond Dust",
+      "artist": "Masahiro “Godspeed” Aoki",
       "jacket": "https://phigros.tools/covers/DiamondDust.MasahiroGodspeedAoki.avif",
       "charts": [
         {
@@ -1846,6 +1930,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "Diamond Eyes",
       "label": "Diamond Eyes",
       "scoreKey": "Diamond Eyes",
+      "artist": "SYNTHETIC",
       "jacket": "https://phigros.tools/covers/DiamondEyes.SYNTHETIC.avif",
       "charts": [
         {
@@ -1867,6 +1952,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "Disorder",
       "label": "Disorder",
       "scoreKey": "Disorder",
+      "artist": "HyuN feat. YURI",
       "jacket": "https://phigros.tools/covers/Disorder.HyuNfeatYURI.avif",
       "charts": [
         {
@@ -1888,6 +1974,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "Distorted Fate",
       "label": "Distorted Fate",
       "scoreKey": "Distorted Fate",
+      "artist": "Sakuzyo",
       "jacket": "https://phigros.tools/covers/DistortedFate.Sakuzyo.avif",
       "charts": [
         {
@@ -1913,6 +2000,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "Dlyrotz",
       "label": "Dlyrotz",
       "scoreKey": "Dlyrotz",
+      "artist": "Likey",
       "jacket": "https://phigros.tools/covers/Dlyrotz.Likey.avif",
       "charts": [
         {
@@ -1934,6 +2022,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "Don't Never Around",
       "label": "Don't Never Around",
       "scoreKey": "Don't Never Around",
+      "artist": "HAMA",
       "jacket": "https://phigros.tools/covers/DontNeverAround.HAMA.avif",
       "charts": [
         {
@@ -1955,6 +2044,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "Doppelganger",
       "label": "Doppelganger",
       "scoreKey": "Doppelganger",
+      "artist": "LeaF",
       "jacket": "https://phigros.tools/covers/Doppelganger.LeaF.avif",
       "charts": [
         {
@@ -1976,6 +2066,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "Dreamland",
       "label": "Dreamland",
       "scoreKey": "Dreamland",
+      "artist": "z1on & kyrrin",
       "jacket": "https://phigros.tools/covers/Dreamland.z1onkyrrin.avif",
       "charts": [
         {
@@ -1997,6 +2088,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "Drop It",
       "label": "Drop It",
       "scoreKey": "Drop It",
+      "artist": "Asuka",
       "jacket": "https://phigros.tools/covers/DropIt.Asuka.avif",
       "charts": [
         {
@@ -2018,6 +2110,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "El Condor Pasa (Phigros Edit)",
       "label": "El Condor Pasa (Phigros Edit)",
       "scoreKey": "El Condor Pasa (Phigros Edit)",
+      "artist": "Plastic Fruits",
       "jacket": "https://phigros.tools/covers/ElCondorPasaPhigrosEdit.PlasticFruits.avif",
       "charts": [
         {
@@ -2039,6 +2132,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "Electron",
       "label": "Electron",
       "scoreKey": "Electron",
+      "artist": "ElousΛ.-FZ",
       "jacket": "https://phigros.tools/covers/Electron.ElousFZ.avif",
       "charts": [
         {
@@ -2060,6 +2154,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "Eltaw",
       "label": "Eltaw",
       "scoreKey": "Eltaw",
+      "artist": "Fl00t",
       "jacket": "https://phigros.tools/covers/Eltaw.Fl00t.avif",
       "charts": [
         {
@@ -2081,6 +2176,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "El último baile",
       "label": "El último baile",
       "scoreKey": "El último baile",
+      "artist": "Θ",
       "jacket": "https://phigros.tools/covers/El%C3%BAltimobaile.%CE%98.avif",
       "charts": [
         {
@@ -2102,6 +2198,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "End Me",
       "label": "End Me",
       "scoreKey": "End Me",
+      "artist": "ZxNX as \"Delaina\"",
       "jacket": "https://phigros.tools/covers/EndMe.ZxNXasDelaina.avif",
       "charts": [
         {
@@ -2123,6 +2220,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "ENERGY SYNERGY MATRIX",
       "label": "ENERGY SYNERGY MATRIX",
       "scoreKey": "ENERGY SYNERGY MATRIX",
+      "artist": "Tanchiky",
       "jacket": "https://phigros.tools/covers/ENERGYSYNERGYMATRIX.Tanchiky.avif",
       "charts": [
         {
@@ -2144,6 +2242,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "energy trixxx",
       "label": "energy trixxx",
       "scoreKey": "energy trixxx",
+      "artist": "KAH",
       "jacket": "https://phigros.tools/covers/energytrixxx.KAH.avif",
       "charts": [
         {
@@ -2165,6 +2264,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "Engine x Start!! (melody mix)",
       "label": "Engine x Start!! (melody mix)",
       "scoreKey": "Engine x Start!! (melody mix)",
+      "artist": "CrossingSound",
       "jacket": "https://phigros.tools/covers/EnginexStartmelodymix.CrossingSound.avif",
       "charts": [
         {
@@ -2186,6 +2286,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "Entrance to the Chaos",
       "label": "Entrance to the Chaos",
       "scoreKey": "Entrance to the Chaos",
+      "artist": "打打だいず vs. siromaru",
       "jacket": "https://phigros.tools/covers/EntrancetotheChaos.%E6%89%93%E6%89%93%E3%81%A0%E3%81%84%E3%81%9Avssiromaru.avif",
       "charts": [
         {
@@ -2211,6 +2312,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "+ERABY+E CONNEC+10N",
       "label": "+ERABY+E CONNEC+10N",
       "scoreKey": "+ERABY+E CONNEC+10N",
+      "artist": "かめりあ",
       "jacket": "https://phigros.tools/covers/ERABYECONNEC10N.%E3%81%8B%E3%82%81%E3%82%8A%E3%81%82.avif",
       "charts": [
         {
@@ -2236,6 +2338,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "Eradication Catastrophe",
       "label": "Eradication Catastrophe",
       "scoreKey": "Eradication Catastrophe",
+      "artist": "NceS",
       "jacket": "https://phigros.tools/covers/EradicationCatastrophe.NceS.avif",
       "charts": [
         {
@@ -2257,6 +2360,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "Eternal Snow",
       "label": "Eternal Snow",
       "scoreKey": "Eternal Snow",
+      "artist": "Abyss Idols",
       "jacket": "https://phigros.tools/covers/EternalSnow.AbyssIdols.avif",
       "charts": [
         {
@@ -2278,6 +2382,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "Evanescent",
       "label": "Evanescent",
       "scoreKey": "Evanescent",
+      "artist": "LeaF",
       "jacket": "https://phigros.tools/covers/Evanescent.LeaF.avif",
       "charts": [
         {
@@ -2299,6 +2404,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "Exoplanetary Mirage",
       "label": "Exoplanetary Mirage",
       "scoreKey": "Exoplanetary Mirage",
+      "artist": "Camellia",
       "jacket": "https://phigros.tools/covers/ExoplanetaryMirage.%E3%81%8B%E3%82%81%E3%82%8A%E3%81%82.avif",
       "charts": [
         {
@@ -2324,6 +2430,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "Feast远东之宴",
       "label": "Feast远东之宴",
       "scoreKey": "Feast远东之宴",
+      "artist": "茶鸣拾贰律",
       "jacket": "https://phigros.tools/covers/Feast%E8%BF%9C%E4%B8%9C%E4%B9%8B%E5%AE%B4.%E8%8C%B6%E9%B8%A3%E6%8B%BE%E8%B4%B0%E5%BE%8B.avif",
       "charts": [
         {
@@ -2345,6 +2452,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "Final Step!",
       "label": "Final Step!",
       "scoreKey": "Final Step!",
+      "artist": "Lime",
       "jacket": "https://phigros.tools/covers/FinalStep.Lime.avif",
       "charts": [
         {
@@ -2366,6 +2474,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "Find_Me",
       "label": "Find_Me",
       "scoreKey": "Find_Me",
+      "artist": "K-forest",
       "jacket": "https://phigros.tools/covers/FindMe.Kforest.avif",
       "charts": [
         {
@@ -2387,6 +2496,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "Fixations Toward the Stars",
       "label": "Fixations Toward the Stars",
       "scoreKey": "Fixations Toward the Stars",
+      "artist": "Foodbot",
       "jacket": "https://phigros.tools/covers/FixationsTowardtheStars.Foodbot.avif",
       "charts": [
         {
@@ -2408,6 +2518,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "Flutter Echo",
       "label": "Flutter Echo",
       "scoreKey": "Flutter Echo",
+      "artist": "Cansol",
       "jacket": "https://phigros.tools/covers/FlutterEcho.Cansol.avif",
       "charts": [
         {
@@ -2429,6 +2540,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "Fractured Angel",
       "label": "Fractured Angel",
       "scoreKey": "Fractured Angel",
+      "artist": "DJ Raisei",
       "jacket": "https://phigros.tools/covers/FracturedAngel.DJRaisei.avif",
       "charts": [
         {
@@ -2450,6 +2562,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "Freaky Undulations ~Noble Knights of Tune~",
       "label": "Freaky Undulations ~Noble Knights of Tune~",
       "scoreKey": "Freaky Undulations ~Noble Knights of Tune~",
+      "artist": "Jehezukiel + KURORAK",
       "jacket": "https://phigros.tools/covers/FreakyUndulationsNobleKnightsofTune.JehezukielKURORAK.avif",
       "charts": [
         {
@@ -2471,6 +2584,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "Frozen Heart",
       "label": "Frozen Heart",
       "scoreKey": "Frozen Heart",
+      "artist": "A-39 / 沙包P",
       "jacket": "https://phigros.tools/covers/FrozenHeart.A39%E6%B2%99%E5%8C%85P.avif",
       "charts": [
         {
@@ -2492,6 +2606,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "FULi AUTO BUSTER",
       "label": "FULi AUTO BUSTER",
       "scoreKey": "FULi AUTO BUSTER",
+      "artist": "MYUKKE.",
       "jacket": "https://phigros.tools/covers/FULiAUTOBUSTER.MYUKKE.avif",
       "charts": [
         {
@@ -2513,6 +2628,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "FULi AUTO SHOOTER",
       "label": "FULi AUTO SHOOTER",
       "scoreKey": "FULi AUTO SHOOTER",
+      "artist": "MYUKKE.",
       "jacket": "https://phigros.tools/covers/FULiAUTOSHOOTER.MYUKKE.avif",
       "charts": [
         {
@@ -2534,6 +2650,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "Future Mind",
       "label": "Future Mind",
       "scoreKey": "Future Mind",
+      "artist": "Ray Nautica & Reku Mochizuki",
       "jacket": "https://phigros.tools/covers/FutureMind.RayNauticaRekuMochizuki.avif",
       "charts": [
         {
@@ -2555,6 +2672,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "Get Back",
       "label": "Get Back",
       "scoreKey": "Get Back",
+      "artist": "CAP3",
       "jacket": "https://phigros.tools/covers/GetBack.CAP3.avif",
       "charts": [
         {
@@ -2576,6 +2694,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "Get Ready!! ",
       "label": "Get Ready!! ",
       "scoreKey": "Get Ready!! ",
+      "artist": "iF",
       "jacket": "https://phigros.tools/covers/GetReady.iF.avif",
       "charts": [
         {
@@ -2597,6 +2716,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "Glaciaxion",
       "label": "Glaciaxion",
       "scoreKey": "Glaciaxion",
+      "artist": "SunsetRay",
       "jacket": "https://phigros.tools/covers/Glaciaxion.SunsetRay.avif",
       "charts": [
         {
@@ -2618,6 +2738,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "GOODBOUNCE",
       "label": "GOODBOUNCE",
       "scoreKey": "GOODBOUNCE",
+      "artist": "EBIMAYO",
       "jacket": "https://phigros.tools/covers/GOODBOUNCE.EBIMAYO.avif",
       "charts": [
         {
@@ -2639,6 +2760,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "GOODFORTUNE",
       "label": "GOODFORTUNE",
       "scoreKey": "GOODFORTUNE",
+      "artist": "EBIMAYO",
       "jacket": "https://phigros.tools/covers/GOODFORTUNE.EBIMAYO.avif",
       "charts": [
         {
@@ -2660,6 +2782,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "GOODRAGE",
       "label": "GOODRAGE",
       "scoreKey": "GOODRAGE",
+      "artist": "EBIMAYO",
       "jacket": "https://phigros.tools/covers/GOODRAGE.EBIMAYO.avif",
       "charts": [
         {
@@ -2681,6 +2804,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "GOODTEK",
       "label": "GOODTEK",
       "scoreKey": "GOODTEK",
+      "artist": "EBIMAYO",
       "jacket": "https://phigros.tools/covers/GOODTEK.EBIMAYO.avif",
       "charts": [
         {
@@ -2702,6 +2826,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "GOODWORLD",
       "label": "GOODWORLD",
       "scoreKey": "GOODWORLD",
+      "artist": "EBIMAYO",
       "jacket": "https://phigros.tools/covers/GOODWORLD.EBIMAYO.avif",
       "charts": [
         {
@@ -2723,6 +2848,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "Grimheart",
       "label": "Grimheart",
       "scoreKey": "Grimheart",
+      "artist": "Puru",
       "jacket": "https://phigros.tools/covers/Grimheart.Puru.avif",
       "charts": [
         {
@@ -2744,6 +2870,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "Gungnir Fracture",
       "label": "Gungnir Fracture",
       "scoreKey": "Gungnir Fracture",
+      "artist": "Kry.exe",
       "jacket": "https://phigros.tools/covers/GungnirFracture.Kryexe.avif",
       "charts": [
         {
@@ -2765,6 +2892,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "G.V.N. (Glitter,Vomitus and Neon)",
       "label": "G.V.N. (Glitter,Vomitus and Neon)",
       "scoreKey": "G.V.N. (Glitter,Vomitus and Neon)",
+      "artist": "Salty Salt & Unfold33",
       "jacket": "https://phigros.tools/covers/GVNGlitterVomitusandNeon.SaltySaltUnfold33.avif",
       "charts": [
         {
@@ -2786,6 +2914,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "Hardcore Kwaya",
       "label": "Hardcore Kwaya",
       "scoreKey": "Hardcore Kwaya",
+      "artist": "EnFr",
       "jacket": "https://phigros.tools/covers/HardcoreKwaya.EnFr.avif",
       "charts": [
         {
@@ -2807,6 +2936,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "HAZARD",
       "label": "HAZARD",
       "scoreKey": "HAZARD",
+      "artist": "Limpid",
       "jacket": "https://phigros.tools/covers/HAZARD.Limpid.avif",
       "charts": [
         {
@@ -2828,6 +2958,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "Helios",
       "label": "Helios",
       "scoreKey": "Helios",
+      "artist": "NOA(Cortrix) & BotaNya",
       "jacket": "https://phigros.tools/covers/Helios.NOABotaNya.avif",
       "charts": [
         {
@@ -2849,6 +2980,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "Horizon Blue",
       "label": "Horizon Blue",
       "scoreKey": "Horizon Blue",
+      "artist": "Nothing But Requiem feat. Aikapin & Chiyoko",
       "jacket": "https://phigros.tools/covers/HorizonBlue.NothingButRequiemfeatAikapinChiyoko.avif",
       "charts": [
         {
@@ -2870,6 +3002,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "HumaN",
       "label": "HumaN",
       "scoreKey": "HumaN",
+      "artist": "SOTUI",
       "jacket": "https://phigros.tools/covers/HumaN.SOTUI.avif",
       "charts": [
         {
@@ -2891,6 +3024,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "Hydra",
       "label": "Hydra",
       "scoreKey": "Hydra",
+      "artist": "James Landino X Akira Complex",
       "jacket": "https://phigros.tools/covers/Hydra.JamesLandinoXAkiraComplex.avif",
       "charts": [
         {
@@ -2916,6 +3050,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "Igallta",
       "label": "Igallta",
       "scoreKey": "Igallta",
+      "artist": "Se-U-Ra",
       "jacket": "https://phigros.tools/covers/Igallta.SeURa.avif",
       "charts": [
         {
@@ -2941,6 +3076,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "iL-Artifact",
       "label": "iL-Artifact",
       "scoreKey": "iL-Artifact",
+      "artist": "Link''0",
       "jacket": "https://phigros.tools/covers/iLArtifact.Link0.avif",
       "charts": [
         {
@@ -2962,6 +3098,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "Implexrough",
       "label": "Implexrough",
       "scoreKey": "Implexrough",
+      "artist": "Silentroom × mommy",
       "jacket": "https://phigros.tools/covers/Implexrough.Silentroommommy.avif",
       "charts": [
         {
@@ -2983,6 +3120,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "I Must Say No",
       "label": "I Must Say No",
       "scoreKey": "I Must Say No",
+      "artist": "TangJuan",
       "jacket": "https://phigros.tools/covers/IMustSayNo.TangJuan.avif",
       "charts": [
         {
@@ -3004,6 +3142,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "Incyde",
       "label": "Incyde",
       "scoreKey": "Incyde",
+      "artist": "YbeLL",
       "jacket": "https://phigros.tools/covers/Incyde.YbeLL.avif",
       "charts": [
         {
@@ -3025,6 +3164,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "Indelible Scar",
       "label": "Indelible Scar",
       "scoreKey": "Indelible Scar",
+      "artist": "Noah",
       "jacket": "https://phigros.tools/covers/IndelibleScar.Noah.avif",
       "charts": [
         {
@@ -3050,6 +3190,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "inferior",
       "label": "inferior",
       "scoreKey": "inferior",
+      "artist": "姜米條",
       "jacket": "https://phigros.tools/covers/inferior.%E5%A7%9C%E7%B1%B3%E6%A2%9D.avif",
       "charts": [
         {
@@ -3071,6 +3212,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "INFiNiTE ENERZY -Overdoze-",
       "label": "INFiNiTE ENERZY -Overdoze-",
       "scoreKey": "INFiNiTE ENERZY -Overdoze-",
+      "artist": "Reku Mochizuki",
       "jacket": "https://phigros.tools/covers/INFiNiTEENERZYOverdoze.RekuMochizuki.avif",
       "charts": [
         {
@@ -3096,6 +3238,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "Infinity Heaven",
       "label": "Infinity Heaven",
       "scoreKey": "Infinity Heaven",
+      "artist": "HyuN",
       "jacket": "https://phigros.tools/covers/InfinityHeaven.HyuN.avif",
       "charts": [
         {
@@ -3117,6 +3260,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "Initialize",
       "label": "Initialize",
       "scoreKey": "Initialize",
+      "artist": "iF",
       "jacket": "https://phigros.tools/covers/Initialize.iF.avif",
       "charts": [
         {
@@ -3138,6 +3282,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "Inverted World",
       "label": "Inverted World",
       "scoreKey": "Inverted World",
+      "artist": "ARForest",
       "jacket": "https://phigros.tools/covers/InvertedWorld.ARForest.avif",
       "charts": [
         {
@@ -3159,6 +3304,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "Journey with You",
       "label": "Journey with You",
       "scoreKey": "Journey with You",
+      "artist": "Iris",
       "jacket": "https://phigros.tools/covers/JourneywithYou.Iris.avif",
       "charts": [
         {
@@ -3180,6 +3326,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "JunXion Between Life And Death(VIP Mix)",
       "label": "JunXion Between Life And Death(VIP Mix)",
       "scoreKey": "JunXion Between Life And Death(VIP Mix)",
+      "artist": "1N6Fs",
       "jacket": "https://phigros.tools/covers/JunXionBetweenLifeAndDeathVIPMix.1N6Fs.avif",
       "charts": [
         {
@@ -3201,6 +3348,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "Kerberos",
       "label": "Kerberos",
       "scoreKey": "Kerberos",
+      "artist": "Zris",
       "jacket": "https://phigros.tools/covers/Kerberos.Zris.avif",
       "charts": [
         {
@@ -3222,6 +3370,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "Khalid",
       "label": "Khalid",
       "scoreKey": "Khalid",
+      "artist": "Dolphin",
       "jacket": "https://phigros.tools/covers/Khalid.Dolphin.avif",
       "charts": [
         {
@@ -3243,6 +3392,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "Khronostasis Katharsis",
       "label": "Khronostasis Katharsis",
       "scoreKey": "Khronostasis Katharsis",
+      "artist": "Halv",
       "jacket": "https://phigros.tools/covers/KhronostasisKatharsis.Halv.avif",
       "charts": [
         {
@@ -3264,6 +3414,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "Kirakira Noel Story!!",
       "label": "Kirakira Noel Story!!",
       "scoreKey": "Kirakira Noel Story!!",
+      "artist": "Reku Mochizuki",
       "jacket": "https://phigros.tools/covers/KirakiraNoelStory.RekuMochizuki.avif",
       "charts": [
         {
@@ -3285,6 +3436,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "KIZUNA Resolution",
       "label": "KIZUNA Resolution",
       "scoreKey": "KIZUNA Resolution",
+      "artist": "TAG",
       "jacket": "https://phigros.tools/covers/KIZUNAResolution.TAG.avif",
       "charts": [
         {
@@ -3306,6 +3458,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "K.Moe (VIP)",
       "label": "K.Moe (VIP)",
       "scoreKey": "K.Moe (VIP)",
+      "artist": "ZxNX",
       "jacket": "https://phigros.tools/covers/KMoeVIP.ZxNX.avif",
       "charts": [
         {
@@ -3327,6 +3480,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "Komplexe",
       "label": "Komplexe",
       "scoreKey": "Komplexe",
+      "artist": "雄之助 feat. Sennzai",
       "jacket": "https://phigros.tools/covers/Komplexe.%E9%9B%84%E4%B9%8B%E5%8A%A9featSennzai.avif",
       "charts": [
         {
@@ -3348,6 +3502,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "Labyrinth in Kowloon: Walled World",
       "label": "Labyrinth in Kowloon: Walled World",
       "scoreKey": "Labyrinth in Kowloon: Walled World",
+      "artist": "かめりあ",
       "jacket": "https://phigros.tools/covers/LabyrinthinKowloonWalledWorld.%E3%81%8B%E3%82%81%E3%82%8A%E3%81%82.avif",
       "charts": [
         {
@@ -3369,6 +3524,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "Leave All Behind",
       "label": "Leave All Behind",
       "scoreKey": "Leave All Behind",
+      "artist": "rider",
       "jacket": "https://phigros.tools/covers/LeaveAllBehind.rider.avif",
       "charts": [
         {
@@ -3394,6 +3550,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "Le temps perdu",
       "label": "Le temps perdu",
       "scoreKey": "Le temps perdu",
+      "artist": "Daison",
       "jacket": "https://phigros.tools/covers/Letempsperdu.Daison.avif",
       "charts": [
         {
@@ -3415,6 +3572,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "life flashes before weeb eyes",
       "label": "life flashes before weeb eyes",
       "scoreKey": "life flashes before weeb eyes",
+      "artist": "BilliumMoto",
       "jacket": "https://phigros.tools/covers/lifeflashesbeforeweebeyes.BilliumMoto.avif",
       "charts": [
         {
@@ -3436,6 +3594,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "Locomotive",
       "label": "Locomotive",
       "scoreKey": "Locomotive",
+      "artist": "♠K",
       "jacket": "https://phigros.tools/covers/Locomotive.K.avif",
       "charts": [
         {
@@ -3457,6 +3616,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "Luminescence",
       "label": "Luminescence",
       "scoreKey": "Luminescence",
+      "artist": "米虾Fomiki & 初云CLoudie",
       "jacket": "https://phigros.tools/covers/Luminescence.%E7%B1%B3%E8%99%BEFomiki%E5%88%9D%E4%BA%91CLoudie.avif",
       "charts": [
         {
@@ -3478,6 +3638,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "Luminescent",
       "label": "Luminescent",
       "scoreKey": "Luminescent",
+      "artist": "Daison",
       "jacket": "https://phigros.tools/covers/Luminescent.Daison.avif",
       "charts": [
         {
@@ -3499,6 +3660,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "Luminous Entities Lost Heart",
       "label": "Luminous Entities Lost Heart",
       "scoreKey": "Luminous Entities Lost Heart",
+      "artist": "NormalM feat. Usagi Denki",
       "jacket": "https://phigros.tools/covers/LuminousEntitiesLostHeart.NormalMfeatUsagiDenki.avif",
       "charts": [
         {
@@ -3520,6 +3682,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "Lyrith -迷宮リリス-",
       "label": "Lyrith -迷宮リリス-",
       "scoreKey": "Lyrith -迷宮リリス-",
+      "artist": "ユメミド",
       "jacket": "https://phigros.tools/covers/Lyrith%E8%BF%B7%E5%AE%AE%E3%83%AA%E3%83%AA%E3%82%B9.%E3%83%A6%E3%83%A1%E3%83%9F%E3%83%89.avif",
       "charts": [
         {
@@ -3545,6 +3708,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "Magenta Potion",
       "label": "Magenta Potion",
       "scoreKey": "Magenta Potion",
+      "artist": "EmoCo.",
       "jacket": "https://phigros.tools/covers/MagentaPotion.EmoCo.avif",
       "charts": [
         {
@@ -3566,6 +3730,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "Manifold Hypothesis",
       "label": "Manifold Hypothesis",
       "scoreKey": "Manifold Hypothesis",
+      "artist": "cybermiso feat. tigerlily",
       "jacket": "https://phigros.tools/covers/ManifoldHypothesis.cybermisofeattigerlily.avif",
       "charts": [
         {
@@ -3587,6 +3752,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "MARENOL",
       "label": "MARENOL",
       "scoreKey": "MARENOL",
+      "artist": "LeaF",
       "jacket": "https://phigros.tools/covers/MARENOL.LeaF.avif",
       "charts": [
         {
@@ -3608,6 +3774,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "mechanted",
       "label": "mechanted",
       "scoreKey": "mechanted",
+      "artist": "rareguy",
       "jacket": "https://phigros.tools/covers/mechanted.rareguy.avif",
       "charts": [
         {
@@ -3629,6 +3796,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "Message",
       "label": "Message",
       "scoreKey": "Message",
+      "artist": "くるぶっこちゃん",
       "jacket": "https://phigros.tools/covers/Message.%E3%81%8F%E3%82%8B%E3%81%B6%E3%81%A3%E3%81%93%E3%81%A1%E3%82%83%E3%82%93.avif",
       "charts": [
         {
@@ -3654,6 +3822,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "micro.wav",
       "label": "micro.wav",
       "scoreKey": "micro.wav",
+      "artist": "dandeless",
       "jacket": "https://phigros.tools/covers/microwav.dandeless.avif",
       "charts": [
         {
@@ -3675,6 +3844,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "Miracle Forest (VIP Mix)",
       "label": "Miracle Forest (VIP Mix)",
       "scoreKey": "Miracle Forest (VIP Mix)",
+      "artist": "Rinth_live",
       "jacket": "https://phigros.tools/covers/MiracleForestVIPMix.Rinthlive.avif",
       "charts": [
         {
@@ -3696,6 +3866,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "MOBILYS",
       "label": "MOBILYS",
       "scoreKey": "MOBILYS",
+      "artist": "Dachs",
       "jacket": "https://phigros.tools/covers/MOBILYS.Dachs.avif",
       "charts": [
         {
@@ -3717,6 +3888,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "modulus",
       "label": "modulus",
       "scoreKey": "modulus",
+      "artist": "PTB10",
       "jacket": "https://phigros.tools/covers/modulus.PTB10.avif",
       "charts": [
         {
@@ -3738,6 +3910,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "Next Time",
       "label": "Next Time",
       "scoreKey": "Next Time",
+      "artist": "SaMZIng",
       "jacket": "https://phigros.tools/covers/NextTime.SaMZIng.avif",
       "charts": [
         {
@@ -3759,6 +3932,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "Nhelv",
       "label": "Nhelv",
       "scoreKey": "Nhelv",
+      "artist": "Silentroom",
       "jacket": "https://phigros.tools/covers/Nhelv.Silentroom.avif",
       "charts": [
         {
@@ -3780,6 +3954,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "Nick of Time",
       "label": "Nick of Time",
       "scoreKey": "Nick of Time",
+      "artist": "P4koo",
       "jacket": "https://phigros.tools/covers/NickofTime.P4koo.avif",
       "charts": [
         {
@@ -3801,6 +3976,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "NightTheater",
       "label": "NightTheater",
       "scoreKey": "NightTheater",
+      "artist": "わかどり",
       "jacket": "https://phigros.tools/covers/NightTheater.%E3%82%8F%E3%81%8B%E3%81%A9%E3%82%8A.avif",
       "charts": [
         {
@@ -3822,6 +3998,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "Non-Melodic Ragez (MUG Edit)",
       "label": "Non-Melodic Ragez (MUG Edit)",
       "scoreKey": "Non-Melodic Ragez (MUG Edit)",
+      "artist": "Normal1zer",
       "jacket": "https://phigros.tools/covers/NonMelodicRagezMUGEdit.Normal1zer.avif",
       "charts": [
         {
@@ -3843,6 +4020,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "NO ONE YES MAN",
       "label": "NO ONE YES MAN",
       "scoreKey": "NO ONE YES MAN",
+      "artist": "MYUKKE.",
       "jacket": "https://phigros.tools/covers/NOONEYESMAN.MYUKKE.avif",
       "charts": [
         {
@@ -3864,6 +4042,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "Now Is The Time, Do It",
       "label": "Now Is The Time, Do It",
       "scoreKey": "Now Is The Time, Do It",
+      "artist": "Roy Mikelate",
       "jacket": "https://phigros.tools/covers/NowIsTheTimeDoIt.RoyMikelate.avif",
       "charts": [
         {
@@ -3885,6 +4064,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "NO x",
       "label": "NO x",
       "scoreKey": "NO x",
+      "artist": "Juggernaut.",
       "jacket": "https://phigros.tools/covers/NOx.Juggernaut.avif",
       "charts": [
         {
@@ -3906,6 +4086,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "[NWAD]",
       "label": "[NWAD]",
       "scoreKey": "[NWAD]",
+      "artist": "Knighthood",
       "jacket": "https://phigros.tools/covers/NWAD.Knighthood.avif",
       "charts": [
         {
@@ -3927,6 +4108,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "NYA!!! (Phigros ver.)",
       "label": "NYA!!! (Phigros ver.)",
       "scoreKey": "NYA!!! (Phigros ver.)",
+      "artist": "FLuoRiTe/姜米條",
       "jacket": "https://phigros.tools/covers/NYA.FLuoRiTe%E5%A7%9C%E7%B1%B3%E6%A2%9D.avif",
       "charts": [
         {
@@ -3948,6 +4130,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "On And On!!",
       "label": "On And On!!",
       "scoreKey": "On And On!!",
+      "artist": "ETIA. feat. Jenga",
       "jacket": "https://phigros.tools/covers/OnAndOn.ETIAfeatJenga.avif",
       "charts": [
         {
@@ -3969,6 +4152,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "opia",
       "label": "opia",
       "scoreKey": "opia",
+      "artist": "rN",
       "jacket": "https://phigros.tools/covers/opia.rN.avif",
       "charts": [
         {
@@ -3990,6 +4174,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "Originally",
       "label": "Originally",
       "scoreKey": "Originally",
+      "artist": "SNKS & Mizku",
       "jacket": "https://phigros.tools/covers/Originally.SNKSMizku.avif",
       "charts": [
         {
@@ -4011,6 +4196,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "Orthodox",
       "label": "Orthodox",
       "scoreKey": "Orthodox",
+      "artist": "tokiwa",
       "jacket": "https://phigros.tools/covers/Orthodox.tokiwa.avif",
       "charts": [
         {
@@ -4032,6 +4218,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "Palescreen",
       "label": "Palescreen",
       "scoreKey": "Palescreen",
+      "artist": "WyvernP feat. Madol",
       "jacket": "https://phigros.tools/covers/Palescreen.WyvernPfeatMadol.avif",
       "charts": [
         {
@@ -4053,6 +4240,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "PANIC PARADISE",
       "label": "PANIC PARADISE",
       "scoreKey": "PANIC PARADISE",
+      "artist": "DJ SHION.Y",
       "jacket": "https://phigros.tools/covers/PANICPARADISE.DJSHIONY.avif",
       "charts": [
         {
@@ -4078,6 +4266,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "Parallel Retrogression(Game Ver.)",
       "label": "Parallel Retrogression(Game Ver.)",
       "scoreKey": "Parallel Retrogression(Game Ver.)",
+      "artist": "Tetrajectory",
       "jacket": "https://phigros.tools/covers/ParallelRetrogressionGameVer.Tetrajectory.avif",
       "charts": [
         {
@@ -4099,6 +4288,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "ρars/ey",
       "label": "ρars/ey",
       "scoreKey": "ρars/ey",
+      "artist": "siqlo",
       "jacket": "https://phigros.tools/covers/parsey.siqlo.avif",
       "charts": [
         {
@@ -4120,6 +4310,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "Petrichor",
       "label": "Petrichor",
       "scoreKey": "Petrichor",
+      "artist": "void (Mournfinale)",
       "jacket": "https://phigros.tools/covers/Petrichor.voidMournfinale.avif",
       "charts": [
         {
@@ -4145,6 +4336,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "Pixel Rebelz",
       "label": "Pixel Rebelz",
       "scoreKey": "Pixel Rebelz",
+      "artist": "Normal1zer",
       "jacket": "https://phigros.tools/covers/PixelRebelz.Normal1zer.avif",
       "charts": [
         {
@@ -4166,6 +4358,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "Poison AND÷OR Affection",
       "label": "Poison AND÷OR Affection",
       "scoreKey": "Poison AND÷OR Affection",
+      "artist": "LeaF",
       "jacket": "https://phigros.tools/covers/PoisonANDORAffection.LeaF.avif",
       "charts": [
         {
@@ -4187,6 +4380,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "Pont des souvenirs",
       "label": "Pont des souvenirs",
       "scoreKey": "Pont des souvenirs",
+      "artist": "VeetaCrush vs. [itsu(feat.itsu)]",
       "jacket": "https://phigros.tools/covers/Pontdessouvenirs.VeetaCrushvsitsufeatitsu.avif",
       "charts": [
         {
@@ -4208,6 +4402,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "Ποσειδών",
       "label": "Ποσειδών",
       "scoreKey": "Ποσειδών",
+      "artist": "1112 vs. Star＊",
       "jacket": "https://phigros.tools/covers/Poseidon.1112vsStar.avif",
       "charts": [
         {
@@ -4233,6 +4428,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "PRAGMATISM -RESURRECTION-",
       "label": "PRAGMATISM -RESURRECTION-",
       "scoreKey": "PRAGMATISM -RESURRECTION-",
+      "artist": "Laur",
       "jacket": "https://phigros.tools/covers/PRAGMATISMRESURRECTION.Laur.avif",
       "charts": [
         {
@@ -4258,6 +4454,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "[PRAW]",
       "label": "[PRAW]",
       "scoreKey": "[PRAW]",
+      "artist": "Bluewind",
       "jacket": "https://phigros.tools/covers/PRAW.Bluewind.avif",
       "charts": [
         {
@@ -4279,6 +4476,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "Protoflicker",
       "label": "Protoflicker",
       "scoreKey": "Protoflicker",
+      "artist": "Silentroom",
       "jacket": "https://phigros.tools/covers/Protoflicker.Silentroom.avif",
       "charts": [
         {
@@ -4300,6 +4498,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "Quantum Hyperspace",
       "label": "Quantum Hyperspace",
       "scoreKey": "Quantum Hyperspace",
+      "artist": "D_AAN",
       "jacket": "https://phigros.tools/covers/QuantumHyperspace.D_AAN.avif",
       "charts": [
         {
@@ -4321,6 +4520,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "QZKago Requiem",
       "label": "QZKago Requiem",
       "scoreKey": "QZKago Requiem",
+      "artist": "t+pazolite",
       "jacket": "https://phigros.tools/covers/QZKagoRequiem.tpazolite.avif",
       "charts": [
         {
@@ -4346,6 +4546,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "Radiance",
       "label": "Radiance",
       "scoreKey": "Radiance",
+      "artist": "Nhato",
       "jacket": "https://phigros.tools/covers/Radiance.Nhato.avif",
       "charts": [
         {
@@ -4371,6 +4572,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "Rainy Heart",
       "label": "Rainy Heart",
       "scoreKey": "Rainy Heart",
+      "artist": "BelieverInYou(阿卡姆巫师)",
       "jacket": "https://phigros.tools/covers/RainyHeart.BelieverInYou%E9%98%BF%E5%8D%A1%E5%A7%86%E5%B7%AB%E5%B8%88.avif",
       "charts": [
         {
@@ -4392,6 +4594,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "Rainy Season",
       "label": "Rainy Season",
       "scoreKey": "Rainy Season",
+      "artist": "Abyss Idols",
       "jacket": "https://phigros.tools/covers/RainySeason.AbyssIdols.avif",
       "charts": [
         {
@@ -4413,6 +4616,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "Ramification",
       "label": "Ramification",
       "scoreKey": "Ramification",
+      "artist": "rareguy & Reina",
       "jacket": "https://phigros.tools/covers/Ramification.rareguyReina.avif",
       "charts": [
         {
@@ -4434,6 +4638,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "Random",
       "label": "Random",
       "scoreKey": "Random",
+      "artist": "Sobrem × Silentroom",
       "jacket": "https://phigros.tools/covers/Random.SobremSilentroom.avif",
       "charts": [
         {
@@ -4455,6 +4660,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "Re_Nascence (Psystyle Ver.) ",
       "label": "Re_Nascence (Psystyle Ver.) ",
       "scoreKey": "Re_Nascence (Psystyle Ver.) ",
+      "artist": "Rinth_live",
       "jacket": "https://phigros.tools/covers/Re_NascencePsystyleVer.Rinth_live.avif",
       "charts": [
         {
@@ -4476,6 +4682,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "Realms",
       "label": "Realms",
       "scoreKey": "Realms",
+      "artist": "Hinkik & A Himitsu",
       "jacket": "https://phigros.tools/covers/Realms.HinkikAHimitsu.avif",
       "charts": [
         {
@@ -4497,6 +4704,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "Re：birth",
       "label": "Re：birth",
       "scoreKey": "Re：birth",
+      "artist": "ああああ",
       "jacket": "https://phigros.tools/covers/Rebirth.%E3%81%82%E3%81%82%E3%81%82%E3%81%82.avif",
       "charts": [
         {
@@ -4518,6 +4726,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "Re：End of a Dream",
       "label": "Re：End of a Dream",
       "scoreKey": "Re：End of a Dream",
+      "artist": "uma vs. モリモリあつし",
       "jacket": "https://phigros.tools/covers/ReEndofaDream.umavs%E3%83%A2%E3%83%AA%E3%83%A2%E3%83%AA%E3%81%82%E3%81%A4%E3%81%97.avif",
       "charts": [
         {
@@ -4543,6 +4752,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "Reimei",
       "label": "Reimei",
       "scoreKey": "Reimei",
+      "artist": "影虎。",
       "jacket": "https://phigros.tools/covers/Reimei.%E5%BD%B1%E8%99%8E.avif",
       "charts": [
         {
@@ -4564,6 +4774,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "Resolver",
       "label": "Resolver",
       "scoreKey": "Resolver",
+      "artist": "Gomadare",
       "jacket": "https://phigros.tools/covers/Resolver.Gomadare.avif",
       "charts": [
         {
@@ -4585,6 +4796,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "RESSiSTANCE",
       "label": "RESSiSTANCE",
       "scoreKey": "RESSiSTANCE",
+      "artist": "ぐるたみん",
       "jacket": "https://phigros.tools/covers/RESSiSTANCE.%E3%81%90%E3%82%8B%E3%81%9F%E3%81%BF%E3%82%93.avif",
       "charts": [
         {
@@ -4606,6 +4818,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "Retribution",
       "label": "Retribution",
       "scoreKey": "Retribution",
+      "artist": "nm-y & Kry.exe",
       "jacket": "https://phigros.tools/covers/Retribution.nmyKryexe.avif",
       "charts": [
         {
@@ -4627,6 +4840,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "Retribution ~ Cycle of Redemption ~ ",
       "label": "Retribution ~ Cycle of Redemption ~ ",
       "scoreKey": "Retribution ~ Cycle of Redemption ~ ",
+      "artist": "Ardolf vs. Daily天利",
       "jacket": "https://phigros.tools/covers/RetributionCycleofRedemption.ArdolfvsDaily%E5%A4%A9%E5%88%A9.avif",
       "charts": [
         {
@@ -4648,6 +4862,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "RIPPER",
       "label": "RIPPER",
       "scoreKey": "RIPPER",
+      "artist": "Friedwav",
       "jacket": "https://phigros.tools/covers/RIPPER.Friedwav.avif",
       "charts": [
         {
@@ -4669,6 +4884,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "Rrhar'il",
       "label": "Rrhar'il",
       "scoreKey": "Rrhar'il",
+      "artist": "Team Grimoire",
       "jacket": "https://phigros.tools/covers/Rrharil.TeamGrimoire.avif",
       "charts": [
         {
@@ -4694,6 +4910,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "Rubbish Sorting",
       "label": "Rubbish Sorting",
       "scoreKey": "Rubbish Sorting",
+      "artist": "Ctymax vs. NceS",
       "jacket": "https://phigros.tools/covers/RubbishSorting.CtymaxvsNceS.avif",
       "charts": [
         {
@@ -4715,6 +4932,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "S.A.T.E.L.L.I.T.E.",
       "label": "S.A.T.E.L.L.I.T.E.",
       "scoreKey": "S.A.T.E.L.L.I.T.E.",
+      "artist": "かめりあ",
       "jacket": "https://phigros.tools/covers/SATELLITE.%E3%81%8B%E3%82%81%E3%82%8A%E3%81%82.avif",
       "charts": [
         {
@@ -4740,6 +4958,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "Schadenfreude",
       "label": "Schadenfreude",
       "scoreKey": "Schadenfreude",
+      "artist": "ZxNX",
       "jacket": "https://phigros.tools/covers/Schadenfreude.ZxNX.avif",
       "charts": [
         {
@@ -4761,6 +4980,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "Secret Illumination",
       "label": "Secret Illumination",
       "scoreKey": "Secret Illumination",
+      "artist": "Yooh",
       "jacket": "https://phigros.tools/covers/SecretIllumination.Yooh.avif",
       "charts": [
         {
@@ -4782,6 +5002,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "Sein",
       "label": "Sein",
       "scoreKey": "Sein",
+      "artist": "朔(Apo11o program vs. お月さま交響曲) ft. kuroa*×荒巻",
       "jacket": "https://phigros.tools/covers/Sein.%E6%9C%94Apo11oprogramvs%E3%81%8A%E6%9C%88%E3%81%95%E3%81%BE%E4%BA%A4%E9%9F%BF%E6%9B%B2ftkuroa%E8%8D%92%E5%B7%BB.avif",
       "charts": [
         {
@@ -4803,6 +5024,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "Shadow",
       "label": "Shadow",
       "scoreKey": "Shadow",
+      "artist": "姜米條&SumaiLight",
       "jacket": "https://phigros.tools/covers/Shadow.SumaiLightvs%E5%A7%9C%E7%B1%B3%E6%A2%9D.avif",
       "charts": [
         {
@@ -4828,6 +5050,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "Shelter",
       "label": "Shelter",
       "scoreKey": "Shelter",
+      "artist": "MeatyRabbit & NceS",
       "jacket": "https://phigros.tools/covers/Shelter.MeatyRabbitNceS.avif",
       "charts": [
         {
@@ -4849,6 +5072,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "Shine After",
       "label": "Shine After",
       "scoreKey": "Shine After",
+      "artist": "ADean & JocularACE",
       "jacket": "https://phigros.tools/covers/ShineAfter.ADeanJocularACE.avif",
       "charts": [
         {
@@ -4870,6 +5094,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "SIGMA",
       "label": "SIGMA",
       "scoreKey": "SIGMA",
+      "artist": "Kry.exe",
       "jacket": "https://phigros.tools/covers/SIGMA.Kryexe.avif",
       "charts": [
         {
@@ -4891,6 +5116,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "Silence is Golden, Speech is Golden",
       "label": "Silence is Golden, Speech is Golden",
       "scoreKey": "Silence is Golden, Speech is Golden",
+      "artist": "NIWASHI",
       "jacket": "https://phigros.tools/covers/SilenceisGoldenSpeechisGolden.NIWASHI.avif",
       "charts": [
         {
@@ -4912,6 +5138,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "sølips",
       "label": "sølips",
       "scoreKey": "sølips",
+      "artist": "rintaro soma",
       "jacket": "https://phigros.tools/covers/slips.rintarosoma.avif",
       "charts": [
         {
@@ -4937,6 +5164,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "Snow Dance",
       "label": "Snow Dance",
       "scoreKey": "Snow Dance",
+      "artist": "悠叶いのり",
       "jacket": "https://phigros.tools/covers/SnowDance.%E6%82%A0%E5%8F%B6%E3%81%84%E3%81%AE%E3%82%8A.avif",
       "charts": [
         {
@@ -4958,6 +5186,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "Snow Desert",
       "label": "Snow Desert",
       "scoreKey": "Snow Desert",
+      "artist": "WyvernP",
       "jacket": "https://phigros.tools/covers/SnowDesert.WyvernP.avif",
       "charts": [
         {
@@ -4979,6 +5208,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "So laggy! (feat. Uzumaki)",
       "label": "So laggy! (feat. Uzumaki)",
       "scoreKey": "So laggy! (feat. Uzumaki)",
+      "artist": "ShrimpCats. (はぁち×後藤涼輔)",
       "jacket": "https://phigros.tools/covers/SolaggyfeatUzumaki.ShrimpCats%E3%81%AF%E3%81%81%E3%81%A1%E5%BE%8C%E8%97%A4%E6%B6%BC%E8%BC%94.avif",
       "charts": [
         {
@@ -5000,6 +5230,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "Sparkle New Life",
       "label": "Sparkle New Life",
       "scoreKey": "Sparkle New Life",
+      "artist": "rider",
       "jacket": "https://phigros.tools/covers/SparkleNewLife.rider.avif",
       "charts": [
         {
@@ -5021,6 +5252,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "Spasmodic",
       "label": "Spasmodic",
       "scoreKey": "Spasmodic",
+      "artist": "姜米條☆颶風 ~ ♫元力上人♫",
       "jacket": "https://phigros.tools/covers/Spasmodic.%E5%A7%9C%E7%B1%B3%E6%A2%9D%E9%A2%B6%E9%A2%A8%E5%85%83%E5%8A%9B%E4%B8%8A%E4%BA%BA.avif",
       "charts": [
         {
@@ -5046,6 +5278,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "Speed Up!",
       "label": "Speed Up!",
       "scoreKey": "Speed Up!",
+      "artist": "DarTokki",
       "jacket": "https://phigros.tools/covers/SpeedUp.DarTokki.avif",
       "charts": [
         {
@@ -5067,6 +5300,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "Spotlight",
       "label": "Spotlight",
       "scoreKey": "Spotlight",
+      "artist": "Ardolf",
       "jacket": "https://phigros.tools/covers/Spotlight.Ardolf.avif",
       "charts": [
         {
@@ -5088,6 +5322,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "Starduster",
       "label": "Starduster",
       "scoreKey": "Starduster",
+      "artist": "Quree",
       "jacket": "https://phigros.tools/covers/Starduster.Quree.avif",
       "charts": [
         {
@@ -5109,6 +5344,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "Stardust:RAY",
       "label": "Stardust:RAY",
       "scoreKey": "Stardust:RAY",
+      "artist": "kanone vs. BlackY",
       "jacket": "https://phigros.tools/covers/StardustRAY.kanonevsBlackY.avif",
       "charts": [
         {
@@ -5134,6 +5370,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "Stasis",
       "label": "Stasis",
       "scoreKey": "Stasis",
+      "artist": "Maozon",
       "jacket": "https://phigros.tools/covers/Stasis.Maozon.avif",
       "charts": [
         {
@@ -5159,6 +5396,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "Sultan Rage",
       "label": "Sultan Rage",
       "scoreKey": "Sultan Rage",
+      "artist": "MonstDeath",
       "jacket": "https://phigros.tools/covers/SultanRage.MonstDeath.avif",
       "charts": [
         {
@@ -5180,6 +5418,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "-SURREALISM-",
       "label": "-SURREALISM-",
       "scoreKey": "-SURREALISM-",
+      "artist": "Itsuki",
       "jacket": "https://phigros.tools/covers/SURREALISM.Itsuki.avif",
       "charts": [
         {
@@ -5201,6 +5440,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "Swing Skip Drop",
       "label": "Swing Skip Drop",
       "scoreKey": "Swing Skip Drop",
+      "artist": "ミハイル",
       "jacket": "https://phigros.tools/covers/SwingSkipDrop.%E3%83%9F%E3%83%8F%E3%82%A4%E3%83%AB.avif",
       "charts": [
         {
@@ -5222,6 +5462,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "TECHNOPOLIS 2085",
       "label": "TECHNOPOLIS 2085",
       "scoreKey": "TECHNOPOLIS 2085",
+      "artist": "PRASTIK DANCEFLOOR",
       "jacket": "https://phigros.tools/covers/TECHNOPOLIS2085.PRASTIKDANCEFLOOR.avif",
       "charts": [
         {
@@ -5247,6 +5488,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "Temporal Shifting",
       "label": "Temporal Shifting",
       "scoreKey": "Temporal Shifting",
+      "artist": "Lure Rabbit & V!C",
       "jacket": "https://phigros.tools/covers/TemporalShifting.LureRabbitVC.avif",
       "charts": [
         {
@@ -5268,6 +5510,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "The Chariot ~REVIIVAL~",
       "label": "The Chariot ~REVIIVAL~",
       "scoreKey": "The Chariot ~REVIIVAL~",
+      "artist": "Attoclef",
       "jacket": "https://phigros.tools/covers/TheChariotREVIIVAL.Attoclef.avif",
       "charts": [
         {
@@ -5289,6 +5532,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "The Mountain Eater",
       "label": "The Mountain Eater",
       "scoreKey": "The Mountain Eater",
+      "artist": "Paul Bazooka",
       "jacket": "https://phigros.tools/covers/TheMountainEater.PaulBazooka.avif",
       "charts": [
         {
@@ -5310,6 +5554,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "The Whole Rest",
       "label": "The Whole Rest",
       "scoreKey": "The Whole Rest",
+      "artist": "KIVΛ",
       "jacket": "https://phigros.tools/covers/TheWholeRest.KIV%CE%9B.avif",
       "charts": [
         {
@@ -5331,6 +5576,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "Thrash force",
       "label": "Thrash force",
       "scoreKey": "Thrash force",
+      "artist": "KAH vs. E0ri4",
       "jacket": "https://phigros.tools/covers/Thrashforce.KAHvsE0ri4.avif",
       "charts": [
         {
@@ -5352,6 +5598,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "Time to Night Sky (feat. Lee Yu Jin)",
       "label": "Time to Night Sky (feat. Lee Yu Jin)",
       "scoreKey": "Time to Night Sky (feat. Lee Yu Jin)",
+      "artist": "HyuN & KLYDIX",
       "jacket": "https://phigros.tools/covers/TimetoNightSkyfeatLeeYuJin.HyuNKLYDIX.avif",
       "charts": [
         {
@@ -5373,6 +5620,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "Träne",
       "label": "Träne",
       "scoreKey": "Träne",
+      "artist": "MALVA.",
       "jacket": "https://phigros.tools/covers/Trane.MALVA.avif",
       "charts": [
         {
@@ -5394,6 +5642,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "Triumph & Regret",
       "label": "Triumph & Regret",
       "scoreKey": "Triumph & Regret",
+      "artist": "typeMARS",
       "jacket": "https://phigros.tools/covers/TriumphRegret.typeMARS.avif",
       "charts": [
         {
@@ -5415,6 +5664,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "Trojan",
       "label": "Trojan",
       "scoreKey": "Trojan",
+      "artist": "litmus*",
       "jacket": "https://phigros.tools/covers/Trojan.litmus.avif",
       "charts": [
         {
@@ -5436,6 +5686,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "True Home, True World (Rework)",
       "label": "True Home, True World (Rework)",
       "scoreKey": "True Home, True World (Rework)",
+      "artist": "816ThreeNumbers",
       "jacket": "https://phigros.tools/covers/TrueHomeTrueWorldRework.816ThreeNumbers.avif",
       "charts": [
         {
@@ -5457,6 +5708,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "Unorthodox Thoughts",
       "label": "Unorthodox Thoughts",
       "scoreKey": "Unorthodox Thoughts",
+      "artist": "Joulez",
       "jacket": "https://phigros.tools/covers/UnorthodoxThoughts.Joulez.avif",
       "charts": [
         {
@@ -5478,6 +5730,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "Upshift",
       "label": "Upshift",
       "scoreKey": "Upshift",
+      "artist": "Iriss-Frantzz",
       "jacket": "https://phigros.tools/covers/Upshift.Iriss-Frantzz.avif",
       "charts": [
         {
@@ -5499,6 +5752,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "valor/starcross",
       "label": "valor/starcross",
       "scoreKey": "valor/starcross",
+      "artist": "Lundy vs. Wyvren",
       "jacket": "https://phigros.tools/covers/valorstarcross.LundyvsWyvren.avif",
       "charts": [
         {
@@ -5520,6 +5774,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "Verrückt",
       "label": "Verrückt",
       "scoreKey": "Verrückt",
+      "artist": "Raimukun",
       "jacket": "https://phigros.tools/covers/Verruckt.Raimukun.avif",
       "charts": [
         {
@@ -5541,6 +5796,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "volcanic",
       "label": "volcanic",
       "scoreKey": "volcanic",
+      "artist": "DETRO a.k.a. ルゼ",
       "jacket": "https://phigros.tools/covers/volcanic.DETROaka%E3%83%AB%E3%82%BC.avif",
       "charts": [
         {
@@ -5566,6 +5822,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "WATER",
       "label": "WATER",
       "scoreKey": "WATER",
+      "artist": "A-39/沙包P",
       "jacket": "https://phigros.tools/covers/WATER.A39%E6%B2%99%E5%8C%85P.avif",
       "charts": [
         {
@@ -5587,6 +5844,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "Wavetapper",
       "label": "Wavetapper",
       "scoreKey": "Wavetapper",
+      "artist": "Frums",
       "jacket": "https://phigros.tools/covers/Wavetapper.Frums.avif",
       "charts": [
         {
@@ -5608,6 +5866,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "What do you want more than a Happy ending?",
       "label": "What do you want more than a Happy ending?",
       "scoreKey": "What do you want more than a Happy ending?",
+      "artist": "Apo11o\"HALO\"program ft. 安月名 莉子×大瀬良あい",
       "jacket": "https://phigros.tools/covers/WhatdoyouwantmorethanaHappyending.Apo11oHALOprogramft%E5%AE%89%E6%9C%88%E5%90%8D%E8%8E%89%E5%AD%90%E5%A4%A7%E7%80%AC%E8%89%AF%E3%81%82%E3%81%84.avif",
       "charts": [
         {
@@ -5633,6 +5892,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "Winter ↑cube↓",
       "label": "Winter ↑cube↓",
       "scoreKey": "Winter ↑cube↓",
+      "artist": "Ctymax feat. NceS",
       "jacket": "https://phigros.tools/covers/Wintercube.CtymaxfeatNceS.avif",
       "charts": [
         {
@@ -5654,6 +5914,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "With You",
       "label": "With You",
       "scoreKey": "With You",
+      "artist": "Cashew",
       "jacket": "https://phigros.tools/covers/WithYou.Cashew.avif",
       "charts": [
         {
@@ -5675,6 +5936,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "Xenolith",
       "label": "Xenolith",
       "scoreKey": "Xenolith",
+      "artist": "Tatsh",
       "jacket": "https://phigros.tools/covers/Xenolith.Tatsh.avif",
       "charts": [
         {
@@ -5696,6 +5958,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "Xenophobia",
       "label": "Xenophobia",
       "scoreKey": "Xenophobia",
+      "artist": "XinG",
       "jacket": "https://phigros.tools/covers/Xenophobia.XinG.avif",
       "charts": [
         {
@@ -5717,6 +5980,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "Xep+ion",
       "label": "Xep+ion",
       "scoreKey": "Xep+ion",
+      "artist": "Acotto",
       "jacket": "https://phigros.tools/covers/Xepion.Acotto.avif",
       "charts": [
         {
@@ -5738,6 +6002,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "XING",
       "label": "XING",
       "scoreKey": "XING",
+      "artist": "ginkiha",
       "jacket": "https://phigros.tools/covers/XING.ginkiha.avif",
       "charts": [
         {
@@ -5759,6 +6024,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "You are the Miserable",
       "label": "You are the Miserable",
       "scoreKey": "You are the Miserable",
+      "artist": "t+pazolite",
       "jacket": "https://phigros.tools/covers/YouaretheMiserable.tpazolite.avif",
       "charts": [
         {
@@ -5784,6 +6050,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "アンビバレンス",
       "label": "アンビバレンス",
       "scoreKey": "アンビバレンス",
+      "artist": "すりぃ×相沢",
       "jacket": "https://phigros.tools/covers/%E3%82%A2%E3%83%B3%E3%83%93%E3%83%90%E3%83%AC%E3%83%B3%E3%82%B9.%E3%81%99%E3%82%8A%E3%81%83%E7%9B%B8%E6%B2%A2.avif",
       "charts": [
         {
@@ -5805,6 +6072,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "いざ、参ります",
       "label": "いざ、参ります",
       "scoreKey": "いざ、参ります",
+      "artist": "U-ske feat. 棗いつき",
       "jacket": "https://phigros.tools/covers/%E3%81%84%E3%81%96%E5%8F%82%E3%82%8A%E3%81%BE%E3%81%99.Uskefeat%E6%A3%97%E3%81%84%E3%81%A4%E3%81%8D.avif",
       "charts": [
         {
@@ -5826,6 +6094,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "インフェルノシティ",
       "label": "インフェルノシティ",
       "scoreKey": "インフェルノシティ",
+      "artist": "Ponchi♪ feat. はぁち",
       "jacket": "https://phigros.tools/covers/%E3%82%A4%E3%83%B3%E3%83%95%E3%82%A7%E3%83%AB%E3%83%8E%E3%82%B7%E3%83%86%E3%82%A3.Ponchifeat%E3%81%AF%E3%81%81%E3%81%A1.avif",
       "charts": [
         {
@@ -5847,6 +6116,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "インマイマインド",
       "label": "インマイマインド",
       "scoreKey": "インマイマインド",
+      "artist": "レシオP",
       "jacket": "https://phigros.tools/covers/%E3%82%A4%E3%83%B3%E3%83%9E%E3%82%A4%E3%83%9E%E3%82%A4%E3%83%B3%E3%83%89.%E3%83%AC%E3%82%B7%E3%82%AAP.avif",
       "charts": [
         {
@@ -5868,6 +6138,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "ジングルベル(Jingle Bell)",
       "label": "ジングルベル(Jingle Bell)",
       "scoreKey": "ジングルベル(Jingle Bell)",
+      "artist": "A-39/沙包P",
       "jacket": "https://phigros.tools/covers/%E3%82%B8%E3%83%B3%E3%82%B0%E3%83%AB%E3%83%99%E3%83%ABJingleBell.A39%E6%B2%99%E5%8C%85P.avif",
       "charts": [
         {
@@ -5889,6 +6160,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "ストレイソウル・アラウンド",
       "label": "ストレイソウル・アラウンド",
       "scoreKey": "ストレイソウル・アラウンド",
+      "artist": "みーに",
       "jacket": "https://phigros.tools/covers/%E3%82%B9%E3%83%88%E3%83%AC%E3%82%A4%E3%82%BD%E3%82%A6%E3%83%AB%E3%82%A2%E3%83%A9%E3%82%A6%E3%83%B3%E3%83%89.%E3%81%BF%E3%83%BC%E3%81%AB.avif",
       "charts": [
         {
@@ -5910,6 +6182,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "ニライカナイ (NiraicA_nai Mix)",
       "label": "ニライカナイ (NiraicA_nai Mix)",
       "scoreKey": "ニライカナイ (NiraicA_nai Mix)",
+      "artist": "roop from STR",
       "jacket": "https://phigros.tools/covers/%E3%83%8B%E3%83%A9%E3%82%A4%E3%82%AB%E3%83%8A%E3%82%A4NiraicA_naiMix.roopfromSTR.avif",
       "charts": [
         {
@@ -5931,6 +6204,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "ハテ",
       "label": "ハテ",
       "scoreKey": "ハテ",
+      "artist": "rN || Frums",
       "jacket": "https://phigros.tools/covers/%E3%83%8F%E3%83%86.rNFrums.avif",
       "charts": [
         {
@@ -5956,6 +6230,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "ぱぴぷぴぷぴぱ",
       "label": "ぱぴぷぴぷぴぱ",
       "scoreKey": "ぱぴぷぴぷぴぱ",
+      "artist": "ころねぽち With 立秋",
       "jacket": "https://phigros.tools/covers/%E3%81%B1%E3%81%B4%E3%81%B7%E3%81%B4%E3%81%B7%E3%81%B4%E3%81%B1.%E3%81%93%E3%82%8D%E3%81%AD%E3%81%BD%E3%81%A1With%E7%AB%8B%E7%A7%8B.avif",
       "charts": [
         {
@@ -5977,6 +6252,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "もぺもぺ",
       "label": "もぺもぺ",
       "scoreKey": "もぺもぺ",
+      "artist": "LeaF",
       "jacket": "https://phigros.tools/covers/%E3%82%82%E3%81%BA%E3%82%82%E3%81%BA.LeaF.avif",
       "charts": [
         {
@@ -6002,6 +6278,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "万吨匿名信",
       "label": "万吨匿名信",
       "scoreKey": "万吨匿名信",
+      "artist": "闫东炜",
       "jacket": "https://phigros.tools/covers/%E4%B8%87%E5%90%A8%E5%8C%BF%E5%90%8D%E4%BF%A1.%E9%97%AB%E4%B8%9C%E7%82%9C.avif",
       "charts": [
         {
@@ -6023,6 +6300,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "下一秒",
       "label": "下一秒",
       "scoreKey": "下一秒",
+      "artist": "Bob Hou & Sherlock卓智媛 feat. 兰音Reine",
       "jacket": "https://phigros.tools/covers/%E4%B8%8B%E4%B8%80%E7%A7%92.BobHouSherlock%E5%8D%93%E6%99%BA%E5%AA%9Bfeat%E5%85%B0%E9%9F%B3Reine.avif",
       "charts": [
         {
@@ -6044,6 +6322,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "亂★舞",
       "label": "亂★舞",
       "scoreKey": "亂★舞",
+      "artist": "Nekock·LK",
       "jacket": "https://phigros.tools/covers/%E4%BA%82%E8%88%9E.NekockLK.avif",
       "charts": [
         {
@@ -6065,6 +6344,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "云女孩",
       "label": "云女孩",
       "scoreKey": "云女孩",
+      "artist": "符白牙/SiYFics",
       "jacket": "https://phigros.tools/covers/%E4%BA%91%E5%A5%B3%E5%AD%A9.%E7%AC%A6%E7%99%BD%E7%89%99SiYFics.avif",
       "charts": [
         {
@@ -6086,6 +6366,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "今天不是明天",
       "label": "今天不是明天",
       "scoreKey": "今天不是明天",
+      "artist": "PIKASONIC feat. 兰音Reine",
       "jacket": "https://phigros.tools/covers/%E4%BB%8A%E5%A4%A9%E4%B8%8D%E6%98%AF%E6%98%8E%E5%A4%A9.PIKASONICfeat%E5%85%B0%E9%9F%B3Reine.avif",
       "charts": [
         {
@@ -6107,6 +6388,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "光",
       "label": "光",
       "scoreKey": "光",
+      "artist": "姜米條",
       "jacket": "https://phigros.tools/covers/%E5%85%89.%E5%A7%9C%E7%B1%B3%E6%A2%9D.avif",
       "charts": [
         {
@@ -6128,6 +6410,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "最高傑作",
       "label": "最高傑作",
       "scoreKey": "最高傑作",
+      "artist": "PYKAMIA",
       "jacket": "https://phigros.tools/covers/%E6%9C%80%E9%AB%98%E5%82%91%E4%BD%9C.PYKAMIA.avif",
       "charts": [
         {
@@ -6149,6 +6432,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "千紫万紅",
       "label": "千紫万紅",
       "scoreKey": "千紫万紅",
+      "artist": "r0y vs. WABI",
       "jacket": "https://phigros.tools/covers/%E5%8D%83%E7%B4%AB%E4%B8%87%E7%B4%85.r0yvsWABI.avif",
       "charts": [
         {
@@ -6170,6 +6454,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "双重间谍 (Double Agent)",
       "label": "双重间谍 (Double Agent)",
       "scoreKey": "双重间谍 (Double Agent)",
+      "artist": "Wav.AV",
       "jacket": "https://phigros.tools/covers/%E5%8F%8C%E9%87%8D%E9%97%B4%E8%B0%8DDoubleAgent.WAVAV.avif",
       "charts": [
         {
@@ -6191,6 +6476,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "君往何处 (Quo Vadis)",
       "label": "君往何处 (Quo Vadis)",
       "scoreKey": "君往何处 (Quo Vadis)",
+      "artist": "M2U",
       "jacket": "https://phigros.tools/covers/%E5%90%9B%E5%BE%80%E4%BD%95%E5%A4%84QuoVadis.M2U.avif",
       "charts": [
         {
@@ -6212,6 +6498,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "夢の降る日に",
       "label": "夢の降る日に",
       "scoreKey": "夢の降る日に",
+      "artist": "seatrus",
       "jacket": "https://phigros.tools/covers/%E5%A4%A2%E3%81%AE%E9%99%8D%E3%82%8B%E6%97%A5%E3%81%AB.seatrus.avif",
       "charts": [
         {
@@ -6233,6 +6520,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "大和撫子 -Wild Dances-",
       "label": "大和撫子 -Wild Dances-",
       "scoreKey": "大和撫子 -Wild Dances-",
+      "artist": "adaptor vs DRIVE.",
       "jacket": "https://phigros.tools/covers/%E5%A4%A7%E5%92%8C%E6%92%AB%E5%AD%90WildDances.adapatorvsDRIVE.avif",
       "charts": [
         {
@@ -6254,6 +6542,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "宇宙残骸少女 (Cosmic Dusty Girl)",
       "label": "宇宙残骸少女 (Cosmic Dusty Girl)",
       "scoreKey": "宇宙残骸少女 (Cosmic Dusty Girl)",
+      "artist": "辻原一郎",
       "jacket": "https://phigros.tools/covers/%E5%AE%87%E5%AE%99%E6%AE%8B%E9%AA%B8%E5%B0%91%E5%A5%B3CosmicDustyGirl.%E8%BE%BB%E5%8E%9F%E4%B8%80%E9%83%8E.avif",
       "charts": [
         {
@@ -6275,6 +6564,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "尊師 ～The Guru～",
       "label": "尊師 ～The Guru～",
       "scoreKey": "尊師 ～The Guru～",
+      "artist": "rider",
       "jacket": "https://phigros.tools/covers/%E5%B0%8A%E5%B8%ABTheGuru.rider.avif",
       "charts": [
         {
@@ -6296,6 +6586,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "幻影鬼魅 (PLEASE)",
       "label": "幻影鬼魅 (PLEASE)",
       "scoreKey": "幻影鬼魅 (PLEASE)",
+      "artist": "R300K",
       "jacket": "https://phigros.tools/covers/%E5%B9%BB%E5%BD%B1%E9%AC%BC%E9%AD%85PLEASE.R300K.avif",
       "charts": [
         {
@@ -6321,6 +6612,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "幽世桔梗",
       "label": "幽世桔梗",
       "scoreKey": "幽世桔梗",
+      "artist": "Capchii feat. まるもこ",
       "jacket": "https://phigros.tools/covers/%E5%B9%BD%E4%B8%96%E6%A1%94%E6%A2%97.Capchiifeat%E3%81%BE%E3%82%8B%E3%82%82%E3%81%93.avif",
       "charts": [
         {
@@ -6342,6 +6634,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "开心病",
       "label": "开心病",
       "scoreKey": "开心病",
+      "artist": "闫东炜",
       "jacket": "https://phigros.tools/covers/%E5%BC%80%E5%BF%83%E7%97%85.%E9%97%AB%E4%B8%9C%E7%82%9C.avif",
       "charts": [
         {
@@ -6363,6 +6656,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "彩",
       "label": "彩",
       "scoreKey": "彩",
+      "artist": "MisoilePunch♪",
       "jacket": "https://phigros.tools/covers/%E5%BD%A9.MisoilePunch.avif",
       "charts": [
         {
@@ -6384,6 +6678,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "彼方へ、名もなき海辺より",
       "label": "彼方へ、名もなき海辺より",
       "scoreKey": "彼方へ、名もなき海辺より",
+      "artist": "打打だいず&月乃",
       "jacket": "https://phigros.tools/covers/%E5%BD%BC%E6%96%B9%E3%81%B8%E5%90%8D%E3%82%82%E3%81%AA%E3%81%8D%E6%B5%B7%E8%BE%BA%E3%82%88%E3%82%8A.%E6%89%93%E6%89%93%E3%81%A0%E3%81%84%E3%81%9A%26%E6%9C%88%E4%B9%83.avif",
       "charts": [
         {
@@ -6405,6 +6700,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "心の記憶",
       "label": "心の記憶",
       "scoreKey": "心の記憶",
+      "artist": "A-39/沙包P",
       "jacket": "https://phigros.tools/covers/%E5%BF%83%E3%81%AE%E8%A8%98%E6%86%B6.A39%E6%B2%99%E5%8C%85P.avif",
       "charts": [
         {
@@ -6426,6 +6722,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "心之所向",
       "label": "心之所向",
       "scoreKey": "心之所向",
+      "artist": "姜米條",
       "jacket": "https://phigros.tools/covers/%E5%BF%83%E4%B9%8B%E6%89%80%E5%90%91.%E5%A7%9C%E7%B1%B3%E6%A2%9D.avif",
       "charts": [
         {
@@ -6447,6 +6744,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "明鏡烈火",
       "label": "明鏡烈火",
       "scoreKey": "明鏡烈火",
+      "artist": "M-UE vs. Reku Mochizuki",
       "jacket": "https://phigros.tools/covers/%E6%98%8E%E9%8F%A1%E7%83%88%E7%81%AB.MUEvsRekuMochizuki.avif",
       "charts": [
         {
@@ -6468,6 +6766,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "星拂云锦 feat. koi",
       "label": "星拂云锦 feat. koi",
       "scoreKey": "星拂云锦 feat. koi",
+      "artist": "S9ryne",
       "jacket": "https://phigros.tools/covers/%E6%98%9F%E6%8B%82%E4%BA%91%E9%94%A6featkoi.S9ryne.avif",
       "charts": [
         {
@@ -6489,6 +6788,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "暗夜苏醒 (REANIMATE)",
       "label": "暗夜苏醒 (REANIMATE)",
       "scoreKey": "暗夜苏醒 (REANIMATE)",
+      "artist": "Warak",
       "jacket": "https://phigros.tools/covers/%E6%9A%97%E5%A4%9C%E8%8B%8F%E9%86%92REANIMATE.Warak.avif",
       "charts": [
         {
@@ -6510,6 +6810,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "月下缭乱",
       "label": "月下缭乱",
       "scoreKey": "月下缭乱",
+      "artist": "月見静華 vs. LUNARiUM",
       "jacket": "https://phigros.tools/covers/%E6%9C%88%E4%B8%8B%E7%BC%AD%E4%B9%B1.%E6%9C%88%E8%A6%8B%E9%9D%99%E8%8F%AFvsLUNARiUM.avif",
       "charts": [
         {
@@ -6531,6 +6832,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "月詠に鳴る",
       "label": "月詠に鳴る",
       "scoreKey": "月詠に鳴る",
+      "artist": "Feryquitous feat.藍月なくる",
       "jacket": "https://phigros.tools/covers/%E6%9C%88%E8%A9%A0%E3%81%AB%E9%B3%B4%E3%82%8B.Feryquitousfeat%E8%97%8D%E6%9C%88%E3%81%AA%E3%81%8F%E3%82%8B.avif",
       "charts": [
         {
@@ -6556,6 +6858,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "望影の方舟Six",
       "label": "望影の方舟Six",
       "scoreKey": "望影の方舟Six",
+      "artist": "Se-U-Ra",
       "jacket": "https://phigros.tools/covers/%E6%9C%9B%E5%BD%B1%E3%81%AE%E6%96%B9%E8%88%9FSix.SeURa.avif",
       "charts": [
         {
@@ -6577,6 +6880,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "桜樹街道",
       "label": "桜樹街道",
       "scoreKey": "桜樹街道",
+      "artist": "kozato snow",
       "jacket": "https://phigros.tools/covers/%E6%A1%9C%E6%A8%B9%E8%A1%97%E9%81%93.kozatosnow.avif",
       "charts": [
         {
@@ -6598,6 +6902,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "混乱-Confusion",
       "label": "混乱-Confusion",
       "scoreKey": "混乱-Confusion",
+      "artist": "Only My Black Score",
       "jacket": "https://phigros.tools/covers/%E6%B7%B7%E4%B9%B1Confusion.OnlyMyBlackScore.avif",
       "charts": [
         {
@@ -6619,6 +6924,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "游园地",
       "label": "游园地",
       "scoreKey": "游园地",
+      "artist": "椒盐菠萝",
       "jacket": "https://phigros.tools/covers/%E6%B8%B8%E5%9B%AD%E5%9C%B0.%E6%A4%92%E7%9B%90%E8%8F%A0%E8%90%9D.avif",
       "charts": [
         {
@@ -6640,6 +6946,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "狂喜蘭舞",
       "label": "狂喜蘭舞",
       "scoreKey": "狂喜蘭舞",
+      "artist": "LeaF",
       "jacket": "https://phigros.tools/covers/%E7%8B%82%E5%96%9C%E8%98%AD%E8%88%9E.LeaF.avif",
       "charts": [
         {
@@ -6665,6 +6972,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "玩具狂奏曲 -終焉-",
       "label": "玩具狂奏曲 -終焉-",
       "scoreKey": "玩具狂奏曲 -終焉-",
+      "artist": "きくお",
       "jacket": "https://phigros.tools/covers/%E7%8E%A9%E5%85%B7%E7%8B%82%E5%A5%8F%E6%9B%B2%E7%B5%82%E7%84%89.%E3%81%8D%E3%81%8F%E3%81%8A.avif",
       "charts": [
         {
@@ -6690,6 +6998,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "瓷岁",
       "label": "瓷岁",
       "scoreKey": "瓷岁",
+      "artist": "茶鸣拾贰律",
       "jacket": "https://phigros.tools/covers/%E7%93%B7%E5%B2%81.%E8%8C%B6%E9%B8%A3%E6%8B%BE%E8%B4%B0%E5%BE%8B.avif",
       "charts": [
         {
@@ -6711,6 +7020,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "白と黒のバケモノ",
       "label": "白と黒のバケモノ",
       "scoreKey": "白と黒のバケモノ",
+      "artist": "テヅカ",
       "jacket": "https://phigros.tools/covers/%E7%99%BD%E3%81%A8%E9%BB%92%E3%81%AE%E3%83%90%E3%82%B1%E3%83%A2%E3%83%8E.%E3%83%86%E3%83%85%E3%82%AB.avif",
       "charts": [
         {
@@ -6732,6 +7042,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "百鬼֎夜行",
       "label": "百鬼֎夜行",
       "scoreKey": "百鬼֎夜行",
+      "artist": "Salad Savior",
       "jacket": "https://phigros.tools/covers/%E7%99%BE%E9%AC%BC%E5%A4%9C%E8%A1%8C.SaladSavior.avif",
       "charts": [
         {
@@ -6753,6 +7064,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "盏茗",
       "label": "盏茗",
       "scoreKey": "盏茗",
+      "artist": "茶鸣拾贰律",
       "jacket": "https://phigros.tools/covers/%E7%9B%8F%E8%8C%97.%E8%8C%B6%E9%B8%A3%E6%8B%BE%E8%B4%B0%E5%BE%8B.avif",
       "charts": [
         {
@@ -6774,6 +7086,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "祈 -我ら神祖と共に歩む者なり-",
       "label": "祈 -我ら神祖と共に歩む者なり-",
       "scoreKey": "祈 -我ら神祖と共に歩む者なり-",
+      "artist": "光吉猛修 VS 穴山大輔 VS Kai VS 水野健治 VS 大国奏音",
       "jacket": "https://phigros.tools/covers/%E7%A5%88-%E6%88%91%E3%82%89%E7%A5%9E%E7%A5%96%E3%81%A8%E5%85%B1%E3%81%AB%E6%AD%A9%E3%82%80%E8%80%85%E3%81%AA%E3%82%8A-.%E5%85%89%E5%90%89%E7%8C%9B%E4%BF%AEVS%E7%A9%B4%E5%B1%B1%E5%A4%A7%E8%BC%94VSKaiVS%E6%B0%B4%E9%87%8E%E5%81%A5%E6%B2%BBVS%E5%A4%A7%E5%9B%BD%E5%A5%8F%E9%9F%B3.avif",
       "charts": [
         {
@@ -6799,6 +7112,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "神話",
       "label": "神話",
       "scoreKey": "神話",
+      "artist": "Pica & M2U",
       "jacket": "https://phigros.tools/covers/%E7%A5%9E%E8%A9%B1.PicaM2U.avif",
       "charts": [
         {
@@ -6820,6 +7134,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "聖夜讃歌",
       "label": "聖夜讃歌",
       "scoreKey": "聖夜讃歌",
+      "artist": "A-39/沙包P",
       "jacket": "https://phigros.tools/covers/%E8%81%96%E5%A4%9C%E8%AE%83%E6%AD%8C.A39%E6%B2%99%E5%8C%85P.avif",
       "charts": [
         {
@@ -6841,6 +7156,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "華灯爱",
       "label": "華灯爱",
       "scoreKey": "華灯爱",
+      "artist": "闫东炜",
       "jacket": "https://phigros.tools/covers/%E8%8F%AF%E7%81%AF%E7%88%B1.%E9%97%AB%E4%B8%9C%E7%82%9C.avif",
       "charts": [
         {
@@ -6862,6 +7178,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "萤火虫の怨",
       "label": "萤火虫の怨",
       "scoreKey": "萤火虫の怨",
+      "artist": "闫东炜",
       "jacket": "https://phigros.tools/covers/%E8%90%A4%E7%81%AB%E8%99%AB%E3%81%AE%E6%80%A8.%E9%97%AB%E4%B8%9C%E7%82%9C.avif",
       "charts": [
         {
@@ -6883,6 +7200,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "蝎虎天体 -Lacertid-",
       "label": "蝎虎天体 -Lacertid-",
       "scoreKey": "蝎虎天体 -Lacertid-",
+      "artist": "Cream vs. Daily天利",
       "jacket": "https://phigros.tools/covers/%E8%9D%8E%E8%99%8E%E5%A4%A9%E4%BD%93Lacertid.CreamvsDaily%E5%A4%A9%E5%88%A9.avif",
       "charts": [
         {
@@ -6904,6 +7222,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "贝多芬祝福 (Beethoven Blessing)",
       "label": "贝多芬祝福 (Beethoven Blessing)",
       "scoreKey": "贝多芬祝福 (Beethoven Blessing)",
+      "artist": "Nauts",
       "jacket": "https://phigros.tools/covers/%E8%B4%9D%E5%A4%9A%E8%8A%AC%E7%A5%9D%E7%A6%8FBeethovenBlessing.Nauts.avif",
       "charts": [
         {
@@ -6925,6 +7244,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "重生",
       "label": "重生",
       "scoreKey": "重生",
+      "artist": "姜米條",
       "jacket": "https://phigros.tools/covers/%E9%87%8D%E7%94%9F.%E5%A7%9C%E7%B1%B3%E6%A2%9D.avif",
       "charts": [
         {
@@ -6946,6 +7266,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "雪降り、メリクリ",
       "label": "雪降り、メリクリ",
       "scoreKey": "雪降り、メリクリ",
+      "artist": "A-39",
       "jacket": "https://phigros.tools/covers/%E9%9B%AA%E9%99%8D%E3%82%8A%E3%83%A1%E3%83%AA%E3%82%AF%E3%83%AA.A39.avif",
       "charts": [
         {
@@ -6967,6 +7288,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "雪降り ~雪が降っている~",
       "label": "雪降り ~雪が降っている~",
       "scoreKey": "雪降り ~雪が降っている~",
+      "artist": "AiSS w/ 夜輪 ft. 結月ゆかり",
       "jacket": "https://phigros.tools/covers/%E9%9B%AA%E9%99%8D%E3%82%8A%E9%9B%AA%E3%81%8C%E9%99%8D%E3%81%A3%E3%81%A6%E3%81%84%E3%82%8B.AiSSw%E5%A4%9C%E8%BC%AAft%E7%B5%90%E6%9C%88%E3%82%86%E3%81%8B%E3%82%8A.avif",
       "charts": [
         {
@@ -6992,6 +7314,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "零號車輛",
       "label": "零號車輛",
       "scoreKey": "零號車輛",
+      "artist": "seatrus",
       "jacket": "https://phigros.tools/covers/%E9%9B%B6%E8%99%9F%E8%BB%8A%E8%BC%9B.seatrus.avif",
       "charts": [
         {
@@ -7013,6 +7336,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "青丘",
       "label": "青丘",
       "scoreKey": "青丘",
+      "artist": "BLACK 0",
       "jacket": "https://phigros.tools/covers/%E9%9D%92%E4%B8%98.BLACK0.avif",
       "charts": [
         {
@@ -7034,6 +7358,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "青芽",
       "label": "青芽",
       "scoreKey": "青芽",
+      "artist": "茶鸣拾贰律",
       "jacket": "https://phigros.tools/covers/%E9%9D%92%E8%8A%BD.%E8%8C%B6%E9%B8%A3%E6%8B%BE%E8%B4%B0%E5%BE%8B.avif",
       "charts": [
         {
@@ -7055,6 +7380,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "风屿",
       "label": "风屿",
       "scoreKey": "风屿",
+      "artist": "闫东炜",
       "jacket": "https://phigros.tools/covers/%E9%A3%8E%E5%B1%BF.%E9%97%AB%E4%B8%9C%E7%82%9C.avif",
       "charts": [
         {
@@ -7080,6 +7406,7 @@ window.PHIGROS_CHART_LIBRARY = {
       "name": "黄金之城 (GOLD TOWN)",
       "label": "黄金之城 (GOLD TOWN)",
       "scoreKey": "黄金之城 (GOLD TOWN)",
+      "artist": "MEMME",
       "jacket": "https://phigros.tools/covers/%E9%BB%84%E9%87%91%E4%B9%8B%E5%9F%8EGOLDTOWN.Memme.avif",
       "charts": [
         {

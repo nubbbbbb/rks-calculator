@@ -223,6 +223,16 @@ input:focus, select:focus { border-color: var(--accent); }
   white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
   font-weight: 600; font-size: 12px;
 }
+.songHeading { min-width: 0; flex: 1; }
+.songHeading .songTitle { width: 100%; }
+.songArtist, .editorArtist, .contribArtist {
+  color: var(--muted);
+  font-size: 11px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.songArtist { margin-top: 2px; }
 .songTopTags { display: flex; align-items: center; gap: 4px; flex: 0 0 auto; flex-wrap: wrap; justify-content: flex-end; }
 
 .diffTagBtn {
@@ -416,6 +426,7 @@ input:focus, select:focus { border-color: var(--accent); }
 .contribCard.selected { border-color: var(--accent); background: #141a2c; }
 .contribInfo { min-width: 0; flex: 1; }
 .contribTitle { font-size: 12px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.contribArtist { margin-top: 2px; }
 .contribMeta { display: flex; align-items: center; gap: 6px; margin-top: 3px; }
 .tagBadge {
   font-size: 9px; font-weight: 800; letter-spacing: .3px;
@@ -436,8 +447,9 @@ input:focus, select:focus { border-color: var(--accent); }
   padding-bottom: 8px;
 }
 .editorHeader { display: flex; align-items: center; gap: 14px; }
-.editorTitle { min-width: 0; }
+.editorTitle { min-width: 0; display: flex; align-items: center; flex-wrap: wrap; gap: 8px; }
 .editorName { font-size: 17px; font-weight: 700; }
+.editorArtist { flex-basis: 100%; margin-top: -6px; }
 .editorLink { font-size: 12px; color: #9ca8ff; display: inline-block; margin-top: 4px; }
 
 .editorDiffs { display: flex; gap: 7px; flex-wrap: wrap; margin: 14px 0; }
@@ -547,6 +559,7 @@ a { color: #9ca8ff; }
   grid-template-columns: repeat(3, 1fr);
   gap: 8px;
 }
+.chartConstGrid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
 .constField {
   display: flex;
   align-items: center;
@@ -583,6 +596,7 @@ a { color: #9ca8ff; }
   margin-bottom: 10px;
 }
 .jacketPreview { flex: 0 0 auto; }
+.chartJacketTools { display: flex; min-width: 0; flex: 1; flex-direction: column; gap: 8px; }
 
 .jacketModeToggle {
   display: flex;
@@ -617,5 +631,9 @@ a { color: #9ca8ff; }
 }
 .modalActionsRight { display: flex; gap: 8px; }
 .modalActions button.hidden { display: none; }
-#addSongSave { background: var(--accent); border-color: transparent; color: #fff; font-weight: 600; }
-#addSongSave:hover { background: #8090ff; }
+#chartSaveBtn { background: var(--accent); border-color: transparent; color: #fff; font-weight: 600; }
+#chartSaveBtn:hover { background: #8090ff; }
+
+@media (max-width: 560px) {
+  .chartConstGrid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}

@@ -6,7 +6,7 @@
   <title>Phigros RKS Calculator</title>
   <meta name="description" content="Phigros RKS calculator with B27 + P3 breakdown.">
   <link rel="icon" href="favicon.ico" type="image/x-icon">
-  <link rel="stylesheet" href="style.css?v=20260913">
+  <link rel="stylesheet" href="style.css?v=20261021-artist">
 </head>
 <body>
   <header class="topbar">
@@ -15,6 +15,7 @@
       <p class="subtitle">Enter your ACCs and see exactly what contributes to your RKS.</p>
     </div>
     <div class="actions">
+      <button id="addChartBtn" class="secondary">+ Add chart</button>
       <button id="exportBtn" class="secondary">Export scores</button>
       <label class="fileBtn secondary">
         Import scores
@@ -97,10 +98,74 @@
   </div>
 
   <footer>
-    <p>Chart titles and difficulty constants are bundled from the <a href="https://phigros.tools/charts" target="_blank" rel="noopener">phigros.tools chart catalog</a>. RKS formula follows the current B27 + P3 convention.</p>
+    <p>Chart titles, artist names, and difficulty constants are bundled from the <a href="https://phigros.tools/charts" target="_blank" rel="noopener">phigros.tools chart catalog</a>. RKS formula follows the current B27 + P3 convention.</p>
   </footer>
 
-  <script src="chart-library.js?v=20261021"></script>
-  <script src="app.js?v=20261021"></script>
+  <div id="chartModal" class="modalOverlay hidden">
+    <div class="modal">
+      <div class="modalHeader">
+        <h2 id="chartModalTitle">Add a chart</h2>
+        <button type="button" id="chartModalClose" class="modalClose" aria-label="Close">&times;</button>
+      </div>
+      <form id="chartForm">
+        <label class="field">
+          <span>Song name</span>
+          <input id="chartName" type="text" placeholder="e.g. Rrhar'il" maxlength="160" required>
+        </label>
+
+        <label class="field">
+          <span>Artist</span>
+          <input id="chartArtist" type="text" placeholder="e.g. Team Grimoire" maxlength="160">
+        </label>
+
+        <div class="field">
+          <span>Difficulty constants <span class="muted">(leave unavailable difficulties blank)</span></span>
+          <div class="constGrid chartConstGrid" id="chartConstGrid">
+            <div class="constField diff-EZ">
+              <label for="chartEZ">EZ</label>
+              <input id="chartEZ" type="number" min="0.1" max="20" step="0.1" data-diff="EZ" placeholder="—">
+            </div>
+            <div class="constField diff-HD">
+              <label for="chartHD">HD</label>
+              <input id="chartHD" type="number" min="0.1" max="20" step="0.1" data-diff="HD" placeholder="—">
+            </div>
+            <div class="constField diff-IN">
+              <label for="chartIN">IN</label>
+              <input id="chartIN" type="number" min="0.1" max="20" step="0.1" data-diff="IN" placeholder="—">
+            </div>
+            <div class="constField diff-AT">
+              <label for="chartAT">AT</label>
+              <input id="chartAT" type="number" min="0.1" max="20" step="0.1" data-diff="AT" placeholder="—">
+            </div>
+          </div>
+        </div>
+
+        <div class="field">
+          <span>Jacket art</span>
+          <div class="jacketPreviewRow">
+            <div id="chartJacketPreview" class="jacket jacketPreview" style="width:56px;height:56px" data-initials="?"></div>
+            <div class="chartJacketTools">
+              <input id="chartJacketUrl" type="url" placeholder="https://example.com/cover.jpg" inputmode="url">
+              <input id="chartJacketFile" type="file" accept="image/png,image/jpeg,image/webp,image/avif,image/gif">
+            </div>
+          </div>
+          <button type="button" id="clearJacketBtn" class="secondary small">Remove jacket</button>
+          <div class="muted small">Uploaded images are saved in this browser. Maximum file size: 512 KB.</div>
+        </div>
+
+        <div id="chartFormStatus" class="muted small" role="status"></div>
+        <div class="modalActions">
+          <button type="button" id="chartDeleteBtn" class="danger hidden">Delete chart</button>
+          <div class="modalActionsRight">
+            <button type="button" id="chartCancelBtn" class="secondary">Cancel</button>
+            <button type="submit" id="chartSaveBtn">Save chart</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="chart-library.js?v=20261021-artist"></script>
+  <script src="app.js?v=20261021-artist-click"></script>
 </body>
 </html>

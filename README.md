@@ -5,6 +5,22 @@ contributing to it.
 
 Note: This project is made with usage of AI.
 
+## Add And Edit Charts
+
+Use **+ Add chart** to add a local song with any EZ, HD, IN, and AT difficulty
+constants. Select a song and choose **Edit chart info** to change its name,
+artist, constants, or jacket art. The bundled catalog includes artist names
+from phigros.tools; locally added and edited charts can include an artist name
+as well. Jacket art can be an image URL or a PNG, JPEG, WebP, AVIF, or GIF
+image up to 512 KB.
+Custom charts can also be deleted from the edit dialog.
+
+Your additions and edits are saved in the browser and are kept separate from
+the checked-in phigros.tools catalog. Uploaded jacket images are stored in
+browser storage; image URLs continue to load from their host. Editing a chart
+does not discard its saved accuracies. Previously saved custom songs are
+migrated into the local chart library when the app first loads this version.
+
 ## Sidebar
 
 Use the difficulty buttons to filter the song list. Search by song name with the
